@@ -2,9 +2,8 @@ import { Breadcrumbs } from '@/components/breadcrumbs';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { useLayout } from '@/contexts/LayoutContext';
 import { type BreadcrumbItem as BreadcrumbItemType } from '@/types';
-import { ProfileMenu } from '@/components/profile-menu';
 import { LanguageSwitcher } from '@/components/language-switcher';
-import { usePage, router } from '@inertiajs/react';
+import { usePage } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import { StoreSwitcher } from '@/components/store-switcher';
 
@@ -31,16 +30,8 @@ export function AppSidebarHeader({ breadcrumbs = [] }: { breadcrumbs?: Breadcrum
                         />
                     )}
                     
-                    {(usePage().props as any).isImpersonating && (
-                        <button 
-                            onClick={() => router.post(route('impersonate.leave'))}
-                            className="bg-red-500 text-white px-2 py-1 rounded text-xs hover:bg-red-600"
-                        >
-                            {t("Return Back")}
-                        </button>
-                    )}
+
                     <LanguageSwitcher />
-                    <ProfileMenu />
                     {position === 'right' && <SidebarTrigger className="-mr-1" />}
                 </div>
             </div>

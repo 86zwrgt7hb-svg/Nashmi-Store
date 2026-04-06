@@ -4,6 +4,40 @@
 @plugin 'tailwind-scrollbar';
 
 @import './rtl.css';
+/* ============================================= */
+/* GLOBAL RTL Overflow Fix                       */
+/* ============================================= */
+html[dir="rtl"],
+html[dir="rtl"] body {
+  overflow-x: clip !important;
+  max-width: 100vw !important;
+  width: 100% !important;
+  overscroll-behavior-x: none !important;
+}
+
+/* Prevent any fixed/absolute elements from causing overflow */
+html[dir="rtl"] .grecaptcha-badge {
+  overflow: hidden !important;
+}
+
+/* Target specific containers that might overflow */
+html[dir="rtl"] [data-slot="sidebar-wrapper"],
+html[dir="rtl"] [data-slot="sidebar-inset"],
+html[dir="rtl"] main,
+html[dir="rtl"] .container,
+html[dir="rtl"] section {
+  max-width: 100vw;
+  box-sizing: border-box;
+}
+
+html[dir="rtl"] img,
+html[dir="rtl"] video,
+html[dir="rtl"] iframe,
+html[dir="rtl"] svg {
+  max-width: 100%;
+}
+
+
 
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';

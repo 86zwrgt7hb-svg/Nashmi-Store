@@ -5,14 +5,15 @@ import { AppSidebarHeader } from '@/components/app-sidebar-header';
 import { TrialBanner } from '@/components/TrialBanner';
 import { SuspensionBanner } from '@/components/SuspensionBanner';
 import { EmailVerificationBanner } from '@/components/EmailVerificationBanner';
+import { ImpersonationBanner } from '@/components/ImpersonationBanner';
 import { type BreadcrumbItem } from '@/types';
 import { type PropsWithChildren } from 'react';
-
 export default function AppSidebarLayout({ children, breadcrumbs = [] }: PropsWithChildren<{ breadcrumbs?: BreadcrumbItem[] }>) {
     return (
         <AppShell variant="sidebar">
             <AppSidebar />
             <AppContent variant="sidebar">
+                <ImpersonationBanner />
                 <AppSidebarHeader breadcrumbs={breadcrumbs} />
                 <EmailVerificationBanner />
                 <TrialBanner />

@@ -7,7 +7,7 @@ import { useSidebarSettings } from '@/contexts/SidebarContext';
 import { useBrand } from '@/contexts/BrandContext';
 import { type NavItem } from '@/types';
 import { Link, usePage, router } from '@inertiajs/react';
-import { BookOpen, Contact, Folder, LayoutGrid, ShoppingBag, Users, Tag, FileIcon, Settings, BarChart, Barcode, FileText, Briefcase, CheckSquare, Calendar, CreditCard, Nfc, Ticket, DollarSign, MessageSquare, CalendarDays, Palette, Image, Mail, Store, ChevronDown, Building2, Globe, Package, ShoppingCart, UserCheck, Truck, Star, Zap, Bot, Webhook, FileType, Languages, Percent, Headphones, Smartphone, Globe2, Megaphone } from 'lucide-react';
+import { BookOpen, Contact, Folder, LayoutGrid, ShoppingBag, Users, Tag, FileIcon, Settings, BarChart, Barcode, FileText, Briefcase, CheckSquare, Calendar, CreditCard, Nfc, Ticket, DollarSign, MessageSquare, CalendarDays, Palette, Image, Mail, Store, ChevronDown, Building2, Globe, Package, ShoppingCart, UserCheck, Truck, Star, Zap, Bot, Webhook, FileType, Languages, Percent, Headphones, Smartphone, Globe2, Megaphone , ArrowLeftFromLine } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import AppLogo from './app-logo';
@@ -497,8 +497,18 @@ export function AppSidebar() {
             </SidebarContent>
 
             <SidebarFooter>
-                {/* <NavFooter items={footerNavItems} className="mt-auto" position={position} /> */}
-                {/* Profile menu moved to header */}
+                {(usePage().props as any).isImpersonating && (
+                    <div className="px-2 pb-1">
+                        <button 
+                            onClick={() => router.post(route('impersonate.leave'))}
+                            className="w-full flex items-center justify-center gap-2 bg-red-500 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-red-600 transition-colors group-data-[collapsible=icon]:px-1 group-data-[collapsible=icon]:py-1.5"
+                        >
+                            <ArrowLeftFromLine className="h-4 w-4 flex-shrink-0" />
+                            <span className="group-data-[collapsible=icon]:hidden">{t("Return to Admin")}</span>
+                        </button>
+                    </div>
+                )}
+                <NavUser position={position} />
             </SidebarFooter>
         </Sidebar>
     );
