@@ -1,0 +1,95 @@
+import tailwindcss from '@tailwindcss/vite';
+import laravel from 'laravel-vite-plugin';
+import { resolve } from 'node:path';
+import { defineConfig } from 'vite';
+
+function stripUseClientDirective(): import('vite').Plugin {
+  return {
+    name: 'strip-use-client-directive',
+    enforce: 'pre' as const,
+    transform(code, id) {
+      if (
+        id.endsWith('.js') ||
+        id.endsWith('.ts') ||
+        id.endsWith('.tsx') ||
+        id.endsWith('.mjs')
+      ) {
+        if (code.includes('"use client"') || code.includes("'use client'")) {
+          return code.replace(/['"]use client['"];?\s*/g, '');
+        }
+      }
+    },
+  };
+}
+
+export default defineConfig({
+    base: './',
+    plugins: [
+        laravel({
+            input: ['resources/css/app.css', 'resources/css/dark-mode.css', 'resources/js/app.tsx'],
+            ssr: 'resources/js/ssr.tsx',
+            refresh: true,
+        }),
+        stripUseClientDirective(),
+        tailwindcss(),
+    ],
+    server: {
+        host: 'localhost',
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
+            'Access-Control-Allow-Headers': '*',
+        },
+        watch: {
+            ignored: ['**/vendor/**', '**/node_modules/**']
+        }
+    },
+
+    esbuild: {
+        jsx: 'automatic',
+        jsxImportSource: 'react',
+    },
+    resolve: {
+        alias: {
+            'ziggy-js': resolve(__dirname, 'vendor/tightenco/ziggy'),
+        },
+    },
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks(id) {
+                    // Core React
+                    if (id.includes('react-dom') || id.includes('react/')) {
+                        return 'vendor-react';
+                    }
+                    // Radix UI components
+                    if (id.includes('@radix-ui')) {
+                        return 'vendor-radix';
+                    }
+                    // Charts
+                    if (id.includes('recharts') || id.includes('d3-')) {
+                        return 'vendor-charts';
+                    }
+                    // Rich text editor
+                    if (id.includes('tiptap') || id.includes('prosemirror') || id.includes('@tiptap')) {
+                        return 'vendor-editor';
+                    }
+                    // Lucide icons
+                    if (id.includes('lucide-react')) {
+                        return 'vendor-icons';
+                    }
+                    // Utility libraries
+                    if (id.includes('date-fns') || id.includes('clsx') || id.includes('class-variance-authority')) {
+                        return 'vendor-utils';
+                    }
+                    // Inertia
+                    if (id.includes('@inertiajs')) {
+                        return 'vendor-inertia';
+                    }
+                }
+            },
+        },
+        assetsDir: 'assets',
+        chunkSizeWarningLimit: 500,
+    }
+});

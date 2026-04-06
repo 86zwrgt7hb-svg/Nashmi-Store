@@ -1,0 +1,70 @@
+{
+    "name": "TechHub Electronics",
+    "short_name": "TechHub",
+    "description": "Make your store installable as a mobile app....",
+    "start_url": "http:\/\/localhost\/product\/whatsstore\/whatsstore-saas-react\/store\/techvibe",
+    "display": "fullscreen",
+    "background_color": "#ffe5e5",
+    "theme_color": "#004ac2",
+    "orientation": "landscape",
+    "categories": [
+        "shopping",
+        "business"
+    ],
+    "icons": [
+        {
+            "src": "http:\/\/localhost\/product\/whatsstore\/whatsstore-saas-react\/storage\/media\/2\/favicon-home-accessories.png",
+            "sizes": "72x72",
+            "type": "image\/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "http:\/\/localhost\/product\/whatsstore\/whatsstore-saas-react\/storage\/media\/2\/favicon-home-accessories.png",
+            "sizes": "96x96",
+            "type": "image\/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "http:\/\/localhost\/product\/whatsstore\/whatsstore-saas-react\/storage\/media\/2\/favicon-home-accessories.png",
+            "sizes": "128x128",
+            "type": "image\/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "http:\/\/localhost\/product\/whatsstore\/whatsstore-saas-react\/storage\/media\/2\/favicon-home-accessories.png",
+            "sizes": "144x144",
+            "type": "image\/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "http:\/\/localhost\/product\/whatsstore\/whatsstore-saas-react\/storage\/media\/2\/favicon-home-accessories.png",
+            "sizes": "152x152",
+            "type": "image\/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "http:\/\/localhost\/product\/whatsstore\/whatsstore-saas-react\/storage\/media\/2\/favicon-home-accessories.png",
+            "sizes": "192x192",
+            "type": "image\/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "http:\/\/localhost\/product\/whatsstore\/whatsstore-saas-react\/storage\/media\/2\/favicon-home-accessories.png",
+            "sizes": "256x256",
+            "type": "image\/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "http:\/\/localhost\/product\/whatsstore\/whatsstore-saas-react\/storage\/media\/2\/favicon-home-accessories.png",
+            "sizes": "384x384",
+            "type": "image\/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "http:\/\/localhost\/product\/whatsstore\/whatsstore-saas-react\/storage\/media\/2\/favicon-home-accessories.png",
+            "sizes": "512x512",
+            "type": "image\/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
