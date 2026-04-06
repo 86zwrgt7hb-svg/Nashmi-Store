@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Plan;
+use App\Mail\TrialWelcomeMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 

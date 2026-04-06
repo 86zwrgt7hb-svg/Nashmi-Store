@@ -242,7 +242,7 @@ class EmailTemplateService
             return true; // Allow if no context
         }
         
-        $setting = Setting::getSetting($templateName, $context['userId'], $context['storeId'], 'off');
+        $setting = Setting::getSetting($templateName, $context['userId'], $context['storeId'], 'on');
         return $setting === 'on';
     }
 
