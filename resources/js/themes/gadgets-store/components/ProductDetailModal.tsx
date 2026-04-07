@@ -115,7 +115,6 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                         <img loading="lazy" 
                           src={getImageUrl(img)} 
                           alt={`${productName} ${index + 1}`}
-                          loading="lazy"
                           className="w-full h-full object-cover rounded-lg p-0.5"
                         />
                       </button>
