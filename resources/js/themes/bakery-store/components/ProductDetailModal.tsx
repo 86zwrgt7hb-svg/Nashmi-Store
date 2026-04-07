@@ -6,6 +6,7 @@ import { toast } from '@/components/custom-toast';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { X, Plus, Minus, ShoppingBag } from 'lucide-react';
 import { log } from 'console';
+import { ProductReviews } from '../../shared/components/ProductReviews';
 
 interface Product {
   id: string;
@@ -274,6 +275,9 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               </button>
             </div>
           </div>
+
+                {/* Product Reviews Section */}
+                <ProductReviews productId={product.id} storeSlug={(window as any).page?.props?.storeSlug || ''} />
         </div>
       </div>
     </div>
