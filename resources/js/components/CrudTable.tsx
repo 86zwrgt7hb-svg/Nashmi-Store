@@ -236,7 +236,7 @@ export function CrudTable({
   };
 
   return (
-    <div className="border-collapse">
+    <div className="border-collapse overflow-x-auto -mx-3 sm:mx-0">
       <Table>
         <TableHeader>
           <TableRow className="bg-gray-50 border-b">
