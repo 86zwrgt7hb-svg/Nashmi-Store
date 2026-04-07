@@ -16,6 +16,7 @@ import NewsletterSection from './components/NewsletterSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import ActiveCampaignsSection from './components/ActiveCampaignsSection';
+import ScrollToTop from './components/ScrollToTop';
 import { useBrand } from '@/contexts/BrandContext';
 import { THEME_COLORS } from '@/hooks/use-appearance';
 import { useFavicon } from '@/hooks/use-favicon';
@@ -363,6 +364,7 @@ export default function LandingPage() {
           const Component = sectionComponents[sectionKey as keyof typeof sectionComponents];
           return Component ? <React.Fragment key={sectionKey}>{Component()}</React.Fragment> : null;
         })}
+        <ScrollToTop />
       </div>
     </>
   );
