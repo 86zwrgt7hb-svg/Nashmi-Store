@@ -90,7 +90,6 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   <img loading="lazy"
                     src={getImageUrl(product.images && product.images.length > 0 ? product.images[selectedImageIndex] : product.image)}
                     alt={productName}
-                    loading="lazy"
                     className="w-full h-full object-scale-down"
                   />
                   
