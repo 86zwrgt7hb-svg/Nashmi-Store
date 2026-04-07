@@ -671,14 +671,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Companies routes
     Route::middleware('permission:manage-companies')->group(function () {
-        Route::get('companies', [CompanyController::class, 'index'])->middleware('permission:manage-companies')->name('companies.index');
-        Route::post('companies', [CompanyController::class, 'store'])->middleware('permission:create-companies')->name('companies.store');
-        Route::put('companies/{company}', [CompanyController::class, 'update'])->middleware('permission:edit-companies')->name('companies.update');
-        Route::delete('companies/{company}', [CompanyController::class, 'destroy'])->middleware('permission:delete-companies')->name('companies.destroy');
-        Route::put('companies/{company}/reset-password', [CompanyController::class, 'resetPassword'])->middleware('permission:reset-password-companies')->name('companies.reset-password');
-        Route::put('companies/{company}/toggle-status', [CompanyController::class, 'toggleStatus'])->middleware('permission:toggle-status-companies')->name('companies.toggle-status');
-        Route::get('companies/{company}/plans', [CompanyController::class, 'getPlans'])->middleware('permission:manage-plans-companies')->name('companies.plans');
-        Route::put('companies/{company}/upgrade-plan', [CompanyController::class, 'upgradePlan'])->middleware('permission:upgrade-plan-companies')->name('companies.upgrade-plan');
+        Route::get('companies', [CompanyController::class, 'index'])->name('companies.index');
+        Route::post('companies', [CompanyController::class, 'store'])->name('companies.store');
+        Route::put('companies/{company}', [CompanyController::class, 'update'])->name('companies.update');
+        Route::delete('companies/{company}', [CompanyController::class, 'destroy'])->name('companies.destroy');
+        Route::put('companies/{company}/reset-password', [CompanyController::class, 'resetPassword'])->name('companies.reset-password');
+        Route::put('companies/{company}/toggle-status', [CompanyController::class, 'toggleStatus'])->name('companies.toggle-status');
+        Route::get('companies/{company}/plans', [CompanyController::class, 'getPlans'])->name('companies.plans');
+        Route::put('companies/{company}/upgrade-plan', [CompanyController::class, 'upgradePlan'])->name('companies.upgrade-plan');
     });
 
 
