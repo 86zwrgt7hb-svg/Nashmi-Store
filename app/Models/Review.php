@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Review extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'store_id',
         'product_id',
@@ -27,19 +29,19 @@ class Review extends Model
         'replied_at' => 'datetime',
     ];
 
-    public function store(): BelongsTo
-    {
-        return $this->belongsTo(Store::class);
-    }
-
-    public function product(): BelongsTo
+    public function product()
     {
         return $this->belongsTo(Product::class);
     }
 
-    public function customer(): BelongsTo
+    public function customer()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(User::class, 'customer_id');
+    }
+
+    public function scopeForStore($query, $storeId)
+    {
+        return $query->where('store_id', $storeId);
     }
 
     public function scopeApproved($query)
@@ -50,15 +52,5 @@ class Review extends Model
     public function scopePending($query)
     {
         return $query->where('status', 'pending');
-    }
-
-    public function scopeForStore($query, $storeId)
-    {
-        return $query->where('store_id', $storeId);
-    }
-
-    public function scopeForProduct($query, $productId)
-    {
-        return $query->where('product_id', $productId);
     }
 }

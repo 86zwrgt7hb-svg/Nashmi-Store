@@ -786,6 +786,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
 
     
+    // Reviews Management routes
+    Route::get("reviews", [\App\Http\Controllers\Dashboard\ReviewController::class, "index"])->name("reviews.index");
+    Route::post("reviews/{review}/approve", [\App\Http\Controllers\Dashboard\ReviewController::class, "approve"])->name("reviews.approve");
+    Route::post("reviews/{review}/reject", [\App\Http\Controllers\Dashboard\ReviewController::class, "reject"])->name("reviews.reject");
+    Route::post("reviews/{review}/reply", [\App\Http\Controllers\Dashboard\ReviewController::class, "reply"])->name("reviews.reply");
+    Route::delete("reviews/{review}", [\App\Http\Controllers\Dashboard\ReviewController::class, "destroy"])->name("reviews.destroy");
+    Route::post("reviews/bulk-action", [\App\Http\Controllers\Dashboard\ReviewController::class, "bulkAction"])->name("reviews.bulk-action");
+    
+    // Notification Settings routes
+    Route::get("notification-settings", [\App\Http\Controllers\Dashboard\NotificationSettingController::class, "index"])->name("notification-settings.index");
+    Route::put("notification-settings", [\App\Http\Controllers\Dashboard\NotificationSettingController::class, "update"])->name("notification-settings.update");
+
     // Store switching route
     Route::post('switch-store', [\App\Http\Controllers\StoreSwitcherController::class, 'switchStore'])->name('switch-store');
     
