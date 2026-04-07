@@ -332,7 +332,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
         </div>
       </div>
 
-      {showReviewModal {false && showReviewModal && ({false && showReviewModal && ( (
+      {showReviewModal && (
         <ReviewModal
           productId={product.id}
           productName={productName || product.name}
