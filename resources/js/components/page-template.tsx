@@ -3,24 +3,21 @@ import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Button } from '@/components/ui/button';
 import { ReactNode } from 'react';
-
 export interface PageAction {
   label: string;
   icon?: ReactNode;
   variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
   onClick?: () => void;
 }
-
 export interface PageTemplateProps {
   title: string;
-  description: string;
+  description?: string;
   url: string;
   actions?: PageAction[];
   children: ReactNode;
   noPadding?: boolean;
   breadcrumbs?: BreadcrumbItem[];
 }
-
 export function PageTemplate({ 
   title,
   description, 
@@ -37,17 +34,16 @@ export function PageTemplate({
       href: url,
     },
   ];
-
   return (
     <AppLayout breadcrumbs={pageBreadcrumbs}>
       <Head title={title} />
       
-      <div className="flex h-full flex-1 flex-col gap-4 p-4">
-        {/* Header with action buttons */}
-        <div className="flex items-center justify-between">
-          <h1 className="text-xl font-semibold">{title}</h1>
+      <div className="flex h-full flex-1 flex-col gap-4 p-3 sm:p-4">
+        {/* Header with action buttons - responsive */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <h1 className="text-lg sm:text-xl font-semibold">{title}</h1>
           {actions && actions.length > 0 && (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               {actions.map((action, index) => (
                 <Button 
                   key={index}
@@ -56,15 +52,15 @@ export function PageTemplate({
                   onClick={action.onClick}
                 >
                   {action.icon}
-                  {action.label}
+                  <span className="hidden xs:inline sm:inline">{action.label}</span>
                 </Button>
               ))}
             </div>
           )}
         </div>
         
-        {/* Content */}
-        <div className={noPadding ? "" : "rounded-xl border p-6"}>
+        {/* Content - responsive padding */}
+        <div className={noPadding ? "" : "rounded-xl border p-3 sm:p-4 md:p-6"}>
           {children}
         </div>
       </div>

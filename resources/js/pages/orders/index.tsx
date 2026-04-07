@@ -149,20 +149,20 @@ export default function Orders({ orders = [], stats }: OrdersProps) {
           <CardContent>
             <div className="space-y-4">
               {orders.length > 0 ? orders.map((order) => (
-                <div key={order.id} className="flex items-center justify-between p-4 border rounded-lg">
-                  <div className="flex items-center space-x-4">
+                <div key={order.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 border rounded-lg gap-3">
+                  <div className="flex items-center gap-3 sm:gap-4">
                     <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
                       <ShoppingCart className="h-6 w-6 text-primary" />
                     </div>
                     <div>
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center gap-1 sm:gap-2 self-end sm:self-auto">
                         <h3 className="font-semibold">{order.orderNumber}</h3>
                         <Badge variant={getStatusVariant(order.status)}>
                           {order.status}
                         </Badge>
                       </div>
                       <p className="text-sm text-muted-foreground">{order.customer} • {order.email}</p>
-                      <div className="flex items-center space-x-4 mt-1">
+                      <div className="flex flex-wrap items-center gap-2 sm:gap-4 mt-1">
                         <span className="text-xs text-muted-foreground">{formatCurrency(order.total)}</span>
                         <span className="text-xs text-muted-foreground">{t('{{items}} items', { items: order.items })}</span>
                         <span className="text-xs text-muted-foreground">{order.date}</span>
@@ -170,7 +170,7 @@ export default function Orders({ orders = [], stats }: OrdersProps) {
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center gap-1 sm:gap-2 self-end sm:self-auto">
                     {hasPermission('view-orders') && (
                       <Button variant="ghost" size="sm" onClick={() => handleActionClick('view', 'view-orders', order.id)}>
                         <Eye className="h-4 w-4" />
