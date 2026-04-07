@@ -139,14 +139,23 @@ export default function ReviewsIndex({ reviews, stats, filters }: Props) {
   const pageActions = [
     {
       label: t('Refresh'),
-      icon: RefreshCw,
+      icon: <RefreshCw className="h-4 w-4" />,
       onClick: () => router.reload(),
       variant: 'outline' as const,
     }
   ];
 
   return (
-    <PageTemplate title={t('Reviews & Ratings')} actions={pageActions}>
+    <PageTemplate
+      title={t('Reviews & Ratings')}
+      description={t('Manage customer reviews and ratings')}
+      url="/reviews"
+      actions={pageActions}
+      breadcrumbs={[
+        { title: t('Dashboard'), href: route('dashboard') },
+        { title: t('Reviews & Ratings') }
+      ]}
+    >
       {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
         <Card>

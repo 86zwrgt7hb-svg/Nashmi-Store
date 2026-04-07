@@ -63,7 +63,22 @@ class ReviewController extends Controller
             'comment' => 'nullable|string|max:2000',
         ]);
 
-        $store = Store::where('slug', $validated['store_slug'])->first();
+        // Get store from slug or try to find from product
+        $storeSlug = $validated['store_slug'] ?? null;
+        $store = null;
+        
+        if ($storeSlug) {
+            $store = Store::where('slug', $storeSlug)->first();
+        }
+        
+        // Fallback: find store from product_id
+        if (!$store && !empty($validated['product_id'])) {
+            $product = Product::find($validated['product_id']);
+            if ($product) {
+                $store = Store::find($product->store_id);
+            }
+        }
+        
         if (!$store) {
             return response()->json(['error' => 'Store not found'], 404);
         }
@@ -97,14 +112,16 @@ class ReviewController extends Controller
             }
         }
 
-        // Check for duplicate review
-        $existingReview = Review::where('store_id', $store->id)
-            ->where('product_id', $product->id)
-            ->where('customer_email', $validated['customer_email'])
-            ->first();
+        // Check for duplicate review (only if email is provided)
+        if (!empty($validated['customer_email'])) {
+            $existingReview = Review::where('store_id', $store->id)
+                ->where('product_id', $product->id)
+                ->where('customer_email', $validated['customer_email'])
+                ->first();
 
-        if ($existingReview) {
-            return response()->json(['error' => __('You have already reviewed this product')], 422);
+            if ($existingReview) {
+                return response()->json(['error' => __('You have already reviewed this product')], 422);
+            }
         }
 
         // Get auto-approve setting from store
@@ -115,7 +132,7 @@ class ReviewController extends Controller
             'product_id' => $product->id,
             'customer_id' => $customerId,
             'customer_name' => $validated['customer_name'],
-            'customer_email' => $validated['customer_email'],
+            'customer_email' => $validated['customer_email'] ?? null,
             'rating' => $validated['rating'],
             'comment' => $validated['comment'],
             'status' => $autoApprove ? 'approved' : 'pending',

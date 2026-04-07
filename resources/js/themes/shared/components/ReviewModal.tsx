@@ -52,22 +52,41 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ productId, productName
     }
   };
 
+  // Extract store slug from URL path (e.g., /store/techvibe -> techvibe)
+  const getStoreSlug = () => {
+    const match = window.location.pathname.match(/\/store\/([^/]+)/);
+    return match ? match[1] : '';
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.customer_name.trim()) return;
+    if (formData.rating < 1) return;
     setSubmitting(true);
     try {
+      const storeSlug = getStoreSlug();
       const response = await fetch('/api/reviews', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, product_id: productId }),
+        headers: { 
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
+        },
+        body: JSON.stringify({ ...formData, product_id: productId, store_slug: storeSlug }),
       });
+      const data = await response.json();
       if (response.ok) {
         setSubmitted(true);
         setShowForm(false);
         setFormData({ customer_name: '', rating: 5, comment: '' });
+        // Refresh reviews after submission
+        setTimeout(() => fetchReviews(), 500);
+      } else {
+        alert(data.error || data.message || (isArabic ? 'حدث خطأ' : 'An error occurred'));
       }
     } catch (error) {
       console.error('Failed to submit review:', error);
+      alert(isArabic ? 'حدث خطأ في الاتصال' : 'Connection error');
     } finally {
       setSubmitting(false);
     }

@@ -96,7 +96,15 @@ export default function NotificationSettingsIndex({ preferences }: Props) {
   ];
 
   return (
-    <PageTemplate title={t('Notification Settings')}>
+    <PageTemplate
+      title={t('Notification Settings')}
+      description={t('Configure your notification preferences')}
+      url="/notification-settings"
+      breadcrumbs={[
+        { title: t('Dashboard'), href: route('dashboard') },
+        { title: t('Notification Settings') }
+      ]}
+    >
       <div className="max-w-3xl mx-auto space-y-6">
         {/* Email Notifications */}
         <Card>
