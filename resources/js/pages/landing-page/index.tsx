@@ -17,6 +17,7 @@ import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import ActiveCampaignsSection from './components/ActiveCampaignsSection';
 import ScrollToTop from './components/ScrollToTop';
+import WhatsAppDemoSection from './components/WhatsAppDemoSection';
 import { useBrand } from '@/contexts/BrandContext';
 import { THEME_COLORS } from '@/hooks/use-appearance';
 import { useFavicon } from '@/hooks/use-favicon';
@@ -196,7 +197,7 @@ export default function LandingPage() {
 
   // Get section order or use default
   const sectionOrder = settings.config_sections?.section_order || [
-    'header', 'hero', 'features', 'screenshots', 'themes', 'why_choose_us', 'about',
+    'header', 'hero', 'whatsapp_demo', 'features', 'screenshots', 'themes', 'why_choose_us', 'about',
     'team', 'testimonials', 'featured_stores', 'plans', 'faq', 'newsletter', 'contact', 'footer'
   ];
 
@@ -219,6 +220,9 @@ export default function LandingPage() {
         sectionData={getSectionData('hero')}
         brandColor={primaryColor}
       />
+    ),
+    whatsapp_demo: () => (
+      <WhatsAppDemoSection brandColor={primaryColor} />
     ),
     features: () => isSectionVisible('features') && (
       <FeaturesSection
