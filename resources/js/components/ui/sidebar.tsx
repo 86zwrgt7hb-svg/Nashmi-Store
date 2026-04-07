@@ -225,7 +225,6 @@ function Sidebar({
             ? "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))]"
             : "group-data-[collapsible=icon]:w-(--sidebar-width-icon)"
         )}
-        style={{ display: 'none' }}
       />
       <div
         className={cn(
@@ -310,7 +309,7 @@ function SidebarInset({ className, ...props }: React.ComponentProps<"main">) {
       data-slot="sidebar-inset"
       className={cn(
         "bg-background relative flex min-h-svh flex-1 flex-col overflow-x-hidden",
-        "peer-data-[side=left]:pl-[var(--sidebar-width)] peer-data-[side=right]:pr-[var(--sidebar-width)] rtl:peer-data-[side=right]:pr-[var(--sidebar-width)] rtl:peer-data-[side=right]:pl-0 rtl:peer-data-[side=left]:pl-0",
+        "peer-data-[side=left]:pl-[var(--sidebar-width)] peer-data-[side=right]:pr-[var(--sidebar-width)]",
         "peer-data-[collapsible=icon]:peer-data-[side=left]:pl-[var(--sidebar-width-icon)] peer-data-[collapsible=icon]:peer-data-[side=right]:pr-[var(--sidebar-width-icon)]",
         "peer-data-[collapsible=offcanvas]:peer-data-[side=left]:pl-0 peer-data-[collapsible=offcanvas]:peer-data-[side=right]:pr-0",
         "peer-data-[variant=inset]:min-h-[calc(100svh-(--spacing(4)))] md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:peer-data-[side=left]:ml-0 md:peer-data-[variant=inset]:peer-data-[side=right]:mr-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow-sm md:peer-data-[variant=inset]:peer-data-[state=collapsed]:peer-data-[side=left]:ml-0 md:peer-data-[variant=inset]:peer-data-[state=collapsed]:peer-data-[side=right]:mr-0",
