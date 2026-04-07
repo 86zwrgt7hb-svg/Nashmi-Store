@@ -55,7 +55,7 @@ class ReviewController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'store_slug' => 'required|string',
+            'store_slug' => 'nullable|string',
             'product_id' => 'required|integer',
             'customer_name' => 'required|string|max:255',
             'customer_email' => 'nullable|email|max:255',
@@ -79,7 +79,7 @@ class ReviewController extends Controller
         $isVerifiedPurchase = false;
         $customerId = null;
 
-        if ($validated['customer_email']) {
+        if (!empty($validated['customer_email'])) {
             $customer = \App\Models\Customer::where('email', $validated['customer_email'])
                 ->where('store_id', $store->id)
                 ->first();

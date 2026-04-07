@@ -6,6 +6,7 @@ import { toast } from '@/components/custom-toast';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { X, Plus, Minus, ShoppingBag } from 'lucide-react';
 import { log } from 'console';
+import { ReviewModal } from '../../shared/components/ReviewModal';
 
 interface Product {
   id: string;
@@ -42,6 +43,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   onAddToCart
 }) => {
   const [selectedVariants, setSelectedVariants] = React.useState<{ [key: string]: string }>({});
+  const [showReviewModal, setShowReviewModal] = useState(false);
   const { getLocalizedField, isArabic } = useStoreLanguage();
   const productName = getLocalizedField(product, 'name');
   const productDescription = getLocalizedField(product, 'description');
@@ -277,6 +279,14 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 
         </div>
       </div>
+
+      {showReviewModal && (
+        <ReviewModal
+          productId={product.id}
+          productName={productName || product.name}
+          onClose={() => setShowReviewModal(false)}
+        />
+      )}
     </div>
   );
 };

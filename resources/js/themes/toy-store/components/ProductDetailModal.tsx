@@ -4,6 +4,7 @@ import { X, Plus, Minus } from 'lucide-react';
 import { getImageUrl } from '../../../utils/image-helper';
 import { formatCurrency } from '../../../utils/currency-formatter';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { ReviewModal } from '../../shared/components/ReviewModal';
 
 interface Product {
   id: string;
@@ -40,6 +41,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   onAddToCart
 }) => {
   const [quantity, setQuantity] = useState(1);
+  const [showReviewModal, setShowReviewModal] = useState(false);
   const [activeTab, setActiveTab] = useState('details');
   const [selectedVariants, setSelectedVariants] = useState<{[key: string]: string}>({});
   const { getLocalizedField, isArabic } = useStoreLanguage();
@@ -364,6 +366,14 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 
         </div>
       </div>
+
+      {showReviewModal && (
+        <ReviewModal
+          productId={product.id}
+          productName={productName || product.name}
+          onClose={() => setShowReviewModal(false)}
+        />
+      )}
     </div>
   );
 };
