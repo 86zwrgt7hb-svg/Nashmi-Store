@@ -41,7 +41,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   onAddToCart
 }) => {
   const [selectedVariants, setSelectedVariants] = React.useState<{[key: string]: string}>({});
-  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [showReviewModal, setShowReviewModal] = React.useState(false);
   const { getLocalizedField, isArabic } = useStoreLanguage();
   const productName = getLocalizedField(product, 'name');
   const productDescription = getLocalizedField(product, 'description');
