@@ -4,7 +4,6 @@ import { X, Plus, Minus } from 'lucide-react';
 import { getImageUrl } from '../../../utils/image-helper';
 import { formatCurrency } from '../../../utils/currency-formatter';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ProductReviews } from '../../shared/components/ProductReviews';
 
 interface Product {
   id: string;
@@ -363,8 +362,6 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             </div>
           </div>
 
-                {/* Product Reviews Section */}
-                <ProductReviews productId={product.id} storeSlug={(window as any).page?.props?.storeSlug || ''} />
         </div>
       </div>
     </div>

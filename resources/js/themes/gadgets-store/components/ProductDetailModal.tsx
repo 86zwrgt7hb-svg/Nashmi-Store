@@ -4,7 +4,6 @@ import { formatCurrency } from '../../../utils/currency-formatter';
 import { toast } from '@/components/custom-toast';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useStoreLanguage } from '../../shared/StoreLanguageContext';
-import { ProductReviews } from '../../shared/components/ProductReviews';
 
 interface Product {
   id: string;
@@ -250,8 +249,6 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             </div>
           </div>
 
-                {/* Product Reviews Section */}
-                <ProductReviews productId={product.id} storeSlug={(window as any).page?.props?.storeSlug || ''} />
         </div>
       </div>
     </div>
