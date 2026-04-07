@@ -214,7 +214,7 @@ export default function Products() {
                   )}
                   {products.map((product: any) => (
                     <div key={product.id} className={`flex items-center justify-between p-4 border rounded-lg ${selectedProducts.includes(product.id) ? 'border-primary bg-primary/5' : ''}`}>
-                      <div className="flex items-center space-x-4">
+                      <div className="flex items-start gap-3 sm:gap-4">
                         {hasPermission('delete-products') && (
                           <Checkbox
                             checked={selectedProducts.includes(product.id)}
@@ -235,7 +235,7 @@ export default function Products() {
                           )}
                         </div>
                         <div>
-                          <div className="flex items-center space-x-2">
+                          <div className="flex flex-wrap items-center gap-1 sm:gap-2">
                             <h3 className="font-semibold">{product.name}</h3>
                             <Badge variant={product.is_active ? 'default' : 'secondary'}>
                               {product.is_active ? t('Active') : t('Inactive')}
@@ -245,8 +245,8 @@ export default function Products() {
                             )}
                           </div>
                           <p className="text-sm text-muted-foreground">{t('SKU: {{sku}}', { sku: product.sku || '-' })}</p>
-                          <div className="flex items-center space-x-4 mt-1">
-                            <div className="flex items-center space-x-2">
+                          <div className="flex flex-wrap items-center gap-2 sm:gap-4 mt-1">
+                            <div className="flex flex-wrap items-center gap-1 sm:gap-2">
                               <span className="text-sm font-medium">{formatCurrency(product.sale_price || product.price)}</span>
                               {product.sale_price && (
                                 <span className="text-xs line-through text-muted-foreground">{formatCurrency(product.price)}</span>
@@ -257,7 +257,7 @@ export default function Products() {
                           </div>
                         </div>
                       </div>
-                      <div className="flex items-center space-x-2">
+                      <div className="flex flex-wrap items-center gap-1 sm:gap-2">
                         {hasPermission('view-products') && (
                           <Button variant="ghost" size="sm" onClick={() => handleActionClick('view', 'view-products', product.id)}>
                             <Eye className="h-4 w-4" />

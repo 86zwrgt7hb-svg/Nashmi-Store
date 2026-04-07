@@ -81,7 +81,7 @@ export function StoreSwitcher({
           role="combobox"
           aria-expanded={open}
           aria-label={t('Select a store')}
-          className={cn("w-[180px] justify-between font-medium", className)}
+          className={cn("w-[120px] sm:w-[180px] justify-between font-medium text-xs sm:text-sm", className)}
           disabled={isLoading}
         >
           {isLoading ? (
