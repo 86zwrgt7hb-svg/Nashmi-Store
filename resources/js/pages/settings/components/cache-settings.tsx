@@ -41,7 +41,7 @@ export default function CacheSettings({ cacheSize = '0.00' }: CacheSettingsProps
             {t("This is a page meant for more advanced users, simply ignore it if you don't understand what cache is.")}
           </p>
         </div>
-        <div className="flex items-center justify-between p-4 border rounded-lg">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 border rounded-lg gap-3">
           <div className="flex items-center space-x-3">
             <HardDrive className="h-5 w-5 text-muted-foreground" />
             <div>

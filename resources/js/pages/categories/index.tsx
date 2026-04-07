@@ -203,8 +203,8 @@ export default function Categories() {
                     </div>
                   )}
                   {categories.map((category: any) => (
-                    <div key={category.id} className={`flex items-center justify-between p-4 border rounded-lg ${selectedCategories.includes(category.id) ? 'border-primary bg-primary/5' : ''}`}>
-                      <div className="flex items-center space-x-4">
+                    <div key={category.id} className={`flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 border rounded-lg gap-3 ${selectedCategories.includes(category.id) ? 'border-primary bg-primary/5' : ''}`}>
+                      <div className="flex items-start gap-3 sm:gap-4">
                         {hasPermission('delete-categories') && (
                           <Checkbox
                             checked={selectedCategories.includes(category.id)}
@@ -232,7 +232,7 @@ export default function Categories() {
                             </Badge>
                           </div>
                           <p className="text-sm text-muted-foreground">/{category.slug}</p>
-                          <div className="flex items-center space-x-4 mt-1">
+                          <div className="flex items-start gap-3 sm:gap-4 mt-1">
                             <span className="text-xs text-muted-foreground">
                               {t('{{count}} products', { count: category.products_count || 0 })}
                             </span>

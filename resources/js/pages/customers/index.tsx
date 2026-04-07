@@ -143,8 +143,8 @@ export default function Customers() {
                 ) : (
                   <div className="space-y-4">
                     {customers.map((customer) => (
-                      <div key={customer.id} className="flex items-center justify-between p-4 border rounded-lg">
-                        <div className="flex items-center space-x-4">
+                      <div key={customer.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 border rounded-lg gap-3">
+                        <div className="flex items-start gap-3 sm:gap-4">
                           <Avatar className="h-12 w-12">
                             <AvatarImage src={customer.avatar ? getImageUrl(customer.avatar) : ''} alt={customer.full_name} />
                             <AvatarFallback>{customer.initials}</AvatarFallback>
@@ -166,7 +166,7 @@ export default function Customers() {
                                 </>
                               )}
                             </div>
-                            <div className="flex items-center space-x-4 mt-1">
+                            <div className="flex items-start gap-3 sm:gap-4 mt-1">
                               <span className="text-xs text-muted-foreground">{t('{{count}} orders', { count: customer.total_orders })}</span>
                               <span className="text-xs text-muted-foreground">{t('{{amount}} spent', { amount: formatCurrency(customer.total_spent || 0) })}</span>
                               <span className="text-xs text-muted-foreground">{t('Joined {{date}}', { date: new Date(customer.created_at).toLocaleDateString() })}</span>

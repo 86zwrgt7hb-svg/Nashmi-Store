@@ -160,8 +160,8 @@ export default function Shipping() {
                 ) : (
                   <div className="space-y-4">
                     {shippings.map((shipping) => (
-                      <div key={shipping.id} className="flex items-center justify-between p-4 border rounded-lg">
-                        <div className="flex items-center space-x-4">
+                      <div key={shipping.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 border rounded-lg gap-3">
+                        <div className="flex items-start gap-3 sm:gap-4">
                           <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
                             <Truck className="h-6 w-6 text-primary" />
                           </div>
@@ -173,7 +173,7 @@ export default function Shipping() {
                               </Badge>
                             </div>
                             <p className="text-sm text-muted-foreground">{shipping.type.replace('_', ' ').charAt(0).toUpperCase() + shipping.type.replace('_', ' ').slice(1)} • {shipping.zone_type || t('Any')}</p>
-                            <div className="flex items-center space-x-4 mt-1">
+                            <div className="flex items-start gap-3 sm:gap-4 mt-1">
                               <span className="text-xs text-muted-foreground">
                                 {t('Cost')}: {shipping.type === 'free_shipping' ? t('Free') : formatCurrency(shipping.cost)}
                               </span>

@@ -213,7 +213,7 @@ export default function Products() {
                     </div>
                   )}
                   {products.map((product: any) => (
-                    <div key={product.id} className={`flex items-center justify-between p-4 border rounded-lg ${selectedProducts.includes(product.id) ? 'border-primary bg-primary/5' : ''}`}>
+                    <div key={product.id} className={`flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 border rounded-lg gap-3 ${selectedProducts.includes(product.id) ? 'border-primary bg-primary/5' : ''}`}>
                       <div className="flex items-start gap-3 sm:gap-4">
                         {hasPermission('delete-products') && (
                           <Checkbox

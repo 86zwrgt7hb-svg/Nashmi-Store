@@ -148,8 +148,8 @@ export default function Tax() {
                 </div>
               ) : (
                 taxes.map((tax: any) => (
-                  <div key={tax.id} className="flex items-center justify-between p-4 border rounded-lg">
-                    <div className="flex items-center space-x-4">
+                  <div key={tax.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 border rounded-lg gap-3">
+                    <div className="flex items-start gap-3 sm:gap-4">
                       <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
                         <Calculator className="h-6 w-6 text-primary" />
                       </div>
@@ -163,7 +163,7 @@ export default function Tax() {
                         <p className="text-sm text-muted-foreground">
                           {tax.type === 'fixed' ? currencySymbol : ''}{tax.rate}{tax.type === 'percentage' ? '%' : ''} - {tax.type === 'percentage' ? t('Percentage') : t('Fixed Amount')}
                         </p>
-                        {/* <div className="flex items-center space-x-4 mt-1">
+                        {/* <div className="flex items-start gap-3 sm:gap-4 mt-1">
                           <span className="text-xs text-muted-foreground">
                             {tax.region ? t('Region: {{region}}', { region: tax.region }) : t('Global')}
                           </span>

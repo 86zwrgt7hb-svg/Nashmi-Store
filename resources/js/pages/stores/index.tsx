@@ -162,8 +162,8 @@ export default function StoreManagement({ stores = [], storeStats = {} }) {
             ) : (
               <div className="space-y-4">
               {stores.map((store) => (
-                <div key={store.id} className="flex items-center justify-between p-4 border rounded-lg">
-                  <div className="flex items-center space-x-4">
+                <div key={store.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 border rounded-lg gap-3">
+                  <div className="flex items-start gap-3 sm:gap-4">
                     <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
                       <Building2 className="h-6 w-6 text-primary" />
                     </div>
@@ -177,7 +177,7 @@ export default function StoreManagement({ stores = [], storeStats = {} }) {
                       <p className="text-sm text-muted-foreground">
                         {store.custom_domain || store.custom_subdomain || t('No domain set')}
                       </p>
-                      <div className="flex items-center space-x-4 mt-1">
+                      <div className="flex items-start gap-3 sm:gap-4 mt-1">
                         <span className="text-xs text-muted-foreground">{t('Theme: {{theme}}', { theme: store.theme })}</span>
                         <span className="text-xs text-muted-foreground">{t('Created: {{date}}', { date: new Date(store.created_at).toLocaleDateString() })}</span>
                         <span className="text-xs text-muted-foreground">{t('{{orders}} orders', { orders: store.orders_count || 0 })}</span>

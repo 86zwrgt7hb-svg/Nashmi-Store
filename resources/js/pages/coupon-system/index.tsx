@@ -174,8 +174,8 @@ export default function CouponSystem() {
                 </div>
               ) : (
                 coupons.data.map((coupon: any) => (
-                  <div key={coupon.id} className="flex items-center justify-between p-4 border rounded-lg">
-                    <div className="flex items-center space-x-4">
+                  <div key={coupon.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 border rounded-lg gap-3">
+                    <div className="flex items-start gap-3 sm:gap-4">
                       <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
                         <Percent className="h-6 w-6 text-primary" />
                       </div>
@@ -192,7 +192,7 @@ export default function CouponSystem() {
                             <Copy className="h-3 w-3" />
                           </Button>
                         </div>
-                        <div className="flex items-center space-x-4 mt-1">
+                        <div className="flex items-start gap-3 sm:gap-4 mt-1">
                           <span className="text-xs text-muted-foreground">
                             {coupon.type === 'percentage' ? t('Percentage') : t('Fixed')}: 
                             {coupon.type === 'percentage' ? `${coupon.discount_amount}%` : formatCurrency(coupon.discount_amount)}
