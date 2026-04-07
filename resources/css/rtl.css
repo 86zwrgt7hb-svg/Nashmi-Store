@@ -75,17 +75,17 @@ html[dir="rtl"] .group-has-data-[sidebar=menu-action]/menu-item:pr-8 {
    but SidebarInset uses physical padding (pl/pr) which does not auto-flip.
    We need to swap the padding direction for the main content area. */
 
-/* Fix: When sidebar is on the "right" (which becomes LEFT in RTL), 
-   swap padding-right to padding-left */
+/* Fix: When sidebar is on the "right" in RTL mode,
+   the sidebar stays at right:0 (physical right), so content needs padding-right */
 html[dir="rtl"] [data-slot="sidebar-inset"] {
-  padding-right: 0 !important;
-  padding-left: var(--sidebar-width) !important;
+  padding-left: 0 !important;
+  padding-right: var(--sidebar-width) !important;
 }
 
 /* Fix for collapsed sidebar in RTL */
 html[dir="rtl"] [data-state="collapsed"] ~ [data-slot="sidebar-inset"] {
-  padding-left: var(--sidebar-width-icon) !important;
-  padding-right: 0 !important;
+  padding-right: var(--sidebar-width-icon) !important;
+  padding-left: 0 !important;
 }
 
 /* Fix for offcanvas (mobile) sidebar in RTL - no padding needed */
