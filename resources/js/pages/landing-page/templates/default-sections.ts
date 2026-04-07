@@ -215,10 +215,7 @@ export const defaultLandingPageSections = {
         ]
       },
       social_links: [
-        { name: 'Facebook', icon: 'Facebook', href: '#' },
-        { name: 'Twitter', icon: 'Twitter', href: '#' },
-        { name: 'LinkedIn', icon: 'Linkedin', href: '#' },
-        { name: 'Instagram', icon: 'Instagram', href: '#' }
+        { name: 'Facebook', icon: 'Facebook', href: 'https://www.facebook.com/share/189Q9wgP8w/?mibextid=wwXIfr' }
       ],
       section_titles: {
         product: 'Product',

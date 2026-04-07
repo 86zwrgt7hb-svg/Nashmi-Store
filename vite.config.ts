@@ -51,6 +51,16 @@ export default defineConfig({
         },
     },
     build: {
-        chunkSizeWarningLimit: 1000,
+        chunkSizeWarningLimit: 500,
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    'vendor-react': ['react', 'react-dom'],
+                    'vendor-ui': ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-select', '@radix-ui/react-tabs', '@radix-ui/react-tooltip'],
+                    'vendor-charts': ['recharts'],
+                    'vendor-utils': ['lodash', 'date-fns', 'clsx'],
+                },
+            },
+        },
     }
 });

@@ -1,1 +1,0 @@
-import{ah as i}from"./app-C4s3hl53.js";const o=(t,r)=>i.isInitialized?i.t(t,r):typeof t=="string"?t:String(t);export{o as t};

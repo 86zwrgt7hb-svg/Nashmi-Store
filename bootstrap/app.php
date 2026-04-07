@@ -34,6 +34,9 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\CheckStoreSuspension::class,
         ]);
         
+        $middleware->api(prepend: [
+            \Illuminate\Routing\Middleware\ThrottleRequests::class.":"."api",
+        ]);
         $middleware->api(append: [
             \App\Http\Middleware\DomainResolver::class,
         ]);
