@@ -108,6 +108,14 @@ Route::prefix('api/locations')->group(function () {
 });
 
 // PWA routes (outside middleware to avoid conflicts)
+
+// Review API routes (public - store frontend)
+Route::prefix('api/reviews')->name('api.reviews.')->group(function () {
+    Route::get('/product/{productId}', [\App\Http\Controllers\Api\ReviewController::class, 'getProductReviews'])->name('product');
+    Route::post('/', [\App\Http\Controllers\Api\ReviewController::class, 'store'])->name('store');
+    Route::get('/store/{storeSlug}', [\App\Http\Controllers\Api\ReviewController::class, 'getStoreRating'])->name('store-rating');
+});
+
 Route::get('store/{storeSlug}/manifest.json', [\App\Http\Controllers\PWAController::class, 'manifest'])->name('store.pwa.manifest');
 Route::get('store/{storeSlug}/service-worker', [\App\Http\Controllers\PWAController::class, 'serviceWorker'])->name('store.pwa.sw');
 

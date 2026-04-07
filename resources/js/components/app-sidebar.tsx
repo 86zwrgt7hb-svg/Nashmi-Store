@@ -224,6 +224,14 @@ export function AppSidebar() {
 
 
 
+        // Reviews Management
+        if (hasPermission('manage-orders')) {
+            items.push({
+                title: t('Reviews & Ratings'),
+                href: route('reviews.index'),
+                icon: Star,
+            });
+        }
         // Coupon System
         if (hasPermission('manage-coupon-system')) {
             items.push({
@@ -345,6 +353,12 @@ export function AppSidebar() {
 
 
 
+        // Notification Settings
+        items.push({
+            title: t('Notification Settings'),
+            href: route('notification-settings.index'),
+            icon: MessageSquare,
+        });
         // Settings - Only show if user has settings permission
         if (hasPermission('manage-settings')) {
             items.push({
