@@ -531,4 +531,77 @@ a:hover,
 .dark .demo-store-preview {
   background: #1f2937;
   border-color: #374151;
+}/* ============================================= */
+/* Mobile Responsiveness Fixes                   */
+/* ============================================= */
+
+/* Fix dashboard cards on small screens */
+@media (max-width: 640px) {
+  /* Reduce card padding on mobile */
+  .rounded-xl.border.p-6 {
+    padding: 0.75rem;
+  }
+  
+  /* Fix page header overflow */
+  .flex.items-center.justify-between h1 {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+  
+  /* Fix order/product list items - stack vertically */
+  .border.rounded-lg .flex.items-center.justify-between {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  /* Fix action buttons on mobile - align right */
+  .border.rounded-lg .flex.items-center.space-x-2:last-child {
+    align-self: flex-end;
+  }
+  
+  /* Fix stat cards grid gap */
+  .grid.gap-4 {
+    gap: 0.5rem;
+  }
+  
+  /* Fix breadcrumbs overflow */
+  nav[aria-label="breadcrumb"] {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  /* Fix QR code card centering */
+  .flex.flex-col.items-center.space-y-4 {
+    padding: 0.5rem;
+  }
+  
+  /* Ensure tables scroll horizontally on mobile */
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Fix dialog/modal on mobile */
+  .fixed.inset-0 .bg-white.rounded-lg {
+    margin: 1rem;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+}
+
+/* Small mobile (< 375px) */
+@media (max-width: 375px) {
+  /* Further reduce padding */
+  .p-4 {
+    padding: 0.5rem;
+  }
+  
+  /* Hide less important text */
+  .text-xs.text-muted-foreground {
+    font-size: 0.65rem;
+  }
 }

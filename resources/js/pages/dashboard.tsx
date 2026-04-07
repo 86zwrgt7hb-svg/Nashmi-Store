@@ -402,7 +402,7 @@ export default function Dashboard({ dashboardData, currentStore, storeUrl, isSup
               <CardContent>
                 <div className="space-y-4">
                   {dashboardData.recentOrders.map((order, index) => (
-                    <div key={index} className="flex items-center justify-between">
+                    <div key={index} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
                       <div>
                         <Link 
                           href={route('orders.show', order.id)} 
@@ -432,7 +432,7 @@ export default function Dashboard({ dashboardData, currentStore, storeUrl, isSup
               <CardContent>
                 <div className="space-y-4">
                   {dashboardData.topProducts?.map((product, index) => (
-                    <div key={index} className="flex items-center justify-between">
+                    <div key={index} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
                       <div>
                         <Link 
                           href={route('products.show', product.id)} 
