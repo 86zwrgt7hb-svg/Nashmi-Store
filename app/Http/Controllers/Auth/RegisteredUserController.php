@@ -99,7 +99,7 @@ class RegisteredUserController extends Controller
             'is_active' => 1,
             'is_enable_login' => 1,
             'created_by' => 0,
-            'plan_is_active' => 0,
+            'plan_is_active' => 1,
         ];
         
         // Handle referral code
