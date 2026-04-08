@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Store extends BaseModel
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $fillable = [
         'name',
@@ -80,11 +79,6 @@ class Store extends BaseModel
         if ($this->enable_custom_subdomain && !empty($this->custom_subdomain)) {
             $baseDomain = $this->getBaseDomain();
             if ($baseDomain) {
-                // Add .free prefix for free plan users
-                $user = $this->user;
-                if ($user && $user->isOnFreePlan()) {
-                    return $this->getProtocol() . $this->custom_subdomain . '.free.' . $baseDomain;
-                }
                 return $this->getProtocol() . $this->custom_subdomain . '.' . $baseDomain;
             }
         }
@@ -156,12 +150,7 @@ class Store extends BaseModel
         }
         
         if ($this->enable_custom_subdomain && str_contains($host, '.')) {
-            $parts = explode('.', $host);
-            $subdomain = $parts[0];
-            // Handle *.free.urdun-tech.com pattern
-            if (count($parts) >= 4 && $parts[1] === 'free') {
-                $subdomain = $parts[0];
-            }
+            $subdomain = explode('.', $host)[0];
             return $this->custom_subdomain === $subdomain;
         }
         

@@ -19,6 +19,7 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error('React ErrorBoundary caught error:', error.message);
     // Auto-reload the page after a brief delay
     setTimeout(() => {
       window.location.reload();

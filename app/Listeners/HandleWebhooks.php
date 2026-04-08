@@ -8,13 +8,9 @@ use App\Events\OrderStatusChanged;
 use App\Events\ProductCreated;
 use App\Events\UserCreated;
 use App\Services\WebhookService;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Bus\Queueable;
 
-class HandleWebhooks implements ShouldQueue
+class HandleWebhooks
 {
-    use Queueable;
-
     private static array $processed = [];
     
     public function __construct(private WebhookService $webhookService)

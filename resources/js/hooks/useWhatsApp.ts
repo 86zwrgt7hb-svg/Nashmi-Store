@@ -52,6 +52,7 @@ export function useWhatsApp(storeId?: number): UseWhatsAppReturn {
         }
       } catch (err) {
         setError('Failed to load WhatsApp configuration');
+        console.error('WhatsApp config error:', err);
       } finally {
         setIsLoading(false);
       }

@@ -74,6 +74,7 @@ export function SSPayPaymentForm({
         throw new Error(data.error || t('Payment creation failed'));
       }
     } catch (err) {
+      console.error('SSPay payment error:', err);
       setError(err instanceof Error ? err.message : t('Payment initialization failed'));
       setIsLoading(false);
     }

@@ -5,7 +5,6 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import { useFavicon } from '@/hooks/use-favicon';
 import { getImageUrl } from '@/utils/image-helper';
-import SafeHTML from '../../components/SafeHTML';
 
 interface CustomPage {
   id: number;
@@ -172,7 +171,10 @@ export default function CustomPage() {
           <div className="container mx-auto px-4 py-12">
             <div className="max-w-4xl mx-auto">
               <h1 className="text-4xl font-bold mb-8 text-gray-900">{t(page.title)}</h1>
-              <SafeHTML html={localizedContent} className="custom-page-content prose prose-lg max-w-none" />
+              <div
+                className="custom-page-content prose prose-lg max-w-none"
+                dangerouslySetInnerHTML={{ __html: localizedContent }}
+              />
             </div>
           </div>
         </main>

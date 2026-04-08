@@ -11,7 +11,6 @@ import { toast } from '@/components/custom-toast';
 import { useTranslation } from 'react-i18next';
 import { Badge } from '@/components/ui/badge';
 import { CrudDeleteModal } from '@/components/CrudDeleteModal';
-import SafeHTML from '../../../components/SafeHTML';
 
 export default function NewsletterSubscribers() {
   const { t } = useTranslation();
@@ -438,7 +437,7 @@ export default function NewsletterSubscribers() {
                   disabled={!link.url}
                   onClick={() => link.url && router.get(link.url)}
                 >
-                  {isTextLink ? label : <SafeHTML html={link.label} as="span" />}
+                  {isTextLink ? label : <span dangerouslySetInnerHTML={{ __html: link.label }} />}
                 </Button>
               );
             })}

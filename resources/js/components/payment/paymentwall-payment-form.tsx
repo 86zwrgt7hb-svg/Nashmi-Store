@@ -112,6 +112,7 @@ export function PaymentWallPaymentForm({
           },
           (errors: any) => {
             // Error callback
+            console.error('Payment error:', errors);
             if (errors && errors.length > 0) {
               setError(errors[0].message || t('Payment failed'));
             } else {
@@ -126,6 +127,7 @@ export function PaymentWallPaymentForm({
         throw new Error(data.error || t('Failed to initialize payment form'));
       }
     } catch (err) {
+      console.error('PaymentWall initialization error:', err);
       setError(err instanceof Error ? err.message : t('Payment initialization failed'));
     }
   };

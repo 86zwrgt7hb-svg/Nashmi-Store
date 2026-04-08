@@ -32,6 +32,7 @@ export default function CreateCity() {
         const data = await response.json();
         setStates(Array.isArray(data) ? data : data.states || []);
       } catch (error) {
+        console.error('Failed to load states:', error);
         setStates([]);
       } finally {
         setLoading(false);

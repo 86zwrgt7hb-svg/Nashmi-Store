@@ -110,6 +110,7 @@ export function ToyyibPayPaymentForm({
       document.body.appendChild(form);
       form.submit();
     } catch (error) {
+      console.error('ToyyibPay payment error:', error);
       toast.error(t('Payment failed. Please try again.'));
       setIsProcessing(false);
     }

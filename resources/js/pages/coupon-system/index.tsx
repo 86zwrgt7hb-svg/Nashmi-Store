@@ -64,6 +64,7 @@ export default function CouponSystem() {
         }
       })
       .catch(error => {
+        console.error('Error toggling status:', error);
       });
   };
   

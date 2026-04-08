@@ -9,7 +9,6 @@ use App\Observers\PlanObserver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,11 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // PERF-01: Enable strict mode in non-production to catch N+1 queries,
-        // mass assignment violations, and accessing missing attributes
-        Model::shouldBeStrict(!$this->app->isProduction());
-
-        // Rate Limiting for API and web routes
+                // Rate Limiting for API and web routes
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });

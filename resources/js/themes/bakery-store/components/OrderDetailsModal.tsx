@@ -25,6 +25,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({ onClose, o
           setOrder(data.order);
         }
       } catch (error) {
+        console.error('Failed to load order details:', error);
       } finally {
         setLoading(false);
       }

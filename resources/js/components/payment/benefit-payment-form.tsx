@@ -64,6 +64,7 @@ export function BenefitPaymentForm({
         throw new Error(data.error || t('Failed to create payment session'));
       }
     } catch (err) {
+      console.error('Benefit payment error:', err);
       setError(err instanceof Error ? err.message : t('Payment initialization failed'));
       setIsLoading(false);
     }

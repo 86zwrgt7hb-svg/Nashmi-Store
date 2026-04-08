@@ -103,6 +103,7 @@ export default function ManageLanguagePage() {
       setSaving(false);
     })
     .catch(error => {
+      console.error('Save error:', error);
       toast.error(t('Failed to update language file'));
       setSaving(false);
     });

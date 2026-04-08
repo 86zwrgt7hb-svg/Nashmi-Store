@@ -52,6 +52,7 @@ export function NavMain({ items = [], position }: { items: NavItem[]; position: 
         try {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(newExpandedItems));
         } catch (e) {
+            console.error('Error saving navigation state:', e);
         }
     }, [page.url]); // Re-run when URL changes
     
@@ -85,6 +86,7 @@ export function NavMain({ items = [], position }: { items: NavItem[]; position: 
         try {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(newExpandedItems));
         } catch (e) {
+            console.error('Error saving navigation state:', e);
         }
     };
     

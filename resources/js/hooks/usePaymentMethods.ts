@@ -29,6 +29,7 @@ export function usePaymentMethods() {
       setPaymentMethods(response.data);
     } catch (err: any) {
       setError(err.response?.data?.message || 'Failed to fetch payment methods');
+      console.error('Error fetching payment methods:', err);
     } finally {
       setLoading(false);
     }

@@ -62,6 +62,7 @@ export function MidtransPaymentForm({
         throw new Error(data.error || t('Payment creation failed'));
       }
     } catch (err) {
+      console.error('Midtrans payment error:', err);
       setError(err instanceof Error ? err.message : t('Payment initialization failed'));
       setIsLoading(false);
     }
@@ -115,6 +116,7 @@ export function MidtransPaymentForm({
         onSuccess();
       },
       onError: (errors) => {
+        console.error('Payment processing error:', errors);
         setError(Object.values(errors).flat().join(', '));
         setIsLoading(false);
       },

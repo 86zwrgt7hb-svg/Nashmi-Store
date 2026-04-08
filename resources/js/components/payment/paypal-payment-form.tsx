@@ -65,6 +65,7 @@ export function PayPalPaymentForm({
             });
           },
           onError: (err: any) => {
+            console.error('PayPal error:', err);
             if (err.message && err.message.includes('declined')) {
               toast.error(t('Card was declined. Please try a different payment method.'));
             } else {

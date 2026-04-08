@@ -5,7 +5,6 @@ import { formatCurrency } from '../../../utils/currency-formatter';
 import { toast } from '@/components/custom-toast';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ReviewModal } from '../../shared/components/ReviewModal';
-import SafeHTML from '../../../components/SafeHTML';
 
 interface Product {
   id: string;
@@ -209,8 +208,10 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 {product.description && (
                   <div>
                     <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3">About This Item</h3>
-                    <SafeHTML html={productDescription} 
-                      className="text-gray-600 leading-relaxed prose prose-sm max-w-none text-sm md:text-base" />
+                    <div 
+                      className="text-gray-600 leading-relaxed prose prose-sm max-w-none text-sm md:text-base"
+                      dangerouslySetInnerHTML={{ __html: productDescription }} 
+                    />
                   </div>
                 )}
 

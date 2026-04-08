@@ -85,6 +85,7 @@ export function RolePermissionCheckboxGroup({
       
       setSelected(processedPermissions);
     } catch (error) {
+      console.error('Error processing permissions:', error);
       setSelected([]);
     }
   }, [selectedPermissions]);

@@ -45,6 +45,7 @@ export default function PWAServiceWorker({ store }: PWAServiceWorkerProps) {
         criteriaTimeout2 = setTimeout(checkPWACriteria, 1000);
       })
       .catch((error) => {
+        console.error('Service Worker registration failed:', error);
       });
       
     return () => {

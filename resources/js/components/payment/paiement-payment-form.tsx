@@ -74,6 +74,7 @@ export function PaiementPaymentForm({
         throw new Error(data.error || t('Payment creation failed'));
       }
     } catch (err) {
+      console.error('Paiement Pro payment error:', err);
       setError(err instanceof Error ? err.message : t('Payment initialization failed'));
       setIsLoading(false);
     }

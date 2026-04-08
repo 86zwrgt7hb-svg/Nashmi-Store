@@ -4,13 +4,9 @@ namespace App\Listeners;
 
 use App\Services\NotificationService;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Bus\Queueable;
 
-class SendUniversalNotification implements ShouldQueue
+class SendUniversalNotification
 {
-    use Queueable;
-
     public function handleOrderCreated($event)
     {
         $order = $event->order;

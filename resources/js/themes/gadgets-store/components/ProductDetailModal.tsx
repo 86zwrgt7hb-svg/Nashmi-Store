@@ -5,7 +5,6 @@ import { toast } from '@/components/custom-toast';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useStoreLanguage } from '../../shared/StoreLanguageContext';
 import { ReviewModal } from '../../shared/components/ReviewModal';
-import SafeHTML from '../../../components/SafeHTML';
 
 interface Product {
   id: string;
@@ -224,9 +223,10 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 {productDescription && (
                   <div className="pb-3 md:border-b md:border-gray-100">
                     <h4 className={`font-semibold md:text-sm text-gray-900 mb-2 md:mb-1 ${isArabic ? 'text-right' : ''}`}>{isArabic ? 'الوصف' : 'Description'}</h4>
-                    <SafeHTML 
-                      html={productDescription}
+                    <div 
                       className={`text-gray-600 md:text-sm leading-relaxed ${isArabic ? 'text-right' : ''}`}
+                      dir={isArabic ? 'rtl' : 'ltr'}
+                      dangerouslySetInnerHTML={{ __html: productDescription }} 
                     />
                   </div>
                 )}

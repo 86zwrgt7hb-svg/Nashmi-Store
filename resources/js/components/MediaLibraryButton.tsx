@@ -53,6 +53,7 @@ export default function MediaLibraryButton({
       const data = await response.json();
       setMedia(data);
     } catch (error) {
+      console.error('Failed to load media:', error);
       toast.error('Failed to load media');
     } finally {
       setLoading(false);

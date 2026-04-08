@@ -12,7 +12,6 @@ import { Badge } from '@/components/ui/badge';
 import { CrudDeleteModal } from '@/components/CrudDeleteModal';
 import { CrudFormModal } from '@/components/CrudFormModal';
 import { FormField } from '@/types/crud';
-import SafeHTML from '../../components/SafeHTML';
 
 interface City {
   id: number;
@@ -107,6 +106,7 @@ export default function Cities() {
       const data = await response.json();
       setStates(Array.isArray(data) ? data : data.states || []);
     } catch (error) {
+      console.error('Failed to fetch states:', error);
       setStates([]);
     } finally {
       setStatesLoading(false);
@@ -436,7 +436,7 @@ export default function Cities() {
                   disabled={!link.url}
                   onClick={() => link.url && router.get(link.url)}
                 >
-                  {isTextLink ? label : <SafeHTML html={link.label} as="span" />}
+                  {isTextLink ? label : <span dangerouslySetInnerHTML={{ __html: link.label }} />}
                 </Button>
               );
             })}

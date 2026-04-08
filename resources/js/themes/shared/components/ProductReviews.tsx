@@ -43,6 +43,7 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, store
       setReviews(data.reviews?.data || []);
       setStats(data.stats || null);
     } catch (error) {
+      console.error('Failed to fetch reviews:', error);
     } finally {
       setLoading(false);
     }
@@ -63,6 +64,7 @@ export const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, store
         setFormData({ customer_name: '', customer_email: '', rating: 5, comment: '' });
       }
     } catch (error) {
+      console.error('Failed to submit review:', error);
     } finally {
       setSubmitting(false);
     }

@@ -50,6 +50,7 @@ const loadFlutterwaveSDK = (): Promise<void> => {
 
         script.onload = () => resolve();
         script.onerror = () => {
+            console.error('Failed to load Flutterwave SDK');
             reject(new Error('Failed to load Flutterwave SDK'));
         };
 
@@ -158,6 +159,7 @@ export const handleFlutterwavePayment = async (paymentData: FlutterwavePaymentDa
 
     } catch (error: any) {
         showOverlays();
+        console.error('Flutterwave payment execution error:', error);
         toast.error(error.message || 'Payment initiation failed');
         throw error;
     }

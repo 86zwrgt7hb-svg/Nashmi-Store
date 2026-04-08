@@ -6,6 +6,7 @@
 export const generateStoreUrl = (routeName: string, store: any, params: any = {}) => {
     // Use the global route() function
     if (typeof (window as any).route !== 'function') {
+        console.warn('Ziggy route() function not found');
         return '';
     }
 

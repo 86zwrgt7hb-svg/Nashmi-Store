@@ -89,6 +89,7 @@ export default function Recaptcha({ onVerify, onExpired, onError }: RecaptchaPro
           },
         });
       } catch (error) {
+        console.error('ReCaptcha v2 render error:', error);
         if (onError) onError();
       }
     };
@@ -103,10 +104,12 @@ export default function Recaptcha({ onVerify, onExpired, onError }: RecaptchaPro
               onVerify(token);
             })
             .catch((error: any) => {
+              console.error('ReCaptcha v3 execute error:', error);
               if (onError) onError();
             });
         });
       } catch (error) {
+        console.error('ReCaptcha v3 ready error:', error);
         if (onError) onError();
       }
     };
@@ -133,6 +136,7 @@ export default function Recaptcha({ onVerify, onExpired, onError }: RecaptchaPro
       script.async = true;
       script.defer = true;
       script.onerror = () => {
+        console.error('Failed to load ReCaptcha script');
         scriptLoaded = false;
         if (onError) onError();
       };
@@ -149,6 +153,7 @@ export default function Recaptcha({ onVerify, onExpired, onError }: RecaptchaPro
         }
         widgetId.current = null;
       } catch (error) {
+        console.error('ReCaptcha cleanup error:', error);
       }
     };
   }, [recaptchaEnabled, recaptchaSiteKey, recaptchaVersion]);

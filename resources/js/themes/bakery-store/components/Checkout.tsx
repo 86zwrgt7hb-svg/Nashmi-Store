@@ -5,7 +5,6 @@ import { CheckoutProvider, useCheckoutContext } from '../../../contexts/Checkout
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { X, ShoppingBag, Minus, Plus, Trash2, CreditCard, Truck } from 'lucide-react';
 import { useStoreLanguage } from '../../shared/StoreLanguageContext';
-import SafeHTML from '../../../components/SafeHTML';
 
 interface Product {
   id: string;
@@ -524,7 +523,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
                             />
                             <div className="w-6 h-6 sm:w-8 sm:h-8 text-stone-700 flex-shrink-0">
                               {method.icon ? (
-                                <SafeHTML html={method.icon} />
+                                <div dangerouslySetInnerHTML={{ __html: method.icon }} />
                               ) : (
                                 <CreditCard className="w-6 h-6 sm:w-8 sm:h-8" />
                               )}

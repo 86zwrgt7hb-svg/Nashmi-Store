@@ -66,6 +66,7 @@ export function IyzipayPaymentForm({
         throw new Error(data.error || t('Failed to create payment form'));
       }
     } catch (err) {
+      console.error('Iyzipay payment error:', err);
       setError(err instanceof Error ? err.message : t('Payment initialization failed'));
     } finally {
       setIsLoading(false);

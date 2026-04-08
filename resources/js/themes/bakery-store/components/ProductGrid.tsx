@@ -4,7 +4,6 @@ import { Plus, Eye } from 'lucide-react';
 import { getImageUrl } from '../../../utils/image-helper';
 import { formatCurrency } from '../../../utils/currency-formatter';
 import { toast } from '@/components/custom-toast';
-import SafeHTML from '../../../components/SafeHTML';
 
 interface Product {
   id: string;
@@ -115,8 +114,10 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
 
                   {/* Description */}
                   {product.description && (
-                    <SafeHTML html={product.description} 
-                      className="text-stone-600 text-xs mb-2 line-clamp-1" />
+                    <div 
+                      className="text-stone-600 text-xs mb-2 line-clamp-1"
+                      dangerouslySetInnerHTML={{ __html: product.description }}
+                    />
                   )}
 
                   {/* Price */}

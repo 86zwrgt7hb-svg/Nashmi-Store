@@ -46,6 +46,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ productId, productName
       setReviews(data.reviews?.data || data.reviews || []);
       setStats(data.stats || null);
     } catch (error) {
+      console.error('Failed to fetch reviews:', error);
     } finally {
       setLoading(false);
     }
@@ -84,6 +85,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ productId, productName
         alert(data.error || data.message || (isArabic ? 'حدث خطأ' : 'An error occurred'));
       }
     } catch (error) {
+      console.error('Failed to submit review:', error);
       alert(isArabic ? 'حدث خطأ في الاتصال' : 'Connection error');
     } finally {
       setSubmitting(false);

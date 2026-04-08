@@ -71,6 +71,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children, storeId })
         setCartItems(data.items);
       }
     } catch (error) {
+      console.error('Failed to load cart:', error);
       setCartError('Failed to load cart. Please try again.');
     }
   };
@@ -108,6 +109,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children, storeId })
       toast.success(data.message || 'Product added to cart!');
       
     } catch (error) {
+      console.error('Failed to add to cart:', error);
       toast.error('Failed to add product to cart. Please try again.');
     } finally {
       setCartLoading(false);
@@ -130,6 +132,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children, storeId })
         await loadCart();
       }
     } catch (error) {
+      console.error('Failed to remove from cart:', error);
     } finally {
       setCartLoading(false);
     }
@@ -182,6 +185,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children, storeId })
       
       await loadCart();
     } catch (error) {
+      console.error('Failed to update cart:', error);
       toast.error('Failed to update quantity. Please try again.');
     } finally {
       setCartLoading(false);
@@ -213,6 +217,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children, storeId })
         await loadCart();
       }
     } catch (error) {
+      console.error('Failed to sync cart:', error);
     }
   };
 

@@ -4,12 +4,8 @@ use App\Events\UserCreated;
 use App\Services\EmailTemplateService;
 use App\Models\User;
 use Exception;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Bus\Queueable;
-class SendUserCreatedEmail implements ShouldQueue
+class SendUserCreatedEmail
 {
-    use Queueable;
-
     private static array $processedUsers = [];
     
     public function __construct(

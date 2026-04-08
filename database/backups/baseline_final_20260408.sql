@@ -23,8 +23,8 @@ DROP TABLE IF EXISTS `cache`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cache` (
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int NOT NULL,
   PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -47,8 +47,8 @@ DROP TABLE IF EXISTS `cache_locks`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cache_locks` (
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `owner` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `owner` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int NOT NULL,
   PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -74,7 +74,7 @@ CREATE TABLE `cart_items` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint unsigned NOT NULL,
   `customer_id` bigint unsigned DEFAULT NULL,
-  `session_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `session_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `product_id` bigint unsigned NOT NULL,
   `quantity` int NOT NULL DEFAULT '1',
   `variants` json DEFAULT NULL,
@@ -84,12 +84,12 @@ CREATE TABLE `cart_items` (
   PRIMARY KEY (`id`),
   KEY `cart_items_customer_id_foreign` (`customer_id`),
   KEY `cart_items_product_id_foreign` (`product_id`),
-  KEY `cart_items_store_id_customer_id_index` (`store_id`,`customer_id`),
+  KEY `cart_items_stoRESEND_KEY_PLACEHOLDER` (`store_id`,`customer_id`),
   KEY `cart_items_store_id_session_id_index` (`store_id`,`session_id`),
   CONSTRAINT `cart_items_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE,
   CONSTRAINT `cart_items_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
   CONSTRAINT `cart_items_store_id_foreign` FOREIGN KEY (`store_id`) REFERENCES `stores` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +98,7 @@ CREATE TABLE `cart_items` (
 
 LOCK TABLES `cart_items` WRITE;
 /*!40000 ALTER TABLE `cart_items` DISABLE KEYS */;
-INSERT INTO `cart_items` VALUES (1,1,NULL,'MX2hXBjPcVhdhIhP1BgMBOhhl2ABXO4Jo5j5CoZ6',2,1,'\"null\"',19.99,'2026-04-02 12:16:41','2026-04-02 12:16:41'),(2,1,NULL,'8oowM18CgnWJuaw1XTrsvkzAoDjY32Fq48Zg7kJ8',1,1,'\"null\"',24.99,'2026-04-02 13:16:10','2026-04-02 13:16:10'),(3,1,NULL,'VBNmp2iPlzLgQHYkhcKpLCZnYZzIvjN2KqXjXFwO',1,3,'\"null\"',24.99,'2026-04-02 13:47:19','2026-04-02 14:19:56'),(4,1,NULL,'mMqzusY5a8uNVsdgzzUR4TkHbATFrXBpM3pkP8SJ',1,1,'\"null\"',24.99,'2026-04-02 14:19:40','2026-04-02 14:19:40'),(5,1,NULL,'7ER4OXIC7Qk8CxFQyXZn7xIxj0E0tNsJdBoo5OiD',1,1,'\"null\"',24.99,'2026-04-04 03:25:41','2026-04-04 03:25:41'),(6,1,NULL,'nUZk8Hv9j8RoL1qL4VntE4bJSllvtPkdGyj7LMBH',1,1,'\"null\"',24.99,'2026-04-04 03:34:48','2026-04-04 03:34:48'),(7,1,NULL,'OYwaZjWLz80hpfgZB3vJWxElrm58ppnYUXbXqt5T',1,6,'\"null\"',24.99,'2026-04-04 14:54:14','2026-04-04 16:56:14'),(8,1,NULL,'pE1fUZJ2f9yVaFeXrJriuBeSMFbpEoaJgW40Y8BG',1,7,'\"null\"',24.99,'2026-04-05 00:02:49','2026-04-05 01:42:58'),(9,1,NULL,'GebpOqYam8ovZSPER7QMWFdgjuahKptYQ97zl0F2',1,1,'\"null\"',24.99,'2026-04-05 00:13:20','2026-04-05 00:13:20'),(10,1,NULL,'r88qa0pK5YXOgF6buQZRtzfXts47Zk2V8erFKfhb',1,1,'\"null\"',24.99,'2026-04-05 01:57:09','2026-04-05 01:57:09'),(13,1,NULL,'J73amvzhxJ58BOHXZQe2i7QAtuRBWzKg5cdMhbQG',1,1,'\"null\"',24.99,'2026-04-06 19:37:52','2026-04-06 19:37:52'),(14,1,NULL,'bHKR5zXh8vS0Le50uGa7zmPdlKMrFXVptWGWf8IO',1,1,'\"null\"',24.99,'2026-04-07 22:21:18','2026-04-07 22:21:18');
+INSERT INTO `cart_items` VALUES (1,1,NULL,'MX2hXBjPcVhdhIhP1BgMBOhhl2ABXO4Jo5j5CoZ6',2,1,'\"null\"',19.99,'2026-04-02 12:16:41','2026-04-02 12:16:41'),(2,1,NULL,'8oowM18CgnWJuaw1XTrsvkzAoDjY32Fq48Zg7kJ8',1,1,'\"null\"',24.99,'2026-04-02 13:16:10','2026-04-02 13:16:10'),(3,1,NULL,'VBNmp2iPlzLgQHYkhcKpLCZnYZzIvjN2KqXjXFwO',1,3,'\"null\"',24.99,'2026-04-02 13:47:19','2026-04-02 14:19:56'),(4,1,NULL,'mMqzusY5a8uNVsdgzzUR4TkHbATFrXBpM3pkP8SJ',1,1,'\"null\"',24.99,'2026-04-02 14:19:40','2026-04-02 14:19:40'),(5,1,NULL,'7ER4OXIC7Qk8CxFQyXZn7xIxj0E0tNsJdBoo5OiD',1,1,'\"null\"',24.99,'2026-04-04 03:25:41','2026-04-04 03:25:41'),(6,1,NULL,'nUZk8Hv9j8RoL1qL4VntE4bJSllvtPkdGyj7LMBH',1,1,'\"null\"',24.99,'2026-04-04 03:34:48','2026-04-04 03:34:48'),(7,1,NULL,'OYwaZjWLz80hpfgZB3vJWxElrm58ppnYUXbXqt5T',1,6,'\"null\"',24.99,'2026-04-04 14:54:14','2026-04-04 16:56:14'),(8,1,NULL,'pE1fUZJ2f9yVaFeXrJriuBeSMFbpEoaJgW40Y8BG',1,7,'\"null\"',24.99,'2026-04-05 00:02:49','2026-04-05 01:42:58'),(9,1,NULL,'GebpOqYam8ovZSPER7QMWFdgjuahKptYQ97zl0F2',1,1,'\"null\"',24.99,'2026-04-05 00:13:20','2026-04-05 00:13:20'),(10,1,NULL,'r88qa0pK5YXOgF6buQZRtzfXts47Zk2V8erFKfhb',1,1,'\"null\"',24.99,'2026-04-05 01:57:09','2026-04-05 01:57:09'),(13,1,NULL,'J73amvzhxJ58BOHXZQe2i7QAtuRBWzKg5cdMhbQG',1,1,'\"null\"',24.99,'2026-04-06 19:37:52','2026-04-06 19:37:52'),(14,1,NULL,'bHKR5zXh8vS0Le50uGa7zmPdlKMrFXVptWGWf8IO',1,1,'\"null\"',24.99,'2026-04-07 22:21:18','2026-04-07 22:21:18'),(15,1,NULL,'YTUPGqv7qwd3TEIWbfW5MOVKloUS4diYspiCoxnc',1,1,'\"null\"',24.99,'2026-04-08 18:21:27','2026-04-08 18:21:27'),(16,1,NULL,'4GDTvghywlPazFoJJHIEQ0SuFYFuiASu49tKbC37',1,3,'\"null\"',24.99,'2026-04-08 18:22:25','2026-04-08 19:00:14'),(17,1,NULL,'8QKc8mbYTluJ1sloVC80vgqoE2xPIopXwD4TtwJV',1,1,'\"null\"',24.99,'2026-04-08 19:00:29','2026-04-08 19:00:29');
 /*!40000 ALTER TABLE `cart_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -111,12 +111,12 @@ DROP TABLE IF EXISTS `categories`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `categories` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name_ar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
-  `description_ar` text COLLATE utf8mb4_unicode_ci,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name_ar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `description_ar` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `parent_id` bigint unsigned DEFAULT NULL,
   `store_id` bigint unsigned NOT NULL,
   `sort_order` int NOT NULL DEFAULT '0',
@@ -153,7 +153,7 @@ DROP TABLE IF EXISTS `cities`;
 CREATE TABLE `cities` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `state_id` bigint unsigned NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -182,10 +182,10 @@ DROP TABLE IF EXISTS `contacts`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `contacts` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `subject` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subject` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_landing_page` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -212,8 +212,8 @@ DROP TABLE IF EXISTS `countries`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `countries` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `code` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -241,16 +241,16 @@ DROP TABLE IF EXISTS `coupons`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `coupons` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` enum('percentage','flat') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` enum('percentage','flat') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `minimum_spend` decimal(10,2) DEFAULT NULL,
   `maximum_spend` decimal(10,2) DEFAULT NULL,
   `discount_amount` decimal(10,2) NOT NULL,
   `use_limit_per_coupon` int DEFAULT NULL,
   `use_limit_per_user` int DEFAULT NULL,
   `expiry_date` date DEFAULT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `code_type` enum('manual','auto') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'manual',
+  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code_type` enum('manual','auto') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'manual',
   `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_by` bigint unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -280,10 +280,10 @@ DROP TABLE IF EXISTS `currencies`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `currencies` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `code` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `symbol` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `symbol` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `is_default` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -312,12 +312,12 @@ DROP TABLE IF EXISTS `customer_addresses`;
 CREATE TABLE `customer_addresses` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `customer_id` bigint unsigned NOT NULL,
-  `type` enum('billing','shipping') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `city` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `state` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `postal_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `country` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` enum('billing','shipping') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `city` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `state` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `postal_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `country` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_default` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -346,20 +346,20 @@ DROP TABLE IF EXISTS `customers`;
 CREATE TABLE `customers` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint unsigned NOT NULL,
-  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `first_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date_of_birth` date DEFAULT NULL,
-  `gender` enum('male','female','other','prefer_not_to_say') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `notes` text COLLATE utf8mb4_unicode_ci,
-  `avatar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gender` enum('male','female','other','prefer_not_to_say') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `notes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
-  `preferred_language` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'en',
-  `customer_group` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'regular',
+  `preferred_language` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'en',
+  `customer_group` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'regular',
   `email_marketing` tinyint(1) NOT NULL DEFAULT '1',
   `sms_notifications` tinyint(1) NOT NULL DEFAULT '0',
   `order_updates` tinyint(1) NOT NULL DEFAULT '1',
@@ -392,9 +392,9 @@ DROP TABLE IF EXISTS `email_template_langs`;
 CREATE TABLE `email_template_langs` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `parent_id` bigint unsigned NOT NULL,
-  `lang` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `subject` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lang` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subject` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -422,8 +422,8 @@ DROP TABLE IF EXISTS `email_templates`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `email_templates` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `from` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `from` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `user_id` bigint unsigned NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -451,21 +451,21 @@ DROP TABLE IF EXISTS `express_checkouts`;
 CREATE TABLE `express_checkouts` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint unsigned NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
-  `button_text` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Buy Now',
-  `button_color` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '#000000',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `button_text` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Buy Now',
+  `button_color` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '#000000',
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
   `payment_methods` json DEFAULT NULL,
-  `default_payment_method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `default_payment_method` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `skip_cart` tinyint(1) NOT NULL DEFAULT '1',
   `auto_fill_customer_data` tinyint(1) NOT NULL DEFAULT '1',
   `guest_checkout_allowed` tinyint(1) NOT NULL DEFAULT '0',
   `mobile_optimized` tinyint(1) NOT NULL DEFAULT '1',
   `save_payment_methods` tinyint(1) NOT NULL DEFAULT '0',
-  `success_redirect_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `cancel_redirect_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `success_redirect_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cancel_redirect_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `conversions` int NOT NULL DEFAULT '0',
   `revenue` decimal(10,2) NOT NULL DEFAULT '0.00',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -494,11 +494,11 @@ DROP TABLE IF EXISTS `failed_jobs`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `failed_jobs` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
@@ -522,13 +522,13 @@ DROP TABLE IF EXISTS `job_batches`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `job_batches` (
-  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `total_jobs` int NOT NULL,
   `pending_jobs` int NOT NULL,
   `failed_jobs` int NOT NULL,
-  `failed_job_ids` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `options` mediumtext COLLATE utf8mb4_unicode_ci,
+  `failed_job_ids` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `options` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `cancelled_at` int DEFAULT NULL,
   `created_at` int NOT NULL,
   `finished_at` int DEFAULT NULL,
@@ -554,8 +554,8 @@ DROP TABLE IF EXISTS `jobs`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `jobs` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `attempts` tinyint unsigned NOT NULL,
   `reserved_at` int unsigned DEFAULT NULL,
   `available_at` int unsigned NOT NULL,
@@ -583,11 +583,11 @@ DROP TABLE IF EXISTS `landing_page_custom_pages`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `landing_page_custom_pages` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `meta_title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_description` text COLLATE utf8mb4_unicode_ci,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `meta_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
   `sort_order` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -616,10 +616,10 @@ DROP TABLE IF EXISTS `landing_page_settings`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `landing_page_settings` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `company_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'WhatsStore',
-  `contact_email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'support@whatsstore.com',
-  `contact_phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '+1 (555) 123-4567',
-  `contact_address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'San Francisco, CA',
+  `company_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'WhatsStore',
+  `contact_email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'support@whatsstore.com',
+  `contact_phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '+1 (555) 123-4567',
+  `contact_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'San Francisco, CA',
   `config_sections` json DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -646,7 +646,7 @@ DROP TABLE IF EXISTS `landing_pages`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `landing_pages` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Landing Page',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Landing Page',
   `layout` json DEFAULT NULL,
   `global_settings` json DEFAULT NULL,
   `is_published` tinyint(1) NOT NULL DEFAULT '0',
@@ -674,15 +674,15 @@ DROP TABLE IF EXISTS `media`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `media` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `model_id` bigint unsigned NOT NULL,
-  `uuid` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `collection_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `file_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mime_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `disk` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `conversions_disk` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `collection_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `file_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mime_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `disk` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `conversions_disk` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `size` bigint unsigned NOT NULL,
   `manipulations` json NOT NULL,
   `custom_properties` json NOT NULL,
@@ -720,8 +720,8 @@ DROP TABLE IF EXISTS `media_items`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `media_items` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -747,7 +747,7 @@ DROP TABLE IF EXISTS `migrations`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `migrations` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -759,7 +759,7 @@ CREATE TABLE `migrations` (
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES (1,'0001_01_01_000000_create_users_table',1),(2,'0001_01_01_000001_create_cache_table',1),(3,'0001_01_01_000002_create_jobs_table',1),(4,'2024_01_01_000001_create_landing_pages_table',1),(5,'2024_07_17_000001_create_stores_table',1),(6,'2025_01_15_000001_create_notifications_table',1),(7,'2025_01_15_000002_create_notification_template_langs_table',1),(8,'2025_01_27_084150_create_landing_page_settings_table',1),(9,'2025_01_28_000001_create_webhooks_table',1),(10,'2025_01_30_083444_create_customers_table',1),(11,'2025_01_31_000001_create_newsletters_table',1),(12,'2025_01_31_000002_create_contacts_table',1),(13,'2025_01_31_020641_create_taxes_table',1),(14,'2025_01_31_041251_create_categories_table',1),(15,'2025_01_31_043555_create_products_table',1),(16,'2025_01_31_062413_create_shippings_table',1),(17,'2025_01_31_083511_create_customer_addresses_table',1),(18,'2025_01_31_120000_create_orders_table',1),(19,'2025_01_31_120001_create_order_items_table',1),(20,'2025_02_01_000000_create_wishlist_items_table',1),(21,'2025_02_02_000001_create_store_settings_table',1),(22,'2025_02_03_000001_create_countries_table',1),(23,'2025_02_03_000002_create_states_table',1),(24,'2025_02_03_000003_create_cities_table',1),(25,'2025_05_25_000000_create_permission_tables',1),(26,'2025_06_18_000001_create_plans_table',1),(27,'2025_06_18_000004_add_plan_id_foreign_key',1),(28,'2025_06_18_105755_create_settings_table',1),(29,'2025_06_19_051735_create_coupons_table',1),(30,'2025_06_19_084856_create_plan_requests_table',1),(31,'2025_06_19_085023_create_plan_orders_table',1),(32,'2025_06_20_044143_create_referral_settings_table',1),(33,'2025_06_20_044158_create_referrals_table',1),(34,'2025_06_20_044206_create_payout_requests_table',1),(35,'2025_06_24_044208_create_currencies_table',1),(36,'2025_06_25_061851_add_created_by_to_roles_table',1),(37,'2025_06_26_000000_fix_roles_unique_constraint',1),(38,'2025_06_26_100501_create_payment_settings_table',1),(39,'2025_06_27_053245_create_media_table',1),(40,'2025_06_27_060535_create_media_items_table',1),(41,'2025_06_27_115807_create_email_templates_table',1),(42,'2025_06_27_115820_create_email_template_langs_table',1),(43,'2025_06_27_115828_create_user_email_templates_table',1),(44,'2025_07_02_094334_create_landing_page_custom_pages_table',1),(45,'2025_07_04_000001_update_plans_table_structure',1),(46,'2025_07_18_071850_create_store_coupons_table',1),(47,'2025_07_21_094201_create_express_checkouts_table',1),(48,'2025_07_25_072209_create_cart_items_table',1),(49,'2025_08_06_104003_create_store_configurations_table',1),(50,'2025_08_20_091433_add_duration_to_plan_requests_table',1),(51,'2025_09_12_124107_add_tax_details_to_order_items_table',1),(52,'2026_03_13_000001_add_plan_duration_to_users_table',1),(53,'2026_04_02_123139_add_arabic_fields_for_bilingual_support',2),(54,'2026_04_02_120000_add_order_type_to_orders',3),(55,'2026_04_04_010104_add_enable_pos_to_plans_table',4),(56,'2026_04_04_225634_create_region_types_table',5),(57,'2026_04_04_225634_add_region_type_to_states_table',5),(58,'2026_04_04_225635_add_jordan_and_governorates',6),(59,'2026_04_04_230134_add_arabic_names_to_jordan_governorates',7),(60,'2026_04_04_234239_add_missing_jordan_governorates',8),(61,'2026_04_05_160111_add_trial_used_to_users_table',9),(62,'2026_04_05_161154_add_grace_period_to_users_table',10),(63,'2026_04_07_151236_create_reviews_table',11),(64,'2026_04_07_151237_create_notification_preferences_table',11),(65,'2026_04_07_151237_create_push_tokens_table',11),(66,'2025_01_15_000001_create_reviews_table',12),(67,'2025_01_15_000002_create_notification_settings_table',12);
+INSERT INTO `migrations` VALUES (1,'0001_01_01_000000_create_users_table',1),(2,'0001_01_01_000001_create_cache_table',1),(3,'0001_01_01_000002_create_jobs_table',1),(4,'2024_01_01_000001_create_landing_pages_table',1),(5,'2024_07_17_000001_create_stores_table',1),(6,'2025_01_15_000001_create_notifications_table',1),(7,'2025_01_15_000002_create_notification_template_langs_table',1),(8,'2025_01_27_084150_create_landing_page_settings_table',1),(9,'2025_01_28_000001_create_webhooks_table',1),(10,'2025_01_30_083444_create_customers_table',1),(11,'2025_01_31_000001_create_newsletters_table',1),(12,'2025_01_31_000002_create_contacts_table',1),(13,'2025_01_31_020641_create_taxes_table',1),(14,'2025_01_31_041251_create_categories_table',1),(15,'2025_01_31_043555_create_products_table',1),(16,'2025_01_31_062413_create_shippings_table',1),(17,'2025_01_31_083511_create_customer_addresses_table',1),(18,'2025_01_31_120000_create_orders_table',1),(19,'2025_01_31_120001_create_order_items_table',1),(20,'2025_02_01_000000_create_wishlist_items_table',1),(21,'2025_02_02_000001_create_store_settings_table',1),(22,'2025_02_03_000001_create_countries_table',1),(23,'2025_02_03_000002_create_states_table',1),(24,'2025_02_03_000003_create_cities_table',1),(25,'2025_05_25_000000_create_permission_tables',1),(26,'2025_06_18_000001_create_plans_table',1),(27,'2025_06_18_000004_add_plan_id_foreign_key',1),(28,'2025_06_18_105755_create_settings_table',1),(29,'2025_06_19_051735_create_coupons_table',1),(30,'2025_06_19_084856_create_plan_requests_table',1),(31,'2025_06_19_085023_create_plan_orders_table',1),(32,'2025_06_20_044143_create_referral_settings_table',1),(33,'2025_06_20_044158_create_referrals_table',1),(34,'2025_06_20_044206_create_payout_requests_table',1),(35,'2025_06_24_044208_create_currencies_table',1),(36,'2025_06_25_061851_add_created_by_to_roles_table',1),(37,'2025_06_26_000000_fix_roles_unique_constraint',1),(38,'2025_06_26_100501_create_payment_settings_table',1),(39,'2025_06_27_053245_create_media_table',1),(40,'2025_06_27_060535_create_media_items_table',1),(41,'2025_06_27_115807_create_email_templates_table',1),(42,'2025_06_27_115820_create_email_template_langs_table',1),(43,'2025_06_27_115828_create_user_email_templates_table',1),(44,'2025_07_02_094334_create_landing_page_custom_pages_table',1),(45,'2025_07_04_000001_update_plans_table_structure',1),(46,'2025_07_18_071850_create_store_coupons_table',1),(47,'2025_07_21_094201_create_express_checkouts_table',1),(48,'2025_07_25_072209_create_cart_items_table',1),(49,'2025_08_06_104003_create_stoRESEND_KEY_PLACEHOLDER',1),(50,'2025_08_20_091433_add_duration_to_plan_requests_table',1),(51,'2025_09_12_124107_add_tax_details_to_order_items_table',1),(52,'2026_03_13_000001_add_plan_duration_to_users_table',1),(53,'2026_04_02_123139_add_arabic_fields_for_bilingual_support',2),(54,'2026_04_02_120000_add_order_type_to_orders',3),(55,'2026_04_04_010104_add_enable_pos_to_plans_table',4),(56,'2026_04_04_225634_create_region_types_table',5),(57,'2026_04_04_225634_add_region_type_to_states_table',5),(58,'2026_04_04_225635_add_jordan_and_governorates',6),(59,'2026_04_04_230134_add_arabic_names_to_jordan_governorates',7),(60,'2026_04_04_234239_add_missing_jordan_governorates',8),(61,'2026_04_05_160111_add_trial_used_to_users_table',9),(62,'2026_04_05_161154_add_grace_period_to_users_table',10),(63,'2026_04_07_151236_create_reviews_table',11),(64,'2026_04_07_151237_create_notification_preferences_table',11),(65,'2026_04_07_151237_create_push_tokens_table',11),(66,'2025_01_15_000001_create_reviews_table',12),(67,'2025_01_15_000002_create_notification_settings_table',12);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -772,7 +772,7 @@ DROP TABLE IF EXISTS `model_has_permissions`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `model_has_permissions` (
   `permission_id` bigint unsigned NOT NULL,
-  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `model_id` bigint unsigned NOT NULL,
   PRIMARY KEY (`permission_id`,`model_id`,`model_type`),
   KEY `model_has_permissions_model_id_model_type_index` (`model_id`,`model_type`),
@@ -798,7 +798,7 @@ DROP TABLE IF EXISTS `model_has_roles`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `model_has_roles` (
   `role_id` bigint unsigned NOT NULL,
-  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `model_id` bigint unsigned NOT NULL,
   PRIMARY KEY (`role_id`,`model_id`,`model_type`),
   KEY `model_has_roles_model_id_model_type_index` (`model_id`,`model_type`),
@@ -825,8 +825,8 @@ DROP TABLE IF EXISTS `newsletters`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `newsletters` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` enum('active','unsubscribed') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('active','unsubscribed') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
   `subscribed_at` timestamp NULL DEFAULT NULL,
   `unsubscribed_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -927,9 +927,9 @@ DROP TABLE IF EXISTS `notification_template_langs`;
 CREATE TABLE `notification_template_langs` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `parent_id` bigint unsigned NOT NULL,
-  `lang` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `variables` text COLLATE utf8mb4_unicode_ci,
-  `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lang` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `variables` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -957,9 +957,9 @@ DROP TABLE IF EXISTS `notifications`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `notifications` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `action` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` enum('on','off') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'on',
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `action` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('on','off') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'on',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -987,8 +987,8 @@ CREATE TABLE `order_items` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `order_id` bigint unsigned NOT NULL,
   `product_id` bigint unsigned NOT NULL,
-  `product_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `product_sku` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_sku` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `product_price` decimal(10,2) NOT NULL,
   `quantity` int NOT NULL,
   `product_variants` json DEFAULT NULL,
@@ -1024,43 +1024,43 @@ DROP TABLE IF EXISTS `orders`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `orders` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `order_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `order_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `store_id` bigint unsigned NOT NULL,
-  `order_type` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'online',
+  `order_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'online',
   `customer_id` bigint unsigned DEFAULT NULL,
-  `session_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` enum('pending','confirmed','processing','shipped','delivered','cancelled','refunded','completed') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
-  `payment_status` enum('pending','paid','failed','refunded','partially_refunded') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
-  `customer_email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `customer_phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `customer_first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `customer_last_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `shipping_address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `shipping_city` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `shipping_state` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `shipping_postal_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `shipping_country` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `billing_address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `billing_city` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `billing_state` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `billing_postal_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `billing_country` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `session_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` enum('pending','confirmed','processing','shipped','delivered','cancelled','refunded','completed') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `payment_status` enum('pending','paid','failed','refunded','partially_refunded') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `customer_email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `customer_phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `customer_first_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `customer_last_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `shipping_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `shipping_city` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shipping_state` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shipping_postal_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shipping_country` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `billing_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `billing_city` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `billing_state` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `billing_postal_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `billing_country` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `subtotal` decimal(10,2) NOT NULL,
   `tax_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
   `shipping_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
   `discount_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
   `total_amount` decimal(10,2) NOT NULL,
-  `payment_method` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `whatsapp_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `payment_transaction_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payment_method` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `whatsapp_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payment_transaction_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `payment_details` json DEFAULT NULL,
-  `bank_transfer_receipt` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bank_transfer_receipt` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `shipping_method_id` bigint unsigned DEFAULT NULL,
-  `tracking_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tracking_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `shipped_at` timestamp NULL DEFAULT NULL,
   `delivered_at` timestamp NULL DEFAULT NULL,
-  `notes` text COLLATE utf8mb4_unicode_ci,
-  `coupon_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `notes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `coupon_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `coupon_discount` decimal(10,2) NOT NULL DEFAULT '0.00',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -1094,8 +1094,8 @@ DROP TABLE IF EXISTS `password_reset_tokens`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `password_reset_tokens` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1121,8 +1121,8 @@ CREATE TABLE `payment_settings` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint unsigned NOT NULL,
   `store_id` bigint unsigned DEFAULT NULL,
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` text COLLATE utf8mb4_unicode_ci,
+  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -1155,8 +1155,8 @@ CREATE TABLE `payout_requests` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `company_id` bigint unsigned NOT NULL,
   `amount` decimal(10,2) NOT NULL,
-  `status` enum('pending','approved','rejected') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
-  `notes` text COLLATE utf8mb4_unicode_ci,
+  `status` enum('pending','approved','rejected') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `notes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -1183,11 +1183,11 @@ DROP TABLE IF EXISTS `permissions`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `permissions` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `module` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `label` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
+  `module` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `label` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -1217,19 +1217,19 @@ CREATE TABLE `plan_orders` (
   `user_id` bigint unsigned NOT NULL,
   `plan_id` bigint unsigned NOT NULL,
   `coupon_id` bigint unsigned DEFAULT NULL,
-  `billing_cycle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `order_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `billing_cycle` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `original_price` decimal(10,2) NOT NULL,
   `discount_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
   `final_price` decimal(10,2) NOT NULL,
-  `coupon_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `payment_method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `payment_id` text COLLATE utf8mb4_unicode_ci,
-  `status` enum('pending','approved','rejected','cancelled') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `coupon_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payment_method` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payment_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `status` enum('pending','approved','rejected','cancelled') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
   `ordered_at` timestamp NOT NULL,
   `processed_at` timestamp NULL DEFAULT NULL,
   `processed_by` bigint unsigned DEFAULT NULL,
-  `notes` text COLLATE utf8mb4_unicode_ci,
+  `notes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -1265,9 +1265,9 @@ CREATE TABLE `plan_requests` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint unsigned NOT NULL,
   `plan_id` bigint unsigned NOT NULL,
-  `duration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'monthly',
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
-  `message` text COLLATE utf8mb4_unicode_ci,
+  `duration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'monthly',
+  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `approved_at` timestamp NULL DEFAULT NULL,
   `rejected_at` timestamp NULL DEFAULT NULL,
   `approved_by` bigint unsigned DEFAULT NULL,
@@ -1304,31 +1304,31 @@ DROP TABLE IF EXISTS `plans`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `plans` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `price` double NOT NULL DEFAULT '0',
   `yearly_price` double DEFAULT NULL,
-  `duration` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `themes` text COLLATE utf8mb4_unicode_ci,
+  `duration` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `themes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `max_stores` int NOT NULL DEFAULT '0',
   `max_users_per_store` int NOT NULL DEFAULT '0',
   `max_products_per_store` int NOT NULL DEFAULT '0',
-  `description` text COLLATE utf8mb4_unicode_ci,
-  `enable_custdomain` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'off',
-  `enable_custsubdomain` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'off',
-  `enable_branding` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'on',
-  `pwa_business` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'off',
-  `enable_chatgpt` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'on',
-  `enable_shipping_method` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'off',
-  `enable_pos` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'off',
-  `enable_staff_management` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'off',
-  `enable_express_checkout` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'off',
-  `enable_analytics` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'off',
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `enable_custdomain` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'off',
+  `enable_custsubdomain` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'off',
+  `enable_branding` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'on',
+  `pwa_business` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'off',
+  `enable_chatgpt` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'on',
+  `enable_shipping_method` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'off',
+  `enable_pos` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'off',
+  `enable_staff_management` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'off',
+  `enable_express_checkout` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'off',
+  `enable_analytics` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'off',
   `storage_limit` float NOT NULL DEFAULT '0',
-  `is_trial` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_trial` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `trial_day` int NOT NULL DEFAULT '0',
-  `is_plan_enable` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'on',
+  `is_plan_enable` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'on',
   `is_default` tinyint(1) NOT NULL DEFAULT '0',
-  `module` text COLLATE utf8mb4_unicode_ci,
+  `module` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -1342,7 +1342,7 @@ CREATE TABLE `plans` (
 
 LOCK TABLES `plans` WRITE;
 /*!40000 ALTER TABLE `plans` DISABLE KEYS */;
-INSERT INTO `plans` VALUES (1,'Free',0,0,'monthly','[\"gadgets\",\"fashion\",\"home-decor\",\"bakery\",\"supermarket\",\"car-accessories\",\"toy\"]',1,1,50,'خطة مجانية للبدء. مناسبة للمتاجر الصغيرة جداً لتجربة المنصة.','off','on','on','on','off','on','off','off','off','off',0.5,'off',0,'on',1,NULL,'2026-04-02 10:31:07','2026-04-08 12:13:43'),(2,'Pro',30,300,'monthly','[\"gadgets\",\"fashion\",\"home-decor\",\"bakery\",\"supermarket\",\"car-accessories\",\"toy\"]',2,4,2000,'الخطة الاحترافية. مثالية للمتاجر النامية التي تحتاج دومين خاص ونظام نقاط بيع (POS).','on','on','off','on','on','on','on','on','on','on',5,'on',7,'on',0,NULL,'2026-04-02 10:31:07','2026-04-08 12:06:19'),(3,'Enterprise',50,500,'monthly','[\"gadgets\",\"fashion\",\"home-decor\",\"bakery\",\"supermarket\",\"car-accessories\",\"toy\"]',6,15,0,'خطة الأعمال المتقدمة. للمتاجر الكبيرة التي تحتاج فروع متعددة ومساحة تخزين ضخمة.','on','on','off','on','on','on','on','on','on','on',0,'on',7,'on',0,NULL,'2026-04-02 10:31:07','2026-04-08 12:05:45');
+INSERT INTO `plans` VALUES (1,'Free',0,0,'monthly','[\"gadgets\",\"fashion\",\"home-decor\",\"bakery\",\"supermarket\",\"car-accessories\",\"toy\"]',1,1,50,'خطة مجانية للبدء. مناسبة للمتاجر الصغيرة جداً لتجربة المنصة.','off','off','on','on','off','on','off','off','off','off',0.5,'off',0,'on',1,NULL,'2026-04-02 10:31:07','2026-04-05 14:17:51'),(2,'Pro',30,300,'monthly','[\"gadgets\",\"fashion\",\"home-decor\",\"bakery\",\"supermarket\",\"car-accessories\",\"toy\"]',2,4,1000,'الخطة الاحترافية. مثالية للمتاجر النامية التي تحتاج دومين خاص ونظام نقاط بيع (POS).','on','on','off','on','on','on','on','on','on','on',5,'on',7,'on',0,NULL,'2026-04-02 10:31:07','2026-04-05 14:03:48'),(3,'Enterprise',50,500,'monthly','[\"gadgets\",\"fashion\",\"home-decor\",\"bakery\",\"supermarket\",\"car-accessories\",\"toy\"]',6,15,0,'خطة الأعمال المتقدمة. للمتاجر الكبيرة التي تحتاج فروع متعددة ومساحة تخزين ضخمة.','on','on','off','on','on','on','on','on','on','on',999999,'on',7,'on',0,NULL,'2026-04-02 10:31:07','2026-04-05 10:47:30');
 /*!40000 ALTER TABLE `plans` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1355,28 +1355,28 @@ DROP TABLE IF EXISTS `products`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `products` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name_ar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `sku` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
-  `description_ar` text COLLATE utf8mb4_unicode_ci,
-  `specifications` text COLLATE utf8mb4_unicode_ci,
-  `specifications_ar` text COLLATE utf8mb4_unicode_ci,
-  `details` text COLLATE utf8mb4_unicode_ci,
-  `details_ar` text COLLATE utf8mb4_unicode_ci,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name_ar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sku` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `description_ar` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `specifications` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `specifications_ar` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `details_ar` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `price` decimal(10,2) NOT NULL DEFAULT '0.00',
   `sale_price` decimal(10,2) DEFAULT NULL,
   `stock` int NOT NULL DEFAULT '0',
-  `cover_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `images` text COLLATE utf8mb4_unicode_ci,
-  `variants` text COLLATE utf8mb4_unicode_ci,
-  `custom_fields` text COLLATE utf8mb4_unicode_ci,
+  `cover_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `images` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `variants` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `custom_fields` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `category_id` bigint unsigned DEFAULT NULL,
   `tax_id` bigint unsigned DEFAULT NULL,
   `store_id` bigint unsigned NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
   `is_downloadable` tinyint(1) NOT NULL DEFAULT '0',
-  `downloadable_file` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `downloadable_file` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -1409,8 +1409,8 @@ DROP TABLE IF EXISTS `push_tokens`;
 CREATE TABLE `push_tokens` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint unsigned NOT NULL,
-  `token` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `device_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'web',
+  `token` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `device_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'web',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -1439,7 +1439,7 @@ CREATE TABLE `referral_settings` (
   `is_enabled` tinyint(1) NOT NULL DEFAULT '1',
   `commission_percentage` decimal(5,2) NOT NULL DEFAULT '10.00',
   `threshold_amount` decimal(10,2) NOT NULL DEFAULT '50.00',
-  `guidelines` text COLLATE utf8mb4_unicode_ci,
+  `guidelines` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1501,13 +1501,13 @@ DROP TABLE IF EXISTS `region_types`;
 CREATE TABLE `region_types` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `country_id` bigint unsigned NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `label_singular` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `label_plural` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `label_singular_en` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `label_plural_en` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `label_singular_ar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `label_plural_ar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `label_singular` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `label_plural` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `label_singular_en` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `label_plural_en` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `label_singular_ar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `label_plural_ar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -1539,13 +1539,13 @@ CREATE TABLE `reviews` (
   `store_id` bigint unsigned NOT NULL,
   `product_id` bigint unsigned NOT NULL,
   `customer_id` bigint unsigned DEFAULT NULL,
-  `customer_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `customer_email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `customer_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `customer_email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `rating` tinyint unsigned NOT NULL,
-  `comment` text COLLATE utf8mb4_unicode_ci,
-  `reply` text COLLATE utf8mb4_unicode_ci,
+  `comment` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `reply` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `replied_at` timestamp NULL DEFAULT NULL,
-  `status` enum('pending','approved','rejected') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `status` enum('pending','approved','rejected') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
   `is_verified_purchase` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -1602,10 +1602,10 @@ DROP TABLE IF EXISTS `roles`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `roles` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `label` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `label` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_by` bigint unsigned DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -1634,11 +1634,11 @@ DROP TABLE IF EXISTS `sessions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sessions` (
-  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint unsigned DEFAULT NULL,
-  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_agent` text COLLATE utf8mb4_unicode_ci,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ip_address` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_agent` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_activity` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `sessions_user_id_index` (`user_id`),
@@ -1666,8 +1666,8 @@ CREATE TABLE `settings` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint unsigned NOT NULL,
   `store_id` bigint unsigned DEFAULT NULL,
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` text COLLATE utf8mb4_unicode_ci,
+  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -1684,7 +1684,7 @@ CREATE TABLE `settings` (
 
 LOCK TABLES `settings` WRITE;
 /*!40000 ALTER TABLE `settings` DISABLE KEYS */;
-INSERT INTO `settings` VALUES (1,1,NULL,'defaultLanguage','en','2026-04-02 10:31:07','2026-04-02 10:31:07'),(2,1,NULL,'dateFormat','Y-m-d','2026-04-02 10:31:07','2026-04-02 10:31:07'),(3,1,NULL,'timeFormat','H:i','2026-04-02 10:31:07','2026-04-02 10:31:07'),(4,1,NULL,'calendarStartDay','sunday','2026-04-02 10:31:07','2026-04-02 10:31:07'),(5,1,NULL,'defaultTimezone','UTC','2026-04-02 10:31:07','2026-04-02 10:31:07'),(6,1,NULL,'emailVerification','1','2026-04-02 10:31:07','2026-04-06 21:58:10'),(7,1,NULL,'landingPageEnabled','1','2026-04-02 10:31:07','2026-04-06 21:58:10'),(8,1,NULL,'registrationEnabled','1','2026-04-02 10:31:07','2026-04-06 21:58:10'),(9,1,NULL,'logoDark','/storage/media/3/NS-logo.png','2026-04-02 10:31:07','2026-04-02 21:21:58'),(10,1,NULL,'logoLight','/storage/media/3/NS-logo.png','2026-04-02 10:31:07','2026-04-02 21:21:58'),(11,1,NULL,'favicon','/storage/media/4/NS-favicon.png','2026-04-02 10:31:07','2026-04-02 21:21:58'),(12,1,NULL,'titleText','Nashmi Store','2026-04-02 10:31:07','2026-04-02 17:38:08'),(13,1,NULL,'footerText','© 2026 Nashmi Store. All rights reserved.','2026-04-02 10:31:07','2026-04-02 17:38:08'),(14,1,NULL,'themeColor','green','2026-04-02 10:31:07','2026-04-02 10:31:07'),(15,1,NULL,'customColor','#10b77f','2026-04-02 10:31:07','2026-04-02 10:31:07'),(16,1,NULL,'sidebarVariant','inset','2026-04-02 10:31:07','2026-04-02 10:31:07'),(17,1,NULL,'sidebarStyle','plain','2026-04-02 10:31:07','2026-04-02 10:31:07'),(18,1,NULL,'layoutDirection','left','2026-04-02 10:31:07','2026-04-02 10:31:07'),(19,1,NULL,'themeMode','light','2026-04-02 10:31:07','2026-04-02 10:31:07'),(20,1,NULL,'storage_type','local','2026-04-02 10:31:07','2026-04-02 10:31:07'),(21,1,NULL,'storage_file_types','jpg,png,webp,gif,pdf,doc,docx,txt,csv','2026-04-02 10:31:07','2026-04-02 10:31:07'),(22,1,NULL,'storage_max_upload_size','2048','2026-04-02 10:31:07','2026-04-02 10:31:07'),(23,1,NULL,'aws_access_key_id','','2026-04-02 10:31:07','2026-04-02 10:31:07'),(24,1,NULL,'aws_secret_access_key','','2026-04-02 10:31:07','2026-04-02 10:31:07'),(25,1,NULL,'aws_default_region','us-east-1','2026-04-02 10:31:07','2026-04-02 10:31:07'),(26,1,NULL,'aws_bucket','','2026-04-02 10:31:07','2026-04-02 10:31:07'),(27,1,NULL,'aws_url','','2026-04-02 10:31:07','2026-04-02 10:31:07'),(28,1,NULL,'aws_endpoint','','2026-04-02 10:31:07','2026-04-02 10:31:07'),(29,1,NULL,'wasabi_access_key','','2026-04-02 10:31:07','2026-04-02 10:31:07'),(30,1,NULL,'wasabi_secret_key','','2026-04-02 10:31:07','2026-04-02 10:31:07'),(31,1,NULL,'wasabi_region','us-east-1','2026-04-02 10:31:07','2026-04-02 10:31:07'),(32,1,NULL,'wasabi_bucket','','2026-04-02 10:31:07','2026-04-02 10:31:07'),(33,1,NULL,'wasabi_url','','2026-04-02 10:31:07','2026-04-02 10:31:07'),(34,1,NULL,'wasabi_root','','2026-04-02 10:31:07','2026-04-02 10:31:07'),(35,1,NULL,'decimalFormat','2','2026-04-02 10:31:07','2026-04-02 10:31:07'),(36,1,NULL,'defaultCurrency','JOD','2026-04-02 10:31:07','2026-04-02 10:31:07'),(37,1,NULL,'decimalSeparator','.','2026-04-02 10:31:07','2026-04-02 10:31:07'),(38,1,NULL,'thousandsSeparator',',','2026-04-02 10:31:07','2026-04-02 10:31:07'),(39,1,NULL,'floatNumber','1','2026-04-02 10:31:07','2026-04-02 10:31:07'),(40,1,NULL,'currencySymbolSpace','1','2026-04-02 10:31:07','2026-04-02 10:31:07'),(41,1,NULL,'currencySymbolPosition','after','2026-04-02 10:31:07','2026-04-02 10:31:07'),(42,1,NULL,'enableLogging','0','2026-04-02 10:31:07','2026-04-02 10:31:07'),(43,1,NULL,'strictlyNecessaryCookies','1','2026-04-02 10:31:07','2026-04-02 10:31:07'),(44,1,NULL,'cookieTitle','Cookie Consent','2026-04-02 10:31:07','2026-04-02 10:31:07'),(45,1,NULL,'strictlyCookieTitle','Strictly Necessary Cookies','2026-04-02 10:31:07','2026-04-02 10:31:07'),(46,1,NULL,'cookieDescription','We use cookies to enhance your browsing experience and provide personalized content.','2026-04-02 10:31:07','2026-04-02 10:31:07'),(47,1,NULL,'strictlyCookieDescription','These cookies are essential for the website to function properly.','2026-04-02 10:31:07','2026-04-02 10:31:07'),(48,1,NULL,'contactUsDescription','If you have any questions about our cookie policy, please contact us.','2026-04-02 10:31:07','2026-04-02 10:31:07'),(49,1,NULL,'contactUsUrl','https://example.com/contact','2026-04-02 10:31:07','2026-04-02 10:31:07'),(50,2,NULL,'defaultLanguage','en','2026-04-02 10:31:07','2026-04-02 10:31:07'),(51,2,NULL,'dateFormat','Y-m-d','2026-04-02 10:31:07','2026-04-02 10:31:07'),(52,2,NULL,'timeFormat','H:i','2026-04-02 10:31:07','2026-04-02 10:31:07'),(53,2,NULL,'calendarStartDay','sunday','2026-04-02 10:31:07','2026-04-02 10:31:07'),(54,2,NULL,'defaultTimezone','UTC','2026-04-02 10:31:08','2026-04-02 10:31:08'),(55,2,NULL,'logoDark','/images/logos/logo-dark.png','2026-04-02 10:31:08','2026-04-02 10:31:08'),(56,2,NULL,'logoLight','/images/logos/logo-light.png','2026-04-02 10:31:08','2026-04-02 10:31:08'),(57,2,NULL,'favicon','/images/logos/favicon.png','2026-04-02 10:31:08','2026-04-02 10:31:08'),(58,2,NULL,'titleText','Nashmi Store','2026-04-02 10:31:08','2026-04-02 10:31:08'),(59,2,NULL,'footerText','© 2026 Nashmi Store. All rights reserved.','2026-04-02 10:31:08','2026-04-02 10:31:08'),(60,2,NULL,'themeColor','green','2026-04-02 10:31:08','2026-04-02 10:31:08'),(61,2,NULL,'customColor','#10b77f','2026-04-02 10:31:08','2026-04-02 10:31:08'),(62,2,NULL,'sidebarVariant','inset','2026-04-02 10:31:08','2026-04-02 10:31:08'),(63,2,NULL,'sidebarStyle','plain','2026-04-02 10:31:08','2026-04-02 10:31:08'),(64,2,NULL,'layoutDirection','left','2026-04-02 10:31:08','2026-04-02 10:31:08'),(65,2,NULL,'themeMode','light','2026-04-02 10:31:08','2026-04-02 10:31:08'),(66,1,NULL,'metaKeywords','ecommerce, online store, shopping, multi-store, saas platform, nashmistore','2026-04-02 10:31:08','2026-04-02 10:31:08'),(67,1,NULL,'metaDescription','Nashmi Store - A powerful SaaS platform for creating and managing multiple online stores with professional themes and complete e-commerce features.','2026-04-02 10:31:08','2026-04-02 10:31:08'),(68,1,NULL,'metaImage','/images/logos/logo-dark.png','2026-04-02 10:31:08','2026-04-02 10:31:08'),(69,2,1,'calendarStartDay','sunday','2026-04-02 10:31:08','2026-04-02 10:31:08'),(70,2,1,'customColor','#10b77f','2026-04-02 10:31:08','2026-04-02 10:31:08'),(71,2,1,'dateFormat','Y-m-d','2026-04-02 10:31:08','2026-04-02 10:31:08'),(72,2,1,'defaultLanguage','en','2026-04-02 10:31:08','2026-04-02 10:31:08'),(73,2,1,'defaultTimezone','UTC','2026-04-02 10:31:08','2026-04-02 10:31:08'),(74,2,1,'favicon','/images/logos/favicon.png','2026-04-02 10:31:08','2026-04-02 10:31:08'),(75,2,1,'footerText','© 2026 Nashmi Store. All rights reserved.','2026-04-02 10:31:08','2026-04-02 10:31:08'),(76,2,1,'layoutDirection','left','2026-04-02 10:31:08','2026-04-02 10:31:08'),(77,2,1,'logoDark','/images/logos/logo-dark.png','2026-04-02 10:31:08','2026-04-02 10:31:08'),(78,2,1,'logoLight','/images/logos/logo-light.png','2026-04-02 10:31:08','2026-04-02 10:31:08'),(79,2,1,'sidebarStyle','plain','2026-04-02 10:31:08','2026-04-02 10:31:08'),(80,2,1,'sidebarVariant','inset','2026-04-02 10:31:08','2026-04-02 10:31:08'),(81,2,1,'themeColor','green','2026-04-02 10:31:08','2026-04-02 10:31:08'),(82,2,1,'themeMode','light','2026-04-02 10:31:08','2026-04-02 10:31:08'),(83,2,1,'timeFormat','H:i','2026-04-02 10:31:08','2026-04-02 10:31:08'),(84,2,1,'titleText','Nashmi Store','2026-04-02 10:31:08','2026-04-02 10:31:08'),(85,2,1,'Order Created','on','2026-04-02 10:31:08','2026-04-06 22:28:38'),(86,2,1,'Order Created For Owner','on','2026-04-02 10:31:08','2026-04-06 22:28:38'),(87,2,1,'Owner And Store Created','on','2026-04-02 10:31:08','2026-04-06 22:28:38'),(88,2,1,'Status Change','on','2026-04-02 10:31:08','2026-04-06 22:28:38'),(89,2,1,'User Created','on','2026-04-02 10:31:08','2026-04-06 22:28:38'),(90,1,NULL,'recaptchaEnabled','1','2026-04-02 17:59:50','2026-04-02 17:59:50'),(91,1,NULL,'recaptchaVersion','v3','2026-04-02 17:59:50','2026-04-02 17:59:50'),(92,1,NULL,'recaptchaSiteKey','6Lekl6MsAAAAAOPzhGjctHE_YrMQtfHQzZ-mp41G','2026-04-02 17:59:50','2026-04-02 17:59:50'),(93,1,NULL,'recaptchaSecretKey','6Lekl6MsAAAAAGoHFrZ-TJ81MTraoXtMR2G1vwTA','2026-04-02 17:59:50','2026-04-02 17:59:50'),(94,1,NULL,'email_provider','resend','2026-04-02 18:12:10','2026-04-02 18:12:10'),(95,1,NULL,'email_driver','resend','2026-04-02 18:12:10','2026-04-02 18:12:10'),(96,1,NULL,'email_host','mail.privateemail.com','2026-04-02 18:12:10','2026-04-02 18:12:10'),(97,1,NULL,'email_port','587','2026-04-02 18:12:10','2026-04-02 18:19:35'),(98,1,NULL,'email_username','info@urdun-tech.com','2026-04-02 18:12:10','2026-04-02 18:12:10'),(99,1,NULL,'email_password','YOUR_RESEND_API_KEY_HERE','2026-04-02 18:12:10','2026-04-02 18:12:10'),(100,1,NULL,'email_encryption','tls','2026-04-02 18:12:10','2026-04-02 18:19:35'),(101,1,NULL,'email_from_address','info@urdun-tech.com','2026-04-02 18:12:10','2026-04-02 18:18:39'),(102,1,NULL,'email_from_name','Nashmi Store','2026-04-02 18:12:10','2026-04-02 18:12:10'),(103,1,NULL,'chatgptKey','YOUR_OPENAI_API_KEY_HERE','2026-04-03 16:32:45','2026-04-05 22:05:58'),(104,1,NULL,'chatgptModel','gpt-4o-mini','2026-04-03 16:32:45','2026-04-03 16:32:45'),(569,2,1,'Plan Upgraded','on','2026-04-06 22:33:04','2026-04-06 22:33:04'),(570,2,1,'New Merchant Registered','on','2026-04-06 22:33:04','2026-04-06 22:33:04'),(571,2,1,'Plan Upgrade Request','on','2026-04-06 22:33:04','2026-04-06 22:33:04'),(572,32,30,'calendarStartDay','sunday','2026-04-07 18:48:29','2026-04-07 18:48:29'),(573,32,30,'customColor','#10b77f','2026-04-07 18:48:29','2026-04-07 18:48:29'),(574,32,30,'dateFormat','Y-m-d','2026-04-07 18:48:29','2026-04-07 18:48:29'),(575,32,30,'defaultLanguage','en','2026-04-07 18:48:29','2026-04-07 18:48:29'),(576,32,30,'defaultTimezone','UTC','2026-04-07 18:48:29','2026-04-07 18:48:29'),(577,32,30,'favicon','/storage/media/4/NS-favicon.png','2026-04-07 18:48:29','2026-04-07 18:48:29'),(578,32,30,'footerText','© 2026 Nashmi Store. All rights reserved.','2026-04-07 18:48:29','2026-04-07 18:48:29'),(579,32,30,'layoutDirection','left','2026-04-07 18:48:29','2026-04-07 18:48:29'),(580,32,30,'logoDark','/storage/media/3/NS-logo.png','2026-04-07 18:48:29','2026-04-07 18:48:29'),(581,32,30,'logoLight','/storage/media/3/NS-logo.png','2026-04-07 18:48:29','2026-04-07 18:48:29'),(582,32,30,'sidebarStyle','plain','2026-04-07 18:48:29','2026-04-07 18:48:29'),(583,32,30,'sidebarVariant','inset','2026-04-07 18:48:29','2026-04-07 18:48:29'),(584,32,30,'themeColor','green','2026-04-07 18:48:29','2026-04-07 18:48:29'),(585,32,30,'themeMode','light','2026-04-07 18:48:29','2026-04-07 18:48:29'),(586,32,30,'timeFormat','H:i','2026-04-07 18:48:29','2026-04-07 18:48:29'),(587,32,30,'titleText','Nashmi Store','2026-04-07 18:48:29','2026-04-07 18:48:29');
+INSERT INTO `settings` VALUES (1,1,NULL,'defaultLanguage','en','2026-04-02 10:31:07','2026-04-02 10:31:07'),(2,1,NULL,'dateFormat','Y-m-d','2026-04-02 10:31:07','2026-04-02 10:31:07'),(3,1,NULL,'timeFormat','H:i','2026-04-02 10:31:07','2026-04-02 10:31:07'),(4,1,NULL,'calendarStartDay','sunday','2026-04-02 10:31:07','2026-04-02 10:31:07'),(5,1,NULL,'defaultTimezone','UTC','2026-04-02 10:31:07','2026-04-02 10:31:07'),(6,1,NULL,'emailVerification','1','2026-04-02 10:31:07','2026-04-06 21:58:10'),(7,1,NULL,'landingPageEnabled','1','2026-04-02 10:31:07','2026-04-06 21:58:10'),(8,1,NULL,'registrationEnabled','1','2026-04-02 10:31:07','2026-04-06 21:58:10'),(9,1,NULL,'logoDark','/storage/media/3/NS-logo.png','2026-04-02 10:31:07','2026-04-02 21:21:58'),(10,1,NULL,'logoLight','/storage/media/3/NS-logo.png','2026-04-02 10:31:07','2026-04-02 21:21:58'),(11,1,NULL,'favicon','/storage/media/4/NS-favicon.png','2026-04-02 10:31:07','2026-04-02 21:21:58'),(12,1,NULL,'titleText','Nashmi Store','2026-04-02 10:31:07','2026-04-02 17:38:08'),(13,1,NULL,'footerText','© 2026 Nashmi Store. All rights reserved.','2026-04-02 10:31:07','2026-04-02 17:38:08'),(14,1,NULL,'themeColor','green','2026-04-02 10:31:07','2026-04-02 10:31:07'),(15,1,NULL,'customColor','#10b77f','2026-04-02 10:31:07','2026-04-02 10:31:07'),(16,1,NULL,'sidebarVariant','inset','2026-04-02 10:31:07','2026-04-02 10:31:07'),(17,1,NULL,'sidebarStyle','plain','2026-04-02 10:31:07','2026-04-02 10:31:07'),(18,1,NULL,'layoutDirection','left','2026-04-02 10:31:07','2026-04-02 10:31:07'),(19,1,NULL,'themeMode','light','2026-04-02 10:31:07','2026-04-02 10:31:07'),(20,1,NULL,'storage_type','local','2026-04-02 10:31:07','2026-04-02 10:31:07'),(21,1,NULL,'storage_file_types','jpg,png,webp,gif,pdf,doc,docx,txt,csv','2026-04-02 10:31:07','2026-04-02 10:31:07'),(22,1,NULL,'storage_max_upload_size','2048','2026-04-02 10:31:07','2026-04-02 10:31:07'),(23,1,NULL,'aws_access_key_id','','2026-04-02 10:31:07','2026-04-02 10:31:07'),(24,1,NULL,'aws_secret_access_key','','2026-04-02 10:31:07','2026-04-02 10:31:07'),(25,1,NULL,'aws_default_region','us-east-1','2026-04-02 10:31:07','2026-04-02 10:31:07'),(26,1,NULL,'aws_bucket','','2026-04-02 10:31:07','2026-04-02 10:31:07'),(27,1,NULL,'aws_url','','2026-04-02 10:31:07','2026-04-02 10:31:07'),(28,1,NULL,'aws_endpoint','','2026-04-02 10:31:07','2026-04-02 10:31:07'),(29,1,NULL,'wasabi_access_key','','2026-04-02 10:31:07','2026-04-02 10:31:07'),(30,1,NULL,'wasabi_secret_key','','2026-04-02 10:31:07','2026-04-02 10:31:07'),(31,1,NULL,'wasabi_region','us-east-1','2026-04-02 10:31:07','2026-04-02 10:31:07'),(32,1,NULL,'wasabi_bucket','','2026-04-02 10:31:07','2026-04-02 10:31:07'),(33,1,NULL,'wasabi_url','','2026-04-02 10:31:07','2026-04-02 10:31:07'),(34,1,NULL,'wasabi_root','','2026-04-02 10:31:07','2026-04-02 10:31:07'),(35,1,NULL,'decimalFormat','2','2026-04-02 10:31:07','2026-04-02 10:31:07'),(36,1,NULL,'defaultCurrency','JOD','2026-04-02 10:31:07','2026-04-02 10:31:07'),(37,1,NULL,'decimalSeparator','.','2026-04-02 10:31:07','2026-04-02 10:31:07'),(38,1,NULL,'thousandsSeparator',',','2026-04-02 10:31:07','2026-04-02 10:31:07'),(39,1,NULL,'floatNumber','1','2026-04-02 10:31:07','2026-04-02 10:31:07'),(40,1,NULL,'currencySymbolSpace','1','2026-04-02 10:31:07','2026-04-02 10:31:07'),(41,1,NULL,'currencySymbolPosition','after','2026-04-02 10:31:07','2026-04-02 10:31:07'),(42,1,NULL,'enableLogging','0','2026-04-02 10:31:07','2026-04-02 10:31:07'),(43,1,NULL,'strictlyNecessaryCookies','1','2026-04-02 10:31:07','2026-04-02 10:31:07'),(44,1,NULL,'cookieTitle','Cookie Consent','2026-04-02 10:31:07','2026-04-02 10:31:07'),(45,1,NULL,'strictlyCookieTitle','Strictly Necessary Cookies','2026-04-02 10:31:07','2026-04-02 10:31:07'),(46,1,NULL,'cookieDescription','We use cookies to enhance your browsing experience and provide personalized content.','2026-04-02 10:31:07','2026-04-02 10:31:07'),(47,1,NULL,'strictlyCookieDescription','These cookies are essential for the website to function properly.','2026-04-02 10:31:07','2026-04-02 10:31:07'),(48,1,NULL,'contactUsDescription','If you have any questions about our cookie policy, please contact us.','2026-04-02 10:31:07','2026-04-02 10:31:07'),(49,1,NULL,'contactUsUrl','https://example.com/contact','2026-04-02 10:31:07','2026-04-02 10:31:07'),(50,2,NULL,'defaultLanguage','en','2026-04-02 10:31:07','2026-04-02 10:31:07'),(51,2,NULL,'dateFormat','Y-m-d','2026-04-02 10:31:07','2026-04-02 10:31:07'),(52,2,NULL,'timeFormat','H:i','2026-04-02 10:31:07','2026-04-02 10:31:07'),(53,2,NULL,'calendarStartDay','sunday','2026-04-02 10:31:07','2026-04-02 10:31:07'),(54,2,NULL,'defaultTimezone','UTC','2026-04-02 10:31:08','2026-04-02 10:31:08'),(55,2,NULL,'logoDark','/images/logos/logo-dark.png','2026-04-02 10:31:08','2026-04-02 10:31:08'),(56,2,NULL,'logoLight','/images/logos/logo-light.png','2026-04-02 10:31:08','2026-04-02 10:31:08'),(57,2,NULL,'favicon','/images/logos/favicon.png','2026-04-02 10:31:08','2026-04-02 10:31:08'),(58,2,NULL,'titleText','Nashmi Store','2026-04-02 10:31:08','2026-04-02 10:31:08'),(59,2,NULL,'footerText','© 2026 Nashmi Store. All rights reserved.','2026-04-02 10:31:08','2026-04-02 10:31:08'),(60,2,NULL,'themeColor','green','2026-04-02 10:31:08','2026-04-02 10:31:08'),(61,2,NULL,'customColor','#10b77f','2026-04-02 10:31:08','2026-04-02 10:31:08'),(62,2,NULL,'sidebarVariant','inset','2026-04-02 10:31:08','2026-04-02 10:31:08'),(63,2,NULL,'sidebarStyle','plain','2026-04-02 10:31:08','2026-04-02 10:31:08'),(64,2,NULL,'layoutDirection','left','2026-04-02 10:31:08','2026-04-02 10:31:08'),(65,2,NULL,'themeMode','light','2026-04-02 10:31:08','2026-04-02 10:31:08'),(66,1,NULL,'metaKeywords','ecommerce, online store, shopping, multi-store, saas platform, nashmistore','2026-04-02 10:31:08','2026-04-02 10:31:08'),(67,1,NULL,'metaDescription','Nashmi Store - A powerful SaaS platform for creating and managing multiple online stores with professional themes and complete e-commerce features.','2026-04-02 10:31:08','2026-04-02 10:31:08'),(68,1,NULL,'metaImage','/images/logos/logo-dark.png','2026-04-02 10:31:08','2026-04-02 10:31:08'),(69,2,1,'calendarStartDay','sunday','2026-04-02 10:31:08','2026-04-02 10:31:08'),(70,2,1,'customColor','#10b77f','2026-04-02 10:31:08','2026-04-02 10:31:08'),(71,2,1,'dateFormat','Y-m-d','2026-04-02 10:31:08','2026-04-02 10:31:08'),(72,2,1,'defaultLanguage','en','2026-04-02 10:31:08','2026-04-02 10:31:08'),(73,2,1,'defaultTimezone','UTC','2026-04-02 10:31:08','2026-04-02 10:31:08'),(74,2,1,'favicon','/images/logos/favicon.png','2026-04-02 10:31:08','2026-04-02 10:31:08'),(75,2,1,'footerText','© 2026 Nashmi Store. All rights reserved.','2026-04-02 10:31:08','2026-04-02 10:31:08'),(76,2,1,'layoutDirection','left','2026-04-02 10:31:08','2026-04-02 10:31:08'),(77,2,1,'logoDark','/images/logos/logo-dark.png','2026-04-02 10:31:08','2026-04-02 10:31:08'),(78,2,1,'logoLight','/images/logos/logo-light.png','2026-04-02 10:31:08','2026-04-02 10:31:08'),(79,2,1,'sidebarStyle','plain','2026-04-02 10:31:08','2026-04-02 10:31:08'),(80,2,1,'sidebarVariant','inset','2026-04-02 10:31:08','2026-04-02 10:31:08'),(81,2,1,'themeColor','green','2026-04-02 10:31:08','2026-04-02 10:31:08'),(82,2,1,'themeMode','light','2026-04-02 10:31:08','2026-04-02 10:31:08'),(83,2,1,'timeFormat','H:i','2026-04-02 10:31:08','2026-04-02 10:31:08'),(84,2,1,'titleText','Nashmi Store','2026-04-02 10:31:08','2026-04-02 10:31:08'),(85,2,1,'Order Created','on','2026-04-02 10:31:08','2026-04-06 22:28:38'),(86,2,1,'Order Created For Owner','on','2026-04-02 10:31:08','2026-04-06 22:28:38'),(87,2,1,'Owner And Store Created','on','2026-04-02 10:31:08','2026-04-06 22:28:38'),(88,2,1,'Status Change','on','2026-04-02 10:31:08','2026-04-06 22:28:38'),(89,2,1,'User Created','on','2026-04-02 10:31:08','2026-04-06 22:28:38'),(90,1,NULL,'recaptchaEnabled','1','2026-04-02 17:59:50','2026-04-02 17:59:50'),(91,1,NULL,'recaptchaVersion','v3','2026-04-02 17:59:50','2026-04-02 17:59:50'),(92,1,NULL,'recaptchaSiteKey','6Lekl6MsAAAAAOPzhGjctHE_YrMQtfHQzZ-mp41G','2026-04-02 17:59:50','2026-04-02 17:59:50'),(93,1,NULL,'recaptchaSecretKey','6Lekl6MsAAAAAGoHFrZ-TJ81MTraoXtMR2G1vwTA','2026-04-02 17:59:50','2026-04-02 17:59:50'),(94,1,NULL,'email_provider','resend','2026-04-02 18:12:10','2026-04-02 18:12:10'),(95,1,NULL,'email_driver','resend','2026-04-02 18:12:10','2026-04-02 18:12:10'),(96,1,NULL,'email_host','mail.privateemail.com','2026-04-02 18:12:10','2026-04-02 18:12:10'),(97,1,NULL,'email_port','587','2026-04-02 18:12:10','2026-04-02 18:19:35'),(98,1,NULL,'email_username','info@urdun-tech.com','2026-04-02 18:12:10','2026-04-02 18:12:10'),(99,1,NULL,'email_password','RESEND_KEY_PLACEHOLDER','2026-04-02 18:12:10','2026-04-02 18:12:10'),(100,1,NULL,'email_encryption','tls','2026-04-02 18:12:10','2026-04-02 18:19:35'),(101,1,NULL,'email_from_address','info@urdun-tech.com','2026-04-02 18:12:10','2026-04-02 18:18:39'),(102,1,NULL,'email_from_name','Nashmi Store','2026-04-02 18:12:10','2026-04-02 18:12:10'),(103,1,NULL,'chatgptKey','OPENAI_KEY_PLACEHOLDER','2026-04-03 16:32:45','2026-04-05 22:05:58'),(104,1,NULL,'chatgptModel','gpt-4o-mini','2026-04-03 16:32:45','2026-04-03 16:32:45'),(569,2,1,'Plan Upgraded','on','2026-04-06 22:33:04','2026-04-06 22:33:04'),(570,2,1,'New Merchant Registered','on','2026-04-06 22:33:04','2026-04-06 22:33:04'),(571,2,1,'Plan Upgrade Request','on','2026-04-06 22:33:04','2026-04-06 22:33:04'),(572,32,30,'calendarStartDay','sunday','2026-04-07 18:48:29','2026-04-07 18:48:29'),(573,32,30,'customColor','#10b77f','2026-04-07 18:48:29','2026-04-07 18:48:29'),(574,32,30,'dateFormat','Y-m-d','2026-04-07 18:48:29','2026-04-07 18:48:29'),(575,32,30,'defaultLanguage','en','2026-04-07 18:48:29','2026-04-07 18:48:29'),(576,32,30,'defaultTimezone','UTC','2026-04-07 18:48:29','2026-04-07 18:48:29'),(577,32,30,'favicon','/storage/media/4/NS-favicon.png','2026-04-07 18:48:29','2026-04-07 18:48:29'),(578,32,30,'footerText','© 2026 Nashmi Store. All rights reserved.','2026-04-07 18:48:29','2026-04-07 18:48:29'),(579,32,30,'layoutDirection','left','2026-04-07 18:48:29','2026-04-07 18:48:29'),(580,32,30,'logoDark','/storage/media/3/NS-logo.png','2026-04-07 18:48:29','2026-04-07 18:48:29'),(581,32,30,'logoLight','/storage/media/3/NS-logo.png','2026-04-07 18:48:29','2026-04-07 18:48:29'),(582,32,30,'sidebarStyle','plain','2026-04-07 18:48:29','2026-04-07 18:48:29'),(583,32,30,'sidebarVariant','inset','2026-04-07 18:48:29','2026-04-07 18:48:29'),(584,32,30,'themeColor','green','2026-04-07 18:48:29','2026-04-07 18:48:29'),(585,32,30,'themeMode','light','2026-04-07 18:48:29','2026-04-07 18:48:29'),(586,32,30,'timeFormat','H:i','2026-04-07 18:48:29','2026-04-07 18:48:29'),(587,32,30,'titleText','Nashmi Store','2026-04-07 18:48:29','2026-04-07 18:48:29');
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1698,23 +1698,23 @@ DROP TABLE IF EXISTS `shippings`;
 CREATE TABLE `shippings` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint unsigned NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name_ar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
-  `description_ar` text COLLATE utf8mb4_unicode_ci,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name_ar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `description_ar` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `cost` decimal(10,2) NOT NULL DEFAULT '0.00',
   `min_order_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `delivery_time` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `delivery_time_ar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `delivery_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `delivery_time_ar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sort_order` int NOT NULL DEFAULT '0',
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
-  `zone_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `countries` text COLLATE utf8mb4_unicode_ci,
-  `postal_codes` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `zone_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `countries` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `postal_codes` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `max_distance` decimal(10,2) DEFAULT NULL,
   `max_weight` decimal(10,2) DEFAULT NULL,
-  `max_dimensions` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `max_dimensions` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `require_signature` tinyint(1) NOT NULL DEFAULT '0',
   `insurance_required` tinyint(1) NOT NULL DEFAULT '0',
   `tracking_available` tinyint(1) NOT NULL DEFAULT '1',
@@ -1749,9 +1749,9 @@ CREATE TABLE `states` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `country_id` bigint unsigned NOT NULL,
   `region_type_id` bigint unsigned DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name_ar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `code` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name_ar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -1781,13 +1781,13 @@ DROP TABLE IF EXISTS `store_configurations`;
 CREATE TABLE `store_configurations` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint unsigned NOT NULL,
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` text COLLATE utf8mb4_unicode_ci,
+  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `store_configurations_store_id_key_unique` (`store_id`,`key`),
-  CONSTRAINT `store_configurations_store_id_foreign` FOREIGN KEY (`store_id`) REFERENCES `stores` (`id`) ON DELETE CASCADE
+  UNIQUE KEY `stoRESEND_KEY_PLACEHOLDER` (`store_id`,`key`),
+  CONSTRAINT `stoRESEND_KEY_PLACEHOLDER` FOREIGN KEY (`store_id`) REFERENCES `stores` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1810,11 +1810,11 @@ DROP TABLE IF EXISTS `store_coupons`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `store_coupons` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
-  `code_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'manual',
-  `type` enum('percentage','flat') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'percentage',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `code_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'manual',
+  `type` enum('percentage','flat') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'percentage',
   `discount_amount` decimal(10,2) NOT NULL,
   `minimum_spend` decimal(10,2) DEFAULT NULL,
   `maximum_spend` decimal(10,2) DEFAULT NULL,
@@ -1830,10 +1830,10 @@ CREATE TABLE `store_coupons` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `store_coupons_code_unique` (`code`),
-  KEY `store_coupons_store_id_foreign` (`store_id`),
-  KEY `store_coupons_created_by_foreign` (`created_by`),
-  CONSTRAINT `store_coupons_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `store_coupons_store_id_foreign` FOREIGN KEY (`store_id`) REFERENCES `stores` (`id`) ON DELETE CASCADE
+  KEY `stoRESEND_KEY_PLACEHOLDER` (`store_id`),
+  KEY `stoRESEND_KEY_PLACEHOLDER` (`created_by`),
+  CONSTRAINT `stoRESEND_KEY_PLACEHOLDER` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `stoRESEND_KEY_PLACEHOLDER` FOREIGN KEY (`store_id`) REFERENCES `stores` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1856,13 +1856,13 @@ DROP TABLE IF EXISTS `store_settings`;
 CREATE TABLE `store_settings` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint unsigned NOT NULL,
-  `theme` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'default',
+  `theme` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'default',
   `content` json NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `store_settings_store_id_theme_unique` (`store_id`,`theme`),
-  CONSTRAINT `store_settings_store_id_foreign` FOREIGN KEY (`store_id`) REFERENCES `stores` (`id`) ON DELETE CASCADE
+  UNIQUE KEY `stoRESEND_KEY_PLACEHOLDER` (`store_id`,`theme`),
+  CONSTRAINT `stoRESEND_KEY_PLACEHOLDER` FOREIGN KEY (`store_id`) REFERENCES `stores` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1884,27 +1884,27 @@ DROP TABLE IF EXISTS `stores`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `stores` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name_ar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
-  `description_ar` text COLLATE utf8mb4_unicode_ci,
-  `theme` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'gadgets',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name_ar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `description_ar` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `theme` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'gadgets',
   `user_id` bigint unsigned NOT NULL,
-  `custom_domain` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `custom_subdomain` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `custom_domain` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `custom_subdomain` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `enable_custom_domain` tinyint(1) NOT NULL DEFAULT '0',
   `enable_custom_subdomain` tinyint(1) NOT NULL DEFAULT '0',
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_featured` tinyint(1) NOT NULL DEFAULT '0',
   `enable_pwa` tinyint(1) NOT NULL DEFAULT '0',
-  `pwa_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `pwa_short_name` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `pwa_description` text COLLATE utf8mb4_unicode_ci,
-  `pwa_theme_color` varchar(9) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '#3B82F6',
-  `pwa_background_color` varchar(9) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '#ffffff',
-  `pwa_display` enum('standalone','fullscreen','minimal-ui','browser') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'standalone',
-  `pwa_orientation` enum('portrait','landscape','any') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'portrait',
+  `pwa_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pwa_short_name` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pwa_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `pwa_theme_color` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '#3B82F6',
+  `pwa_background_color` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '#ffffff',
+  `pwa_display` enum('standalone','fullscreen','minimal-ui','browser') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'standalone',
+  `pwa_orientation` enum('portrait','landscape','any') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'portrait',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -1920,7 +1920,7 @@ CREATE TABLE `stores` (
 
 LOCK TABLES `stores` WRITE;
 /*!40000 ALTER TABLE `stores` DISABLE KEYS */;
-INSERT INTO `stores` VALUES (1,'TechVibe',NULL,'techvibe','Your one-stop destination for the latest smartphones, laptops, gaming gear, smart home devices, and cutting-edge technology with expert support and warranty.',NULL,'home-decor',2,NULL,'ayman',0,1,'hello@techvibe.com',0,1,'TechVibe','TechVibe','Your favorite tech store','#8B4513','#ffffff','standalone','portrait','2026-04-02 10:31:08','2026-04-08 14:42:06'),(30,'Your Business Name',NULL,'your-business-name',NULL,NULL,'gadgets',32,NULL,'ayman1',0,1,'sample@sample.com',0,0,NULL,NULL,NULL,'#3B82F6','#ffffff','standalone','portrait','2026-04-07 18:48:29','2026-04-08 13:21:13');
+INSERT INTO `stores` VALUES (1,'TechVibe',NULL,'techvibe','Your one-stop destination for the latest smartphones, laptops, gaming gear, smart home devices, and cutting-edge technology with expert support and warranty.',NULL,'home-decor',2,NULL,NULL,0,0,'hello@techvibe.com',0,1,'TechVibe','TechVibe','Your favorite tech store','#8B4513','#ffffff','standalone','portrait','2026-04-02 10:31:08','2026-04-02 14:05:06'),(30,'Your Business Name',NULL,'your-business-name',NULL,NULL,'gadgets',32,NULL,NULL,0,0,'sample@sample.com',0,0,NULL,NULL,NULL,'#3B82F6','#ffffff','standalone','portrait','2026-04-07 18:48:29','2026-04-07 18:48:29');
 /*!40000 ALTER TABLE `stores` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1933,10 +1933,10 @@ DROP TABLE IF EXISTS `taxes`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `taxes` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `rate` decimal(8,2) NOT NULL,
-  `type` enum('percentage','fixed') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'percentage',
-  `region` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type` enum('percentage','fixed') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'percentage',
+  `region` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `priority` int NOT NULL DEFAULT '1',
   `compound` tinyint(1) NOT NULL DEFAULT '0',
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
@@ -1999,29 +1999,29 @@ DROP TABLE IF EXISTS `users`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `google_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `google_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `lang` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'en',
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lang` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'en',
   `current_store` bigint unsigned DEFAULT NULL,
-  `avatar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `type` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'company',
+  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'company',
   `plan_id` bigint unsigned DEFAULT NULL,
-  `plan_duration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'monthly',
+  `plan_duration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'monthly',
   `plan_expire_date` date DEFAULT NULL,
   `requested_plan` int NOT NULL DEFAULT '0',
   `created_by` int NOT NULL DEFAULT '0',
-  `mode` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'light',
+  `mode` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'light',
   `plan_is_active` int NOT NULL DEFAULT '1',
   `storage_limit` float NOT NULL DEFAULT '0',
   `is_enable_login` int NOT NULL DEFAULT '1',
   `google2fa_enable` int NOT NULL DEFAULT '0',
-  `google2fa_secret` text COLLATE utf8mb4_unicode_ci,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
-  `is_trial` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `google2fa_secret` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
+  `is_trial` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `trial_day` int NOT NULL DEFAULT '0',
   `trial_expire_date` date DEFAULT NULL,
   `trial_used` tinyint(1) NOT NULL DEFAULT '0',
@@ -2029,7 +2029,7 @@ CREATE TABLE `users` (
   `grace_period_start` timestamp NULL DEFAULT NULL,
   `store_archived` tinyint(1) NOT NULL DEFAULT '0',
   `archived_at` timestamp NULL DEFAULT NULL,
-  `active_module` text COLLATE utf8mb4_unicode_ci,
+  `active_module` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `referral_code` int NOT NULL DEFAULT '0',
   `used_referral_code` int NOT NULL DEFAULT '0',
   `commission_amount` int NOT NULL DEFAULT '0',
@@ -2048,7 +2048,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Super Admin','moh.laham51@gmail.com',NULL,'2026-04-05 18:48:55','$2y$12$bxSJDFvy9ap9Qr1r3pBaNuteD3/Wvl8ZIbZRe02nguJ11m6hSf4sa','s5K1Vjv9OBi8T16sQqCGuFY64yruTxRJ3mjEbv3X3jvvHaIMzAWel0H28Z4D','en',NULL,NULL,'superadmin',NULL,'monthly',NULL,0,0,'light',1,793619,1,0,NULL,'active',NULL,0,NULL,0,0,NULL,0,NULL,NULL,0,0,0,'2026-04-02 10:31:07','2026-04-08 12:16:08'),(2,'Company','company@example.com',NULL,'2026-04-02 10:31:07','$2y$12$o0mst.ktu6Oa.tK5oeThSuc4zk.uR2Tni6EJ9qGXUoVL.wg5r5i2e',NULL,'en',1,NULL,'company',3,'monthly',NULL,0,1,'light',1,941578,1,0,NULL,'inactive',NULL,0,NULL,0,0,NULL,0,NULL,NULL,196191,0,0,'2026-04-02 10:31:07','2026-04-07 17:24:01'),(32,'Test','sample@sample.com',NULL,NULL,'$2y$12$1LzM/r66sn3T53/I.mi3beOYMMiLbL9AC/WI5DEu1nFNWttcznAEq',NULL,'ar',30,NULL,'company',1,'monthly',NULL,0,0,'light',1,0,1,0,NULL,'active',NULL,0,NULL,0,0,NULL,0,NULL,NULL,987229,0,0,'2026-04-07 18:48:29','2026-04-07 23:05:51');
+INSERT INTO `users` VALUES (1,'Super Admin','moh.laham51@gmail.com',NULL,'2026-04-05 18:48:55','$2y$12$bxSJDFvy9ap9Qr1r3pBaNuteD3/Wvl8ZIbZRe02nguJ11m6hSf4sa','EREXminQOWFoLX3ujPRQIYu4KYB0VceaG7fNalmw8d9vgSJp578vaxxmKVpU','en',NULL,NULL,'superadmin',NULL,'monthly',NULL,0,0,'light',1,793619,1,0,NULL,'active',NULL,0,NULL,0,0,NULL,0,NULL,NULL,0,0,0,'2026-04-02 10:31:07','2026-04-08 19:04:17'),(2,'Company','company@example.com',NULL,'2026-04-02 10:31:07','$2y$12$o0mst.ktu6Oa.tK5oeThSuc4zk.uR2Tni6EJ9qGXUoVL.wg5r5i2e',NULL,'en',1,NULL,'company',3,'monthly',NULL,0,1,'light',1,941578,1,0,NULL,'inactive',NULL,0,NULL,0,0,NULL,0,NULL,NULL,196191,0,0,'2026-04-02 10:31:07','2026-04-07 17:24:01'),(32,'Test','sample@sample.com',NULL,NULL,'$2y$12$1LzM/r66sn3T53/I.mi3beOYMMiLbL9AC/WI5DEu1nFNWttcznAEq',NULL,'ar',30,NULL,'company',1,'monthly',NULL,0,0,'light',1,0,1,0,NULL,'active',NULL,0,NULL,0,0,NULL,0,NULL,NULL,987229,0,0,'2026-04-07 18:48:29','2026-04-07 23:05:51');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2063,9 +2063,9 @@ CREATE TABLE `webhooks` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint unsigned NOT NULL,
   `store_id` bigint unsigned DEFAULT NULL,
-  `module` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `method` enum('GET','POST') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'POST',
-  `url` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `module` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `method` enum('GET','POST') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'POST',
+  `url` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -2099,7 +2099,7 @@ CREATE TABLE `wishlist_items` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint unsigned NOT NULL,
   `customer_id` bigint unsigned DEFAULT NULL,
-  `session_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `session_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `product_id` bigint unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -2132,4 +2132,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-04-08 16:20:52
+-- Dump completed on 2026-04-08 19:04:32

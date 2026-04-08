@@ -17,7 +17,6 @@ import { DatePicker } from '@/components/ui/date-picker';
 import { CrudFormModal } from '@/components/CrudFormModal';
 import { CrudDeleteModal } from '@/components/CrudDeleteModal';
 import { UpgradePlanModal } from '@/components/UpgradePlanModal';
-import SafeHTML from '../../components/SafeHTML';
 
 export default function Companies() {
   const { t } = useTranslation();
@@ -714,7 +713,7 @@ export default function Companies() {
                     disabled={!link.url}
                     onClick={() => link.url && router.get(link.url)}
                   >
-                    {isTextLink ? label : <SafeHTML html={link.label} as="span" />}
+                    {isTextLink ? label : <span dangerouslySetInnerHTML={{ __html: link.label }} />}
                   </Button>
                 );
               })}
@@ -880,7 +879,7 @@ export default function Companies() {
                     disabled={!link.url}
                     onClick={() => link.url && router.get(link.url)}
                   >
-                    {isTextLink ? label : <SafeHTML html={link.label} as="span" />}
+                    {isTextLink ? label : <span dangerouslySetInnerHTML={{ __html: link.label }} />}
                   </Button>
                 );
               })}

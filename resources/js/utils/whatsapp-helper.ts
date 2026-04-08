@@ -70,6 +70,7 @@ export function getWhatsAppRedirectData(): { url: string; orderId: string } | nu
       return { url, orderId };
     }
   } catch (error) {
+    console.error('Error reading WhatsApp redirect data:', error);
   }
   
   return null;
@@ -84,6 +85,7 @@ export function clearWhatsAppRedirectData(): void {
     sessionStorage.removeItem('whatsapp_order_id');
     sessionStorage.removeItem('whatsapp_message_sent');
   } catch (error) {
+    console.error('Error clearing WhatsApp redirect data:', error);
   }
 }
 

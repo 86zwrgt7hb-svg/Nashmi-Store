@@ -64,6 +64,7 @@ export function KhaltiPaymentForm({
         throw new Error(data.error || t('Payment creation failed'));
       }
     } catch (err) {
+      console.error('Khalti payment error:', err);
       setError(err instanceof Error ? err.message : t('Payment initialization failed'));
       setIsLoading(false);
     }
@@ -101,6 +102,7 @@ export function KhaltiPaymentForm({
           handlePaymentSuccess(payload.token, payload.amount);
         },
         onError(error: any) {
+          console.error('Khalti payment error:', error);
           setError(t('Payment failed'));
           setIsLoading(false);
         },
@@ -127,6 +129,7 @@ export function KhaltiPaymentForm({
         onSuccess();
       },
       onError: (errors) => {
+        console.error('Payment processing error:', errors);
         setError(Object.values(errors).flat().join(', '));
         setIsLoading(false);
       },

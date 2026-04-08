@@ -248,9 +248,11 @@ const ProfileModalContent: React.FC<ProfileModalProps> = ({
                     .then(data => {
                       const citiesData = Array.isArray(data) ? data : (data.cities || []);
                     })
+                    .catch(err => console.error('Error loading cities:', err));
                 }
               }
             })
+            .catch(err => console.error('Error loading states:', err));
         }
       }
     }

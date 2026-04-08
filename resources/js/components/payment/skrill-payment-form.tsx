@@ -60,6 +60,7 @@ export function SkrillPaymentForm({
           onSuccess();
         },
         onError: (errors) => {
+          console.error('Skrill payment error:', errors);
           toast.error(t('Payment failed. Please try again.'));
         },
         onFinish: () => {
@@ -67,6 +68,7 @@ export function SkrillPaymentForm({
         }
       });
     } catch (error) {
+      console.error('Skrill payment error:', error);
       toast.error(t('Payment failed. Please try again.'));
       setIsProcessing(false);
     }

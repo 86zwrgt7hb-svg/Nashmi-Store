@@ -7,7 +7,6 @@ use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
 use App\Models\Currency;
 use App\Models\Setting;
-use App\Security\SensitiveKeys;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -81,7 +80,17 @@ class HandleInertiaRequests extends Middleware
             $globalSettings['base_url'] = config('app.url');
             
             // SECURITY FIX: Remove sensitive keys before passing to frontend
-            $globalSettings = SensitiveKeys::sanitize($globalSettings);
+            $sensitiveKeys = [
+                'chatgptKey', 'chatgptModel',
+                'email_password', 'email_host', 'email_port',
+                'email_username', 'email_encryption', 'email_driver', 'email_provider',
+                'recaptchaSecretKey',
+                'aws_access_key_id', 'aws_secret_access_key', 'aws_bucket', 'aws_endpoint', 'aws_url',
+                'wasabi_access_key', 'wasabi_secret_key', 'wasabi_bucket', 'wasabi_region', 'wasabi_root', 'wasabi_url',
+            ];
+            foreach ($sensitiveKeys as $key) {
+                unset($globalSettings[$key]);
+            }
             
             
             // Get store-specific currency settings for authenticated users
@@ -220,7 +229,7 @@ class HandleInertiaRequests extends Middleware
                 'importSuccess' => $request->session()->get('importSuccess'),
             ],
             'globalSettings' => $globalSettings,
-            'superadminSettings' => SensitiveKeys::sanitize(settings(getSuperadminId()) ?: []),
+            'superadminSettings' => settings(getSuperadminId()),
             'storeCurrency' => $storeCurrency,
             'is_demo' => config('app.is_demo', false),
         ];

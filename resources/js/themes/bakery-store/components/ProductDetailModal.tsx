@@ -7,7 +7,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { X, Plus, Minus, ShoppingBag } from 'lucide-react';
 import { log } from 'console';
 import { ReviewModal } from '../../shared/components/ReviewModal';
-import SafeHTML from '../../../components/SafeHTML';
 
 interface Product {
   id: string;
@@ -163,7 +162,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 {product.description && (
                   <div>
                     <h4 className="font-serif font-semibold text-stone-900 mb-2">{isArabic ? 'الوصف' : 'Description'}</h4>
-                    <SafeHTML html={productDescription} className="text-stone-600 text-sm leading-relaxed" />
+                    <div className="text-stone-600 text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: productDescription }} />
                   </div>
                 )}
 
