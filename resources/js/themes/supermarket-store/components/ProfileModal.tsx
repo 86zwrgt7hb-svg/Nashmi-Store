@@ -99,7 +99,6 @@ const ProfileModalContent: React.FC<ProfileModalProps> = ({ onClose, userProfile
         }
       })
       .catch((error) => {
-        console.error('Error loading states:', error);
         setStates([]);
         setLoadingStates(false);
       });
@@ -121,7 +120,6 @@ const ProfileModalContent: React.FC<ProfileModalProps> = ({ onClose, userProfile
         setLoadingCities(false);
       })
       .catch((error) => {
-        console.error('Error loading cities:', error);
         setCities([]);
         setLoadingCities(false);
       });

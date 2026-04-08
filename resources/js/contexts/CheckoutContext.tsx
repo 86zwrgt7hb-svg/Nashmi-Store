@@ -487,7 +487,6 @@ export const CheckoutProvider: React.FC<CheckoutProviderProps> = ({
         setAppliedCoupon(null);
       }
     } catch (error) {
-      console.error('Coupon validation error:', error);
       setCouponError('Failed to validate coupon. Please try again.');
       setAppliedCoupon(null);
     }
@@ -509,7 +508,6 @@ export const CheckoutProvider: React.FC<CheckoutProviderProps> = ({
         setShippingMethods(data.shipping_methods || []);
       }
     } catch (error) {
-      console.error('Failed to load shipping methods:', error);
     } finally {
       setLoadingShipping(false);
     }
@@ -531,7 +529,6 @@ export const CheckoutProvider: React.FC<CheckoutProviderProps> = ({
         setPaymentMethods(data.payment_methods || []);
       }
     } catch (error) {
-      console.error('Failed to load payment methods:', error);
     } finally {
       setLoadingPayments(false);
     }
@@ -713,7 +710,6 @@ export const CheckoutProvider: React.FC<CheckoutProviderProps> = ({
             });
             return; // Don't proceed to success page yet
           } catch (error) {
-            console.error('Paystack payment error:', error);
             // Fallback to redirect if modal fails
             window.location.href = data.authorization_url;
           }
@@ -727,7 +723,6 @@ export const CheckoutProvider: React.FC<CheckoutProviderProps> = ({
             const { handleWhatsAppRedirect } = await import('../utils/whatsapp-helper');
             handleWhatsAppRedirect(data.whatsapp_data.url, data.whatsapp_data.order_id.toString());
           } catch (error) {
-            console.error('WhatsApp redirect error:', error);
             // Fallback to direct redirect
             window.open(data.whatsapp_data.url, '_blank');
           }
@@ -780,7 +775,6 @@ export const CheckoutProvider: React.FC<CheckoutProviderProps> = ({
         toast.error(data.message || 'Order placement failed');
       }
     } catch (error) {
-      console.error('Order placement error:', error);
       toast.error('Failed to place order. Please try again.');
     } finally {
       setIsPlacingOrder(false);

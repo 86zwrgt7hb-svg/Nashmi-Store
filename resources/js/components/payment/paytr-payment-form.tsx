@@ -87,7 +87,6 @@ export function PayTRPaymentForm({
         throw new Error(response.data.error || 'Token creation failed');
       }
     } catch (error: any) {
-      console.error('PayTR payment error:', error);
       toast.error(error.response?.data?.error || t('Payment failed. Please try again.'));
     } finally {
       setIsProcessing(false);

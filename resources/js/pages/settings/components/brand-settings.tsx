@@ -125,7 +125,6 @@ export default function BrandSettings({ userSettings }: BrandSettingsProps) {
         }));
       }
     } catch (error) {
-      console.error('Error loading sidebar settings', error);
     }
   }, [effectiveSettings, userSettings, isSaving]);
 

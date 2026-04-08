@@ -16,10 +16,11 @@ php artisan route:clear
 # Dump autoload
 COMPOSER_ALLOW_SUPERUSER=1 composer dump-autoload --optimize
 
-# Clear OPcache via FPM
-echo "<?php opcache_reset(); echo done;" > public/oc.php
-curl -sk https://ns.urdun-tech.com/oc.php
-rm -f public/oc.php
+# DEV-01: OPcache is cleared automatically by PHP-FPM restart below
+# Removed temporary public/oc.php file for security
+
+# Run pending migrations
+php artisan migrate --force
 
 # Restart PHP-FPM
 systemctl restart php8.2-fpm

@@ -16,6 +16,7 @@ import { toast } from '@/components/custom-toast';
 import { CrudConfig } from '@/types/crud';
 import { BreadcrumbItem } from '@/types';
 import { useTranslation } from 'react-i18next';
+import SafeHTML from './SafeHTML';
 
 export interface CrudButton {
   label: string;
@@ -573,7 +574,7 @@ export function PageCrudWrapper({
                   disabled={!link.url}
                   onClick={() => link.url && router.get(link.url)}
                 >
-                  {isTextLink ? label : <span dangerouslySetInnerHTML={{ __html: link.label }} />}
+                  {isTextLink ? label : <SafeHTML html={link.label} as="span" />}
                 </Button>
               );
             })}

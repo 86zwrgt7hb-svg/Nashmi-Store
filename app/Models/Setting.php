@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Crypt;
+use App\Security\SensitiveKeys;
 
 class Setting extends BaseModel
 {
@@ -15,6 +17,49 @@ class Setting extends BaseModel
         'key',
         'value',
     ];
+
+    /**
+     * Check if a key is sensitive and should be encrypted.
+     */
+    private static function isSensitiveKey(string $key): bool
+    {
+        return in_array($key, SensitiveKeys::KEYS);
+    }
+
+    /**
+     * Automatically decrypt the value when reading a sensitive setting.
+     */
+    public function getValueAttribute($value)
+    {
+        if ($value && self::isSensitiveKey($this->attributes['key'] ?? '')) {
+            try {
+                return Crypt::decryptString($value);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                // Value is not encrypted yet (legacy data), return as-is
+                return $value;
+            }
+        }
+        return $value;
+    }
+
+    /**
+     * Automatically encrypt the value when storing a sensitive setting.
+     */
+    public function setValueAttribute($value)
+    {
+        if ($value && self::isSensitiveKey($this->attributes['key'] ?? $this->key ?? '')) {
+            try {
+                // Check if already encrypted to avoid double encryption
+                Crypt::decryptString($value);
+                $this->attributes['value'] = $value;
+            } catch (\Exception $e) {
+                // Not encrypted yet, encrypt it
+                $this->attributes['value'] = Crypt::encryptString($value);
+            }
+        } else {
+            $this->attributes['value'] = $value;
+        }
+    }
 
     /**
      * Get the user that owns the setting.

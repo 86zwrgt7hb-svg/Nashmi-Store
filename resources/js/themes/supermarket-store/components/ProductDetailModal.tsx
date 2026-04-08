@@ -5,6 +5,7 @@ import { getImageUrl } from '../../../utils/image-helper';
 import { formatCurrency } from '../../../utils/currency-formatter';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ReviewModal } from '../../shared/components/ReviewModal';
+import SafeHTML from '../../../components/SafeHTML';
 
 interface Product {
   id: string;
@@ -292,10 +293,8 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                     )}
                     
                     {activeTab === 'description' && product.description && (
-                      <div 
-                        className="text-xs sm:text-sm text-gray-600 leading-relaxed prose prose-sm max-w-none overflow-wrap-anywhere"
-                        dangerouslySetInnerHTML={{ __html: productDescription }}
-                      />
+                      <SafeHTML html={productDescription} 
+                        className="text-xs sm:text-sm text-gray-600 leading-relaxed prose prose-sm max-w-none overflow-wrap-anywhere" />
                     )}
                   </div>
                 </div>

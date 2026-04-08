@@ -60,10 +60,8 @@ if (! function_exists('settings')) {
             return collect();
         }
 
-        return Setting::where('user_id', $user_id)
-                     ->where('store_id', $store_id)
-                     ->pluck('value', 'key')
-                     ->toArray();
+        // PERF-02: Use cached settings service instead of direct DB query
+        return \App\Services\CachedSettingsService::get($user_id, $store_id);
     }
 }
 

@@ -10,6 +10,8 @@ use App\Models\Setting;
 use App\Models\Currency;
 use App\Models\User;
 use Inertia\Inertia;
+use App\Security\SensitiveKeys;
+use Illuminate\Support\Facades\RateLimiter;
 
 class DomainResolver
 {
@@ -231,17 +233,8 @@ class DomainResolver
             $globalSettings = array_merge($settings, $currencySettings);
             $globalSettings['base_url'] = config('app.url');
             
-            $sensitiveKeys = [
-                'stripeKey', 'stripeSecret', 'paypalClientId', 'paypalSecret',
-                'razorpayKey', 'razorpaySecret', 'paystackPublicKey', 'paystackSecretKey',
-                'openaiApiKey', 'resendApiKey', 'smtpPassword',
-                'xenditSecretKey', 'toyyibpaySecretKey', 'cashfreeSecretKey',
-                'flutterwaveSecretKey', 'flutterwaveEncryptionKey',
-                'paytabsServerKey', 'mercadopagoAccessToken',
-            ];
-            foreach ($sensitiveKeys as $key) {
-                unset($globalSettings[$key]);
-            }
+            // SECURITY FIX: Use centralized SensitiveKeys to sanitize
+            $globalSettings = SensitiveKeys::sanitize($globalSettings);
             
             $storeCurrency = [
                 'code' => 'USD', 'symbol' => '$', 'name' => 'US Dollar',
@@ -252,7 +245,7 @@ class DomainResolver
             Inertia::share([
                 'auth' => ['user' => $request->user()],
                 'globalSettings' => $globalSettings,
-                'superadminSettings' => $superadminId ? settings($superadminId) : [],
+                'superadminSettings' => SensitiveKeys::sanitize($superadminId ? settings($superadminId) : []),
                 'storeCurrency' => $storeCurrency,
                 'is_demo' => config('app.is_demo', false),
                 'ziggy' => [
@@ -344,12 +337,26 @@ class DomainResolver
                 $request->merge(['action' => 'login']);
                 return app(\App\Http\Controllers\ThemeController::class)->home($store->slug, $request);
             }
+            // Rate limit: 5 login attempts per minute per IP
+            $rateLimitKey = 'storefront-login:' . $request->ip();
+            if (RateLimiter::tooManyAttempts($rateLimitKey, 5)) {
+                $seconds = RateLimiter::availableIn($rateLimitKey);
+                return back()->withErrors(['email' => __('Too many login attempts. Please try again in :seconds seconds.', ['seconds' => $seconds])]);
+            }
+            RateLimiter::hit($rateLimitKey, 60);
             return app(\App\Http\Controllers\Store\AuthController::class)->login($request, $store->slug);
         } elseif ($segments[0] === 'register') {
             if ($request->isMethod('get')) {
                 $request->merge(['action' => 'register']);
                 return app(\App\Http\Controllers\ThemeController::class)->home($store->slug, $request);
             }
+            // Rate limit: 3 register attempts per minute per IP
+            $rateLimitKey = 'storefront-register:' . $request->ip();
+            if (RateLimiter::tooManyAttempts($rateLimitKey, 3)) {
+                $seconds = RateLimiter::availableIn($rateLimitKey);
+                return back()->withErrors(['email' => __('Too many attempts. Please try again in :seconds seconds.', ['seconds' => $seconds])]);
+            }
+            RateLimiter::hit($rateLimitKey, 60);
             return app(\App\Http\Controllers\Store\AuthController::class)->register($request, $store->slug);
         } elseif ($segments[0] === 'logout') {
             return app(\App\Http\Controllers\Store\AuthController::class)->logout($request, $store->slug);
@@ -358,6 +365,13 @@ class DomainResolver
                 $request->merge(['action' => 'forgot-password']);
                 return app(\App\Http\Controllers\ThemeController::class)->home($store->slug, $request);
             }
+            // Rate limit: 3 forgot-password attempts per minute per IP
+            $rateLimitKey = 'storefront-forgot:' . $request->ip();
+            if (RateLimiter::tooManyAttempts($rateLimitKey, 3)) {
+                $seconds = RateLimiter::availableIn($rateLimitKey);
+                return back()->withErrors(['email' => __('Too many attempts. Please try again in :seconds seconds.', ['seconds' => $seconds])]);
+            }
+            RateLimiter::hit($rateLimitKey, 60);
             return app(\App\Http\Controllers\Store\AuthController::class)->forgotPassword($request, $store->slug);
         } elseif ($segments[0] === 'reset-password') {
             if (isset($segments[1])) {

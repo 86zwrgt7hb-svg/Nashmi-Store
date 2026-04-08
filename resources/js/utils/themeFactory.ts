@@ -25,7 +25,6 @@ export const getThemeComponent = (themeName: string): ThemeComponent => {
   const theme = themes[themeName];
   
   if (!theme) {
-    console.warn(`Theme "${themeName}" not found, falling back to gadgets theme`);
     return themes.gadgets;
   }
   

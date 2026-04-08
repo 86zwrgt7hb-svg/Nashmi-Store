@@ -62,7 +62,6 @@ export default function MediaLibraryDemo() {
       setMedia(data);
       setFilteredMedia(data);
     } catch (error) {
-      console.error('Failed to load media:', error);
       toast.error('Failed to load media');
     } finally {
       setLoading(false);

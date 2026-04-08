@@ -59,7 +59,6 @@ export function PayTabsPaymentForm({
         throw new Error(response.data.message || 'Payment initialization failed');
       }
     } catch (error: any) {
-      console.error('PayTabs payment error:', error);
       
       let errorMessage = t('Payment failed. Please try again.');
       

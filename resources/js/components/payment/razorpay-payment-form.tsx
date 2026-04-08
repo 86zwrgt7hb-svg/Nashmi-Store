@@ -127,7 +127,6 @@ export function RazorpayPaymentForm({
     } catch (error: any) {
       const errorMsg = error.response?.data?.error || t('Failed to initialize payment');
       toast.error(errorMsg);
-      console.error('Razorpay error:', error);
     }
   };
   

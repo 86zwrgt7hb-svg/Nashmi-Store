@@ -61,7 +61,6 @@ export function XenditPaymentForm({
         throw new Error(data.error || t('Payment creation failed'));
       }
     } catch (err) {
-      console.error('Xendit payment error:', err);
       setError(err instanceof Error ? err.message : t('Payment initialization failed'));
       setIsLoading(false);
     }

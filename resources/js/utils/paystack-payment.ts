@@ -24,7 +24,6 @@ const loadPaystackSDK = (): Promise<void> => {
     
     script.onload = () => resolve();
     script.onerror = () => {
-      console.error('Failed to load Paystack SDK');
       reject(new Error('Failed to load Paystack SDK'));
     };
     
@@ -47,7 +46,6 @@ export const handlePaystackPayment = async (paymentData: PaystackPaymentData): P
     // The success handler in PaystackController will process the payment
     
   } catch (error) {
-    console.error('Paystack payment error:', error);
     throw error;
   }
 };
@@ -91,7 +89,6 @@ export const handlePaystackInlinePayment = async (
         },
         callback: function(response: any) {
           // Payment successful
-          console.log('Paystack payment successful:', response);
           
           // Reload page or redirect to success page
           if (onSuccess) {
@@ -104,7 +101,6 @@ export const handlePaystackInlinePayment = async (
         },
         onClose: function() {
           // Modal closed
-          console.log('Paystack modal closed');
           
           if (onCancel) {
             onCancel();
@@ -118,7 +114,6 @@ export const handlePaystackInlinePayment = async (
       handler.openIframe();
     });
   } catch (error) {
-    console.error('Paystack inline payment error:', error);
     throw error;
   }
 };

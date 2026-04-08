@@ -133,7 +133,6 @@ export const handleCashfreePayment = async (
     return new Promise((resolve) => {
       cashfree.checkout(checkoutOptions).then((result: any) => {
         if (result.error) {
-          console.error('Cashfree Modal Error Result:', result.error);
           resolve({ success: false, error: result.error.message || 'Payment failed' });
         } else if (result.paymentDetails) {
           // In _modal mode, when payment is complete, it usually returns paymentdetails.
@@ -144,13 +143,11 @@ export const handleCashfreePayment = async (
           resolve({ success: true, orderNumber: data.order_number });
         }
       }).catch((err: any) => {
-        console.error('Cashfree Checkout Promise Error:', err);
         resolve({ success: false, error: err.message || 'Payment initiation failed' });
       });
     });
 
   } catch (error: any) {
-    console.error('Cashfree Checkout Error:', error);
     return {
       success: false,
       error: error.message || 'Payment initiation failed',

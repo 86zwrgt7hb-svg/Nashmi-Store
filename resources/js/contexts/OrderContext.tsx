@@ -79,7 +79,6 @@ export const OrderProvider: React.FC<OrderProviderProps> = ({
         setUserOrders(data.orders || []);
       }
     } catch (error) {
-      console.error('Failed to load orders:', error);
     } finally {
       setLoadingOrders(false);
     }

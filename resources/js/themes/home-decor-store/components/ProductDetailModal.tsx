@@ -6,6 +6,7 @@ import { toast } from '@/components/custom-toast';
 import { ShoppingBag, Heart, Eye, Star } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ReviewModal } from '../../shared/components/ReviewModal';
+import SafeHTML from '../../../components/SafeHTML';
 
 interface Product {
   id: string;
@@ -299,10 +300,8 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                       <div className="w-1 h-6 bg-amber-500 rounded-full"></div>
                       About This Product
                     </h3>
-                    <div 
-                      className="text-amber-800 leading-relaxed prose prose-amber max-w-none"
-                      dangerouslySetInnerHTML={{ __html: productDescription }} 
-                    />
+                    <SafeHTML html={productDescription} 
+                      className="text-amber-800 leading-relaxed prose prose-amber max-w-none" />
                   </div>
                 )}
 

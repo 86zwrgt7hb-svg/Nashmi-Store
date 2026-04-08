@@ -8,6 +8,7 @@ import { router, usePage } from '@inertiajs/react';
 import { getImageUrl } from '@/utils/image-helper';
 import { formatCurrency } from '@/utils/currency-helper';
 import { hasPermission, checkPermission } from '@/utils/permissions';
+import SafeHTML from '../../components/SafeHTML';
 
 export default function ShowProduct() {
   const { t } = useTranslation();
@@ -209,7 +210,7 @@ export default function ShowProduct() {
               <CardTitle>{t('Product Description')}</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: product.description }} />
+              <SafeHTML html={product.description} className="prose max-w-none" />
             </CardContent>
           </Card>
         )}
@@ -220,7 +221,7 @@ export default function ShowProduct() {
               <CardTitle>{t('Product Specifications')}</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: product.specifications }} />
+              <SafeHTML html={product.specifications} className="prose max-w-none" />
             </CardContent>
           </Card>
         )}
@@ -231,7 +232,7 @@ export default function ShowProduct() {
               <CardTitle>{t('Product Details')}</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: product.details }} />
+              <SafeHTML html={product.details} className="prose max-w-none" />
             </CardContent>
           </Card>
         )}

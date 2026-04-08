@@ -152,7 +152,6 @@ export function AuthorizeNetPaymentForm({
         onSuccess();
       },
       onError: (errors) => {
-        console.error('Payment processing error:', errors);
         setError(Object.values(errors).flat().join(', '));
         setIsLoading(false);
       },

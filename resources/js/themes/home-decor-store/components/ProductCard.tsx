@@ -4,6 +4,7 @@ import { ShoppingBag, Heart, Eye, Star } from 'lucide-react';
 import { getImageUrl } from '../../../utils/image-helper';
 import { formatCurrency } from '../../../utils/currency-formatter';
 import { toast } from '@/components/custom-toast';
+import SafeHTML from '../../../components/SafeHTML';
 
 interface Product {
   id: string;
@@ -127,10 +128,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
             {/* Description - Hidden on mobile */}
             {product.description && (
-              <div 
-                className="text-sm text-amber-700/70 mb-4 line-clamp-2"
-                dangerouslySetInnerHTML={{ __html: product.description }}
-              />
+              <SafeHTML html={product.description} 
+                className="text-sm text-amber-700/70 mb-4 line-clamp-2" />
             )}
 
             {/* Action Buttons */}

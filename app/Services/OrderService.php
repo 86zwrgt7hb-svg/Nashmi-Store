@@ -300,9 +300,10 @@ class OrderService
             ];
             
         } catch (\Exception $e) {
+            \Log::error('Stripe payment error', ['order' => $order->order_number, 'error' => $e->getMessage()]);
             return [
                 'success' => false,
-                'message' => 'Stripe payment failed: ' . $e->getMessage()
+                'message' => __('Payment processing failed. Please try again or contact support.')
             ];
         }
     }
@@ -358,7 +359,8 @@ class OrderService
                 ]);
             
             if (!$orderResponse->successful()) {
-                return ['success' => false, 'message' => 'PayPal order creation failed: ' . $orderResponse->body()];
+                \Log::error('PayPal order creation failed', ['order' => $order->order_number, 'response' => $orderResponse->body()]);
+                return ['success' => false, 'message' => __('Payment processing failed. Please try again or contact support.')];
             }
             
             $paypalOrder = $orderResponse->json();
@@ -382,13 +384,15 @@ class OrderService
                     'order_number' => $order->order_number,
                 ];
             } else {
-                return ['success' => false, 'message' => 'Failed to create PayPal order: ' . json_encode($paypalOrder)];
+                \Log::error('PayPal order creation failed', ['order' => $order->order_number, 'response' => $paypalOrder]);
+                return ['success' => false, 'message' => __('Payment processing failed. Please try again or contact support.')];
             }
             
         } catch (\Exception $e) {
+            \Log::error('PayPal payment error', ['order' => $order->order_number, 'error' => $e->getMessage()]);
             return [
                 'success' => false,
-                'message' => 'PayPal payment failed: ' . $e->getMessage()
+                'message' => __('Payment processing failed. Please try again or contact support.')
             ];
         }
     }
@@ -464,7 +468,7 @@ class OrderService
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Razorpay payment failed: ' . $e->getMessage()
+                'message' => __('Payment processing failed. Please try again or contact support.')
             ];
         }
     }
@@ -525,7 +529,8 @@ class OrderService
             ])->post('https://api.paystack.co/transaction/initialize', $transactionData);
             
             if (!$response->successful()) {
-                return ['success' => false, 'message' => 'Paystack initialization failed: ' . $response->body()];
+                \Log::error('Paystack initialization failed', ['order' => $order->order_number, 'response' => $response->body()]);
+                return ['success' => false, 'message' => __('Payment processing failed. Please try again or contact support.')];
             }
             
             $result = $response->json();
@@ -558,7 +563,7 @@ class OrderService
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Paystack payment failed: ' . $e->getMessage()
+                'message' => __('Payment processing failed. Please try again or contact support.')
             ];
         }
     }
@@ -688,7 +693,8 @@ class OrderService
                 ->post($baseUrl . '/checkout/preferences', $preferenceData);
             
             if (!$response->successful()) {
-                return ['success' => false, 'message' => 'MercadoPago preference creation failed: ' . $response->body()];
+                \Log::error('MercadoPago preference creation failed', ['order' => $order->order_number, 'response' => $response->body()]);
+                return ['success' => false, 'message' => __('Payment processing failed. Please try again or contact support.')];
             }
             
             $preference = $response->json();
@@ -718,7 +724,7 @@ class OrderService
             Log::error('MercadoPago payment processing error: ' . $e->getMessage());
             return [
                 'success' => false,
-                'message' => 'MercadoPago payment failed: ' . $e->getMessage()
+                'message' => __('Payment processing failed. Please try again or contact support.')
             ];
         }
     }
@@ -762,7 +768,7 @@ class OrderService
             
             if (!$response->successful()) {
                 \Log::error('Xendit Invoice Creation Failed: ' . $response->body());
-                return ['success' => false, 'message' => 'Xendit payment creation failed: ' . $response->body()];
+                return ['success' => false, 'message' => __('Payment processing failed. Please try again or contact support.')];
             }
             
             $result = $response->json();
@@ -791,7 +797,7 @@ class OrderService
             \Log::error('Xendit Payment Error: ' . $e->getMessage());
             return [
                 'success' => false,
-                'message' => 'Xendit payment failed: ' . $e->getMessage()
+                'message' => __('Payment processing failed. Please try again or contact support.')
             ];
         }
     }
@@ -898,7 +904,7 @@ class OrderService
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'ToyyibPay payment failed: ' . $e->getMessage()
+                'message' => __('Payment processing failed. Please try again or contact support.')
             ];
         }
     }
@@ -946,7 +952,7 @@ class OrderService
 
         } catch (\Exception $e) {
             Log::error('Flutterwave Store Payment Error: ' . $e->getMessage());
-            return ['success' => false, 'message' => 'Flutterwave payment failed: ' . $e->getMessage()];
+            return ['success' => false, 'message' => __('Payment processing failed. Please try again or contact support.')];
         }
     }
 
@@ -1017,7 +1023,7 @@ class OrderService
 
         } catch (\Exception $e) {
             Log::error('PayTabs Store Payment Error: ' . $e->getMessage());
-            return ['success' => false, 'message' => 'PayTabs payment failed: ' . $e->getMessage()];
+            return ['success' => false, 'message' => __('Payment processing failed. Please try again or contact support.')];
         }
     }
 
@@ -1110,11 +1116,11 @@ class OrderService
             }
 
             Log::error('OrderService Cashfree Error', ['body' => $response->body()]);
-            return ['success' => false, 'message' => 'Cashfree API Error: ' . ($response->json()['message'] ?? $response->body())];
+            return ['success' => false, 'message' => __('Payment processing failed. Please try again or contact support.')];
 
         } catch (\Exception $e) {
             Log::error('OrderService Cashfree Exception: ' . $e->getMessage());
-            return ['success' => false, 'message' => 'Cashfree Exception: ' . $e->getMessage()];
+            return ['success' => false, 'message' => __('Payment processing failed. Please try again or contact support.')];
         }
     }
 }
