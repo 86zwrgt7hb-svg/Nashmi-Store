@@ -244,6 +244,7 @@ export default function EditProduct() {
                       onChange={(value) => handleSelectChange('cover_image', value)}
                       placeholder={t('Select cover image...')}
                     />
+                    <p className="text-xs text-muted-foreground mt-1">{t('Recommended: 800x800px, square ratio for best display across all themes')}</p>
                   </div>
                   <div>
                     <MediaPicker
@@ -253,6 +254,7 @@ export default function EditProduct() {
                       multiple={true}
                       placeholder={t('Select product images...')}
                     />
+                    <p className="text-xs text-muted-foreground mt-1">{t('Recommended: 800x800px, up to 5 images for best results')}</p>
                   </div>
                 </div>
                 <div className="flex items-center justify-between">

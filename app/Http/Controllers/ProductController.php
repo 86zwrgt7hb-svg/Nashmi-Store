@@ -86,7 +86,7 @@ class ProductController extends Controller
         // Validation
         $request->validate([
             'name' => 'required|string|max:255',
-            'sku' => 'nullable|string|max:100',
+            'sku' => 'nullable|string|max:100|unique:products,sku,NULL,id,store_id,' . $currentStoreId,
             'description' => 'nullable|string',
             'specifications' => 'nullable|string',
             'price' => 'required|numeric|min:0',
@@ -203,7 +203,7 @@ class ProductController extends Controller
         // Validation
         $request->validate([
             'name' => 'required|string|max:255',
-            'sku' => 'nullable|string|max:100',
+            'sku' => 'nullable|string|max:100|unique:products,sku,' . $product->id . ',id,store_id,' . $currentStoreId,
             'description' => 'nullable|string',
             'specifications' => 'nullable|string',
             'price' => 'required|numeric|min:0',

@@ -73,14 +73,14 @@ class OrderService
             foreach ($cartItems as $cartItem) {
                 $unitPrice = $cartItem['sale_price'] ?? $cartItem['price'];
                 
-                // Check and update product inventory
-                $product = Product::find($cartItem['product_id']);
+                // Check and update product inventory with row-level locking to prevent race conditions
+                $product = Product::lockForUpdate()->find($cartItem['product_id']);
                 if ($product) {
                     if ($product->stock < $cartItem['quantity']) {
-                        throw new \Exception("Insufficient stock for product: {$cartItem['name']}");
+                        throw new \Exception("Insufficient stock for product: {$cartItem['name']}. Only {$product->stock} left.");
                     }
                     
-                    // Reduce product stock
+                    // Reduce product stock (atomic operation with lock)
                     $product->decrement('stock', $cartItem['quantity']);
                 }
                 

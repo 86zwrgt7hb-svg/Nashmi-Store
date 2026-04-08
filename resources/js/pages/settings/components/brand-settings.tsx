@@ -327,6 +327,7 @@ export default function BrandSettings({ userSettings }: BrandSettingsProps) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-3">
                   <Label>{t("Logo (Dark Mode)")}</Label>
+                  <p className="text-xs text-muted-foreground">{t('Recommended: 200x60px, PNG with transparent background')}</p>
                   <div className="flex flex-col gap-3">
                     <div className="border rounded-md p-4 flex items-center justify-center bg-muted/30 h-32">
                       {settings.logoDark && !logoErrors.logoDark ? (
@@ -360,6 +361,7 @@ export default function BrandSettings({ userSettings }: BrandSettingsProps) {
 
                 <div className="space-y-3">
                   <Label>{t("Logo (Light Mode)")}</Label>
+                  <p className="text-xs text-muted-foreground">{t('Recommended: 200x60px, PNG with transparent background')}</p>
                   <div className="flex flex-col gap-3">
                     <div className="border rounded-md p-4 flex items-center justify-center bg-gray-800 h-32">
                       {settings.logoLight && !logoErrors.logoLight ? (
@@ -393,6 +395,7 @@ export default function BrandSettings({ userSettings }: BrandSettingsProps) {
 
                 <div className="space-y-3">
                   <Label>{t("Favicon")}</Label>
+                  <p className="text-xs text-muted-foreground">{t('Recommended: 64x64px, square PNG or ICO')}</p>
                   <div className="flex flex-col gap-3">
                     <div className="border rounded-md p-4 flex items-center justify-center bg-muted/30 h-20">
                       {settings.favicon && !logoErrors.favicon ? (
