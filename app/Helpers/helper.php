@@ -241,7 +241,7 @@ if (! function_exists('isRegistrationEnabled')) {
 if (! function_exists('defaultRoleAndSetting')) {
     function defaultRoleAndSetting($user)
     {
-        $companyRole = Role::where('name', 'company')->first();
+        $companyRole = \Spatie\Permission\Models\Role::where('name', 'company')->where('guard_name', 'web')->first();
             
         if ($companyRole) {
             $user->assignRole($companyRole);
