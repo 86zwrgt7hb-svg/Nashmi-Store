@@ -52,24 +52,29 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-amber-100 shadow-lg">
 
+
       {/* Main Header */}
-      <div className="max-w-7xl mx-auto px-2 sm:px-4 py-2 sm:py-4">
-        <div className="flex items-center justify-between w-full overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 py-4">
+        <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="flex-shrink min-w-0">
+          <div className="flex items-center space-x-3 flex-shrink-0">
+          {/* Language Toggle */}
+          <LanguageToggle variant="pill" className="hidden sm:inline-flex" />
+          <LanguageToggle variant="minimal" className="sm:hidden" />
+          
             {logo ? (
-              <img loading="lazy" src={getImageUrl(logo)} alt={storeName} className="h-10 sm:h-12 md:h-14 w-auto object-contain" />
+              <img loading="lazy" src={getImageUrl(logo)} alt={storeName} className="max-w-28 md:max-w-32 object-contain" />
             ) : (
-              <div className="flex items-center gap-1">
-                <div className="w-6 h-6 md:w-8 md:h-8 bg-amber-600 rounded-lg flex items-center justify-center flex-shrink-0">
+              <div className="flex items-center space-x-2">
+                <div className="w-6 h-6 md:w-8 md:h-8 bg-amber-600 rounded-lg flex items-center justify-center">
                   <span className="text-white font-bold text-xs md:text-base">🏠</span>
                 </div>
-                <h1 className="text-sm sm:text-base md:text-xl font-serif font-bold text-amber-900 truncate">{storeName}</h1>
+                <h1 className="text-base md:text-xl font-serif font-bold text-amber-900 truncate max-w-24 md:max-w-none">{storeName}</h1>
               </div>
             )}
           </div>
 
-          {/* Search Bar - Desktop Only */}
+          {/* Search Bar - Desktop */}
           <div className="hidden md:flex flex-1 max-w-2xl mx-8">
             <form onSubmit={handleSearchSubmit} className="w-full relative">
               <div className="relative">
@@ -85,25 +90,9 @@ export const Header: React.FC<HeaderProps> = ({
             </form>
           </div>
 
-          {/* Right Actions - All in one row */}
-          <div className="flex items-center gap-1 md:gap-3 flex-shrink-0">
-            {/* Language Toggle - minimal on mobile, pill on desktop */}
-            <div className="hidden md:block">
-              <LanguageToggle variant="pill" />
-            </div>
-            <div className="md:hidden">
-              <LanguageToggle variant="minimal" />
-            </div>
-
-            {/* Search - Mobile Only */}
-            <button
-              onClick={() => setIsMobileSearchOpen(!isMobileSearchOpen)}
-              className="md:hidden p-1.5 text-amber-700 hover:bg-amber-100 rounded-lg"
-            >
-              <Search className="w-4 h-4" />
-            </button>
-
-            {/* User - Desktop */}
+          {/* Right Actions */}
+          <div className="flex items-center space-x-2 md:space-x-4">
+            {/* User Menu - Desktop Only */}
             {isLoggedIn ? (
               <div className="relative hidden md:block">
                 <button
@@ -160,31 +149,50 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
             )}
 
-            {/* User - Mobile Only */}
-            {isLoggedIn ? (
+            {/* Mobile Actions */}
+            <div className="md:hidden flex items-center space-x-1">
               <button
-                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                className="md:hidden p-1.5 text-amber-700 hover:bg-amber-100 rounded-lg"
+                onClick={() => setIsMobileSearchOpen(!isMobileSearchOpen)}
+                className="p-2 text-amber-700 hover:bg-amber-100 rounded-lg"
               >
-                <User className="w-4 h-4" />
+                <Search className="w-5 h-5" />
               </button>
-            ) : (
+              {isLoggedIn ? (
+                <button
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                  className="p-2 text-amber-700 hover:bg-amber-100 rounded-lg"
+                >
+                  <User className="w-5 h-5" />
+                </button>
+              ) : (
+                <button
+                  onClick={onLoginClick}
+                  className="p-2 text-amber-700 hover:bg-amber-100 rounded-lg"
+                >
+                  <User className="w-5 h-5" />
+                </button>
+              )}
               <button
-                onClick={onLoginClick}
-                className="md:hidden p-1.5 text-amber-700 hover:bg-amber-100 rounded-lg"
+                onClick={onCartClick}
+                className="relative p-2 bg-amber-600 hover:bg-amber-700 text-white rounded-full shadow-lg"
               >
-                <User className="w-4 h-4" />
+                <ShoppingBag className="w-5 h-5" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                    {cartCount}
+                  </span>
+                )}
               </button>
-            )}
+            </div>
 
-            {/* Cart Button - Always visible */}
+            {/* Cart Button - Desktop Only */}
             <button
               onClick={onCartClick}
-              className="relative p-1.5 md:p-3 bg-amber-600 hover:bg-amber-700 text-white rounded-full shadow-lg flex-shrink-0"
+              className="hidden md:block relative p-3 bg-amber-600 hover:bg-amber-700 text-white rounded-full shadow-lg"
             >
-              <ShoppingBag className="w-4 h-4 md:w-6 md:h-6" />
+              <ShoppingBag className="w-6 h-6" />
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 md:-top-2 md:-right-2 bg-red-500 text-white font-bold rounded-full w-4 h-4 md:w-6 md:h-6 flex items-center justify-center" style={{ fontSize: '10px' }}>
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
                   {cartCount}
                 </span>
               )}
@@ -194,7 +202,7 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Mobile Search */}
         {isMobileSearchOpen && (
-          <div className="md:hidden mt-3">
+          <div className="md:hidden mt-4">
             <form onSubmit={handleSearchSubmit} className="relative">
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-amber-600 w-5 h-5" />
               <input
@@ -211,7 +219,7 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Mobile User Menu */}
         {isUserMenuOpen && isLoggedIn && (
-          <div className="md:hidden absolute right-4 top-14 w-36 bg-white rounded-lg shadow-lg border border-amber-100 py-1 z-50">
+          <div className="md:hidden absolute right-4 top-16 w-36 bg-white rounded-lg shadow-lg border border-amber-100 py-1 z-50">
             <button
               onClick={() => {
                 onProfileClick();
@@ -245,6 +253,7 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
           </div>
         )}
+
 
       </div>
     </header>

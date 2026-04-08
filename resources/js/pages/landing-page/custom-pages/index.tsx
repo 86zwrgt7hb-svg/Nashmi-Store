@@ -175,7 +175,6 @@ export default function CustomPagesIndex() {
       setData('slug', response.data.slug);
       setSlugValidation({ loading: false, available: true, message: 'Generated unique slug' });
     } catch (error) {
-      console.error('Error generating slug:', error);
     }
   };
 

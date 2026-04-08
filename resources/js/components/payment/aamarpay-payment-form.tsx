@@ -76,7 +76,6 @@ export function AamarpayPaymentForm({
       document.body.appendChild(form);
       form.submit();
     } catch (err) {
-      console.error('Aamarpay payment error:', err);
       setError(err instanceof Error ? err.message : t('Payment initialization failed'));
       setIsLoading(false);
     }

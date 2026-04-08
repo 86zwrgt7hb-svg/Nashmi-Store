@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Textarea } from '@/components/ui/textarea';
 import { Filter, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import SafeHTML from '../../components/SafeHTML';
 
 export default function PlanOrdersPage() {
   const { t } = useTranslation();
@@ -258,7 +259,7 @@ export default function PlanOrdersPage() {
                   disabled={!link.url}
                   onClick={() => link.url && router.get(link.url)}
                 >
-                  {isTextLink ? t(label) : <span dangerouslySetInnerHTML={{ __html: link.label }} />}
+                  {isTextLink ? t(label) : <SafeHTML html={link.label} as="span" />}
                 </Button>
               );
             })}

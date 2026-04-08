@@ -5,9 +5,13 @@ namespace App\Listeners;
 use App\Events\OrderCreated;
 use Illuminate\Support\Facades\Cache;
 use Exception;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Bus\Queueable;
 
-class SendOrderCreatedMessaging
+class SendOrderCreatedMessaging implements ShouldQueue
 {
+    use Queueable;
+
     public function handle(OrderCreated $event): void
     {
         $order = $event->order;

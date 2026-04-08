@@ -76,7 +76,6 @@ export function CinetPayPaymentForm({
         throw new Error(data.error || t('Payment creation failed'));
       }
     } catch (err) {
-      console.error('CinetPay payment error:', err);
       setError(err instanceof Error ? err.message : t('Payment initialization failed'));
       setIsLoading(false);
     }

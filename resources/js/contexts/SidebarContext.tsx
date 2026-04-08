@@ -76,7 +76,6 @@ export const SidebarProvider = ({ children }: { children: ReactNode }) => {
           const newSettings = JSON.parse(event.newValue || '');
           setSettings(newSettings);
         } catch (error) {
-          console.error('Failed to parse sidebar settings', error);
         }
       }
     };

@@ -9,6 +9,7 @@ import { Search, Trash2, Download } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { CrudDeleteModal } from '@/components/CrudDeleteModal';
 import { toast } from '@/components/custom-toast';
+import SafeHTML from '../../../components/SafeHTML';
 
 export default function ContactsIndex() {
   const { t } = useTranslation();
@@ -284,7 +285,7 @@ export default function ContactsIndex() {
                   disabled={!link.url}
                   onClick={() => link.url && router.get(link.url)}
                 >
-                  {isTextLink ? label : <span dangerouslySetInnerHTML={{ __html: link.label }} />}
+                  {isTextLink ? label : <SafeHTML html={link.label} as="span" />}
                 </Button>
               );
             })}

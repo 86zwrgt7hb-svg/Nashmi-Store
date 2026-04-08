@@ -109,7 +109,6 @@ export function PayfastPaymentForm({
       }
       
     } catch (error) {
-      console.error('PayFast payment error:', error);
       toast.error(t('Payment failed. Please try again.'));
       setIsProcessing(false);
     }

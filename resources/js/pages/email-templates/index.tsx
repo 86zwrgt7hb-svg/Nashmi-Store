@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { Search, Eye } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import SafeHTML from '../../components/SafeHTML';
 
 interface EmailTemplate {
   id: number
@@ -243,7 +244,7 @@ export default function EmailTemplatesIndex({ templates, filters: pageFilters = 
                   disabled={!link.url}
                   onClick={() => link.url && router.get(link.url)}
                 >
-                  {isTextLink ? label : <span dangerouslySetInnerHTML={{ __html: link.label }} />}
+                  {isTextLink ? label : <SafeHTML html={link.label} as="span" />}
                 </Button>
               )
             })}

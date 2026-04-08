@@ -154,7 +154,6 @@ const handleRazorpayPayment = async (
               });
             }
           } catch (error: any) {
-            console.error('Payment verification error:', error);
             resolve({
               success: false,
               error: error.response?.data?.error || 'Payment verification failed',
@@ -183,7 +182,6 @@ const handleRazorpayPayment = async (
       razorpay.open();
     });
   } catch (error: any) {
-    console.error('Razorpay payment error:', error);
     return {
       success: false,
       error: error.message || 'Payment failed',
@@ -238,7 +236,6 @@ export const handleOrderPlacement = async (
       form.submit();
     }
   } catch (error: any) {
-    console.error('Order placement error:', error);
     onError(error.message || 'Failed to place order');
   }
 };

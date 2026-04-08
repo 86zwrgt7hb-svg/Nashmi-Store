@@ -84,7 +84,6 @@ export const LocationDropdowns: React.FC<LocationDropdownsProps> = ({
       const response = await axios.get(route('api.locations.countries'));
       setCountries(response.data);
     } catch (error) {
-      console.error('Error loading countries:', error);
     } finally {
       setLoading(prev => ({ ...prev, countries: false }));
     }
@@ -96,7 +95,6 @@ export const LocationDropdowns: React.FC<LocationDropdownsProps> = ({
       const response = await axios.get(route('api.locations.states', countryId));
       setStates(response.data);
     } catch (error) {
-      console.error('Error loading states:', error);
       setStates([]);
     } finally {
       setLoading(prev => ({ ...prev, states: false }));
@@ -109,7 +107,6 @@ export const LocationDropdowns: React.FC<LocationDropdownsProps> = ({
       const response = await axios.get(route('api.locations.cities', stateId));
       setCities(response.data);
     } catch (error) {
-      console.error('Error loading cities:', error);
       setCities([]);
     } finally {
       setLoading(prev => ({ ...prev, cities: false }));

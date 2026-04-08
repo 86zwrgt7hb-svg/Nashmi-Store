@@ -49,7 +49,6 @@ createInertiaApp({
         try {
             (window as any).page = props.initialPage;
         } catch (e) {
-            console.warn('Could not set global page data:', e);
         }
 
         // Set demo mode globally
@@ -106,7 +105,6 @@ createInertiaApp({
         // Handle exceptions during Inertia visits
         router.on('exception', (event) => {
             event.preventDefault();
-            console.error('Inertia exception:', event.detail.exception);
             // Auto-reload on exception
             window.location.reload();
         });
@@ -141,7 +139,6 @@ createInertiaApp({
                     document.body.classList.toggle('dark', isDark);
                 }
             } catch (e) {
-                console.error('Navigation error:', e);
             }
         });
     },

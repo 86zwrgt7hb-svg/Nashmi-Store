@@ -115,7 +115,6 @@ export function PaymentFormWrapper({
         setSelectedMethod(methods[0].id);
       }
     } catch (error) {
-      console.error('Failed to fetch payment methods:', error);
     } finally {
       setLoading(false);
     }

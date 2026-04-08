@@ -77,7 +77,6 @@ export function TapPaymentForm({
       document.body.appendChild(form);
       form.submit();
     } catch (err) {
-      console.error('Tap payment error:', err);
       setError(err instanceof Error ? err.message : t('Payment initialization failed'));
       setIsLoading(false);
     }

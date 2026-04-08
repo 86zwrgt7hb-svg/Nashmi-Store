@@ -105,7 +105,6 @@ export default function CookieConsentBanner() {
 
       const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
       if (!csrfToken) {
-        console.warn('CSRF token not found, skipping backend storage');
         return;
       }
 
@@ -128,7 +127,6 @@ export default function CookieConsentBanner() {
         throw new Error('Server returned error');
       }
     } catch (error) {
-      console.warn('Failed to save cookie consent to backend:', error);
     }
   };
 

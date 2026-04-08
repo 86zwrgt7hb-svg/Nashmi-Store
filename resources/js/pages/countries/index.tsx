@@ -12,6 +12,7 @@ import { Badge } from '@/components/ui/badge';
 import { CrudDeleteModal } from '@/components/CrudDeleteModal';
 import { CrudFormModal } from '@/components/CrudFormModal';
 import { FormField } from '@/types/crud';
+import SafeHTML from '../../components/SafeHTML';
 
 interface Country {
   id: number;
@@ -343,7 +344,7 @@ export default function Countries() {
                   disabled={!link.url}
                   onClick={() => link.url && router.get(link.url)}
                 >
-                  {isTextLink ? label : <span dangerouslySetInnerHTML={{ __html: link.label }} />}
+                  {isTextLink ? label : <SafeHTML html={link.label} as="span" />}
                 </Button>
               );
             })}

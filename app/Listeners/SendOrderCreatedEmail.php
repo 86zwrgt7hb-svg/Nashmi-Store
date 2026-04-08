@@ -4,9 +4,13 @@ namespace App\Listeners;
 
 use App\Events\OrderCreated;
 use App\Services\EmailTemplateService;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Bus\Queueable;
 
-class SendOrderCreatedEmail
+class SendOrderCreatedEmail implements ShouldQueue
 {
+    use Queueable;
+
     protected $emailTemplateService;
 
     public function __construct(EmailTemplateService $emailTemplateService)

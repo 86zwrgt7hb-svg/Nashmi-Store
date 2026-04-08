@@ -282,7 +282,7 @@ class ThemeController extends Controller
             ];
         })->toArray();
         
-        return Inertia::render('store/' . $theme, array_merge([
+        return Inertia::render('store/' . $theme, array_merge($this->getSharedInertiaData($request), [
             'config' => $storeData['config'],
             'categories' => $categories,
             'products' => $products,
@@ -787,5 +787,30 @@ class ThemeController extends Controller
         
         $pdf = Pdf::loadView('pdf.invoice', $data);
         return $pdf->download("invoice-{$orderNumber}.pdf");
+    }
+
+    /**
+     * Get shared Inertia data for subdomain/custom domain store pages
+     */
+    private function getSharedInertiaData($request): array
+    {
+        $superadminId = getSuperadminId();
+        $settings = $superadminId ? settings($superadminId) : [];
+        $globalSettings = $settings;
+        $globalSettings["base_url"] = config("app.url");
+        
+        // Remove sensitive keys
+        $sensitiveKeys = ["stripeKey","stripeSecret","paypalClientId","paypalSecret","razorpayKey","razorpaySecret","openaiApiKey","resendApiKey","smtpPassword"];
+        foreach ($sensitiveKeys as $key) { unset($globalSettings[$key]); }
+        
+        return [
+            "globalSettings" => $globalSettings,
+            "auth" => ["user" => $request->user()],
+            "ziggy" => ["url" => $request->schemeAndHttpHost(), "port" => null, "defaults" => [], "routes" => [], "location" => $request->url()],
+            "flash" => ["success" => null, "error" => null],
+            "stores" => [],
+            "isImpersonating" => false,
+            "is_demo" => config("app.is_demo", false),
+        ];
     }
 }

@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Filter, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import SafeHTML from '../../components/SafeHTML';
 
 export default function PlanRequestsPage() {
   const { t } = useTranslation();
@@ -239,7 +240,7 @@ export default function PlanRequestsPage() {
                   disabled={!link.url}
                   onClick={() => link.url && router.get(link.url)}
                 >
-                  {isTextLink ? t(label) : <span dangerouslySetInnerHTML={{ __html: link.label }} />}
+                  {isTextLink ? t(label) : <SafeHTML html={link.label} as="span" />}
                 </Button>
               );
             })}

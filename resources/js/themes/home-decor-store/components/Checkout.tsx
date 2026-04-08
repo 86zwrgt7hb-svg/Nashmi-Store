@@ -4,6 +4,7 @@ import { formatCurrency } from '../../../utils/currency-formatter';
 import { CheckoutProvider, useCheckoutContext } from '../../../contexts/CheckoutContext';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useStoreLanguage } from '../../shared/StoreLanguageContext';
+import SafeHTML from '../../../components/SafeHTML';
 
 interface Product {
   id: string;
@@ -397,7 +398,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
                             />
                             <div className="w-8 h-8 text-amber-600">
                               {method.icon ? (
-                                <div dangerouslySetInnerHTML={{ __html: method.icon }} />
+                                <SafeHTML html={method.icon} />
                               ) : (
                                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-3a2 2 0 00-2-2H9a2 2 0 00-2 2v3a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />

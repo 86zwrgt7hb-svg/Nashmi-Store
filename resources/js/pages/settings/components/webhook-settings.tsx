@@ -64,7 +64,6 @@ export default function WebhookSettings({
       const response = await axios.get(route('settings.webhooks.index'));
       setWebhookList(response.data);
     } catch (error) {
-      console.error('Failed to fetch webhooks:', error);
     } finally {
       setLoading(false);
     }
