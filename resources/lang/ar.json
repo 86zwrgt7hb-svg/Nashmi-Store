@@ -3552,5 +3552,11 @@
   "Review": "تقييم",
   "Manage your email notification preferences": "إدارة تفضيلات إشعارات البريد الإلكتروني",
   "Manage your push notification preferences": "إدارة تفضيلات الإشعارات الفورية",
-  "units": "وحدة"
+  "units": "وحدة",
+  "This SKU is already used by another product in your store": "هذا الرمز (SKU) مستخدم مسبقاً في منتج آخر بمتجرك",
+  "Insufficient stock for product: {{name}}. Only {{stock}} left.": "المخزن غير كافٍ للمنتج: {{name}}. المتبقي فقط: {{stock}}.",
+  "Recommended: 800x800px, square ratio for best display across all themes": "المقاس الموصى به: 800×800 بكسل، نسبة مربعة لأفضل عرض في جميع الثيمات",
+  "Recommended: 800x800px, up to 5 images for best results": "المقاس الموصى به: 800×800 بكسل، حتى 5 صور لأفضل النتائج",
+  "Recommended: 200x60px, PNG with transparent background": "المقاس الموصى به: 200×60 بكسل، بصيغة PNG بخلفية شفافة",
+  "Recommended: 64x64px, square PNG or ICO": "المقاس الموصى به: 64×64 بكسل، بصيغة PNG أو ICO مربعة"
 }
