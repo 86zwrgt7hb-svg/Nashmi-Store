@@ -29,6 +29,7 @@ class Plan extends Model
         'trial_day',
         'is_plan_enable',
         'is_default',
+        'is_lifetime',
         'module',
     ];
     
@@ -36,6 +37,7 @@ class Plan extends Model
         'themes' => 'array',
         'module' => 'array', 
         'is_default' => 'boolean',
+        'is_lifetime' => 'boolean',
         'price' => 'float',
         'yearly_price' => 'float',
     ];
@@ -63,16 +65,29 @@ class Plan extends Model
     /**
      * Get the price based on billing cycle
      *
-     * @param string $cycle 'monthly' or 'yearly'
+     * @param string $cycle 'monthly', 'yearly', or 'lifetime'
      * @return float
      */
     public function getPriceForCycle($cycle = 'monthly')
     {
+        // Lifetime plans always return the base price
+        if ($this->is_lifetime || $cycle === 'lifetime') {
+            return $this->price;
+        }
+
         if ($cycle === 'yearly' && $this->yearly_price) {
             return $this->yearly_price;
         }
         
         return $this->price;
+    }
+
+    /**
+     * Get the lifetime plan
+     */
+    public static function getLifetimePlan()
+    {
+        return self::where('is_lifetime', true)->first();
     }
     
     /**

@@ -49,6 +49,7 @@ class User extends BaseAuthenticatable implements MustVerifyEmail
         'plan_expire_date',
         'requested_plan',
         'plan_is_active',
+        'is_lifetime',
         'is_enable_login',
         'storage_limit',
         'mode',
@@ -99,6 +100,7 @@ class User extends BaseAuthenticatable implements MustVerifyEmail
             'store_archived' => 'boolean',
             'archived_at' => 'datetime',
             'plan_is_active' => 'integer',
+            'is_lifetime' => 'boolean',
             'is_active' => 'integer',
             'is_enable_login' => 'integer',
             'google2fa_enable' => 'integer',
@@ -164,11 +166,40 @@ class User extends BaseAuthenticatable implements MustVerifyEmail
     }
     
     /**
-     * Check if user is on free plan
+     * Check if user is on free plan (legacy - now checks if on trial)
      */
     public function isOnFreePlan()
     {
-        return $this->plan && $this->plan->is_default;
+        return $this->is_trial === 'yes' && !$this->is_lifetime;
+    }
+
+    /**
+     * Check if user has a lifetime license
+     */
+    public function hasLifetimeLicense()
+    {
+        return (bool) $this->is_lifetime;
+    }
+
+    /**
+     * Check if user is on active trial
+     */
+    public function isOnActiveTrial()
+    {
+        return $this->is_trial === 'yes' 
+            && $this->trial_expire_date 
+            && now()->isBefore(\Carbon\Carbon::parse($this->trial_expire_date));
+    }
+
+    /**
+     * Get remaining trial days
+     */
+    public function getTrialDaysLeft()
+    {
+        if (!$this->isOnActiveTrial()) {
+            return 0;
+        }
+        return max(0, (int) now()->diffInDays(\Carbon\Carbon::parse($this->trial_expire_date), false));
     }
     
     /**
@@ -188,6 +219,16 @@ class User extends BaseAuthenticatable implements MustVerifyEmail
      */
     public function hasActivePlan()
     {
+        // Lifetime users always have active plan
+        if ($this->is_lifetime && $this->plan_id && $this->plan_is_active) {
+            return true;
+        }
+
+        // Trial users with valid trial period
+        if ($this->isOnActiveTrial()) {
+            return true;
+        }
+
         return $this->plan_id && 
                $this->plan_is_active && 
                ($this->plan_expire_date === null || $this->plan_expire_date > now());
@@ -221,13 +262,23 @@ class User extends BaseAuthenticatable implements MustVerifyEmail
         if ($this->type !== 'company') {
             return false;
         }
+
+        // Lifetime users never need subscription
+        if ($this->is_lifetime) {
+            return false;
+        }
         
         // Check if user has no plan
         if (!$this->plan_id) {
             return true;
         }
+
+        // Active trial users don't need subscription yet
+        if ($this->isOnActiveTrial()) {
+            return false;
+        }
         
-        // Check if trial is expired
+        // Check if trial is expired (not lifetime = needs to pay)
         if ($this->isTrialExpired()) {
             return true;
         }

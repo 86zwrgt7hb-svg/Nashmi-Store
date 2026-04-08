@@ -145,7 +145,7 @@ class MediaController extends Controller
         
         $config = [
             'allowed_file_types' => $settings['storage_file_types'] ?? 'jpg,png,webp,gif',
-            'max_file_size_kb' => (int)($settings['storage_max_upload_size'] ?? 2048),
+            'max_file_size_kb' => (int)($settings['storage_max_upload_size'] ?? 5120), // 5MB default
         ];
         
         // Get all allowed file types from config
@@ -158,7 +158,7 @@ class MediaController extends Controller
                 'required',
                 'file',
                 'mimes:' . implode(',', $allowedTypes),
-                'max:' . min($config['max_file_size_kb'], 10240) // Cap at 10MB for safety
+                'max:' . min($config['max_file_size_kb'], 5120) // Cap at 5MB per file
             ],
         ], [
             'files.required' => __('Please select files to upload.'),
@@ -348,13 +348,28 @@ class MediaController extends Controller
     
     private function getUserStorageLimit($user)
     {
+        // Lifetime users have unlimited storage (controlled by per-file size limit)
+        if ($user->type === 'company' && $user->is_lifetime) {
+            return null; // null = unlimited
+        }
+
         if ($user->type === 'company' && $user->plan) {
+            // 0 = unlimited in the plan
+            if ($user->plan->storage_limit == 0) {
+                return null;
+            }
             return $user->plan->storage_limit * 1024 * 1024 * 1024;
         }
         
         if ($user->created_by) {
             $company = User::find($user->created_by);
+            if ($company && $company->is_lifetime) {
+                return null; // null = unlimited
+            }
             if ($company && $company->plan) {
+                if ($company->plan->storage_limit == 0) {
+                    return null;
+                }
                 return $company->plan->storage_limit * 1024 * 1024 * 1024;
             }
         }

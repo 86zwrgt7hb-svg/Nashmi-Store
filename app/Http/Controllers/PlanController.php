@@ -276,74 +276,60 @@ class PlanController extends Controller
     private function companyPlansView(Request $request)
     {
         $user = auth()->user();
-        // Use billing_cycle from request, or default to user's plan_duration
-        $billingCycle = $request->input('billing_cycle', $user->plan_duration ?? 'monthly');
         
-        $dbPlans = Plan::where('is_plan_enable', 'on')->get();
+        // Get the single lifetime plan
+        $lifetimePlan = Plan::getLifetimePlan() ?? Plan::getDefaultPlan();
         
-        $plans = $dbPlans->map(function ($plan) use ($billingCycle, $user) {
-            $price = $billingCycle === 'yearly' ? $plan->yearly_price : $plan->price;
-            
+        $plans = collect();
+        if ($lifetimePlan) {
             $features = [];
-            if ($plan->enable_custdomain === 'on') $features[] = 'Custom Domain';
-            if ($plan->enable_custsubdomain === 'on') $features[] = 'Subdomain';
-            if ($plan->pwa_business === 'on') $features[] = 'PWA';
-            if ($plan->enable_chatgpt === 'on') $features[] = 'AI Integration';
-            if ($plan->enable_shipping_method === 'on') $features[] = 'Shipping Method';
-            if ($plan->enable_pos === 'on') $features[] = 'POS System';
+            if ($lifetimePlan->enable_custdomain === 'on') $features[] = 'Custom Domain';
+            if ($lifetimePlan->enable_custsubdomain === 'on') $features[] = 'Subdomain';
+            if ($lifetimePlan->pwa_business === 'on') $features[] = 'PWA';
+            if ($lifetimePlan->enable_chatgpt === 'on') $features[] = 'AI Integration';
+            if ($lifetimePlan->enable_shipping_method === 'on') $features[] = 'Shipping Method';
+            if ($lifetimePlan->enable_pos === 'on') $features[] = 'POS System';
             
-            return [
-                'id' => $plan->id,
-                'name' => $plan->name,
-                'price' => $price,
-                'monthly_price' => $plan->price,
-                'yearly_price' => $plan->yearly_price,
-                'formatted_price' => $this->formatPlanPrice($price),
-                'duration' => $billingCycle === 'yearly' ? 'Yearly' : 'Monthly',
-                'description' => $plan->description,
-                'trial_days' => $plan->trial_day,
+            $plans = collect([[
+                'id' => $lifetimePlan->id,
+                'name' => $lifetimePlan->name,
+                'price' => $lifetimePlan->price,
+                'monthly_price' => $lifetimePlan->price,
+                'yearly_price' => $lifetimePlan->price,
+                'formatted_price' => $this->formatPlanPrice($lifetimePlan->price),
+                'duration' => 'Lifetime',
+                'description' => $lifetimePlan->description,
+                'trial_days' => $lifetimePlan->trial_day,
                 'features' => $features,
                 'stats' => [
-                    'stores' => ($plan->max_stores ?? $plan->business ?? 0) == 0 ? __('Unlimited') : ($plan->max_stores ?? $plan->business ?? 0),
-                    'users_per_store' => ($plan->max_users_per_store ?? $plan->max_users ?? 0) == 0 ? __('Unlimited') : ($plan->max_users_per_store ?? $plan->max_users ?? 0),
-                    'products_per_store' => ($plan->max_products_per_store ?? 0) == 0 ? __('Unlimited') : ($plan->max_products_per_store ?? 0),
-                    'storage' => ($plan->storage_limit ?? 0) == 0 ? __('Unlimited') : $plan->storage_limit . ' GB',
-                    'templates' => $this->getThemeCount($plan->themes)
+                    'stores' => __('Unlimited'),
+                    'users_per_store' => __('Unlimited'),
+                    'products_per_store' => __('Unlimited'),
+                    'storage' => __('Unlimited'),
+                    'templates' => $this->getThemeCount($lifetimePlan->themes)
                 ],
-                'is_current' => $user->plan_id == $plan->id,
-                'is_trial_available' => $plan->is_trial === 'on' && !$user->trial_used,
-                'is_default' => $plan->is_default,
-                'is_free' => $plan->price == 0,
-                'recommended' => false // Default to false
-            ];
-        });
-        
-        // Mark the plan with most subscribers as recommended
-        $planSubscriberCounts = Plan::withCount('users')->get()->pluck('users_count', 'id');
-        if ($planSubscriberCounts->isNotEmpty()) {
-            $mostSubscribedPlanId = $planSubscriberCounts->keys()->sortByDesc(function($planId) use ($planSubscriberCounts) {
-                return $planSubscriberCounts[$planId];
-            })->first();
-            
-            $plans = $plans->map(function($plan) use ($mostSubscribedPlanId) {
-                if ($plan['id'] == $mostSubscribedPlanId) {
-                    $plan['recommended'] = true;
-                }
-                return $plan;
-            });
+                'is_current' => $user->is_lifetime,
+                'is_trial_available' => false,
+                'is_default' => true,
+                'is_free' => false,
+                'is_lifetime' => true,
+                'recommended' => true
+            ]]);
         }
         
         return Inertia::render('plans/index', [
             'plans' => $plans,
-            'billingCycle' => $billingCycle,
+            'billingCycle' => 'lifetime',
             'currentPlan' => $user->plan ? [
                 ...$user->plan->toArray(),
-                'duration' => $user->plan_duration ?? 'monthly'
+                'duration' => $user->plan_duration ?? 'lifetime'
             ] : null,
             'userTrialUsed' => (bool)$user->trial_used,
-            'userOnTrial' => in_array($user->is_trial, ['yes', '1'], true) && $user->trial_expire_date && now()->isBefore(\Carbon\Carbon::parse($user->trial_expire_date)),
-            'trialDaysLeft' => (!$user->trial_used && $user->trial_expire_date && now()->isBefore(\Carbon\Carbon::parse($user->trial_expire_date))) ? max(0, (int)now()->diffInDays(\Carbon\Carbon::parse($user->trial_expire_date), false)) : 0,
-            'trialPeriodActive' => !$user->trial_used && $user->trial_expire_date && now()->isBefore(\Carbon\Carbon::parse($user->trial_expire_date))
+            'userOnTrial' => $user->isOnActiveTrial(),
+            'trialDaysLeft' => $user->getTrialDaysLeft(),
+            'trialPeriodActive' => $user->isOnActiveTrial(),
+            'isLifetime' => (bool)$user->is_lifetime,
+            'isTrialExpired' => $user->isTrialExpired() && !$user->is_lifetime,
         ]);
     }
     
@@ -399,15 +385,15 @@ class PlanController extends Controller
     {
         $request->validate([
             'plan_id' => 'required|exists:plans,id',
-            'billing_cycle' => 'required|in:monthly,yearly'
+            'billing_cycle' => 'nullable|in:monthly,yearly,lifetime'
         ]);
         
         $user = auth()->user();
         $plan = Plan::findOrFail($request->plan_id);
         
-        // Check if user already has this plan
-        if ($user->plan_id == $plan->id && $user->hasActivePlan()) {
-            return back()->withErrors(['error' => __('You already have this plan active.')]);
+        // For lifetime plans, check if user already has lifetime
+        if ($plan->is_lifetime && $user->is_lifetime) {
+            return back()->withErrors(['error' => __('You already have a lifetime license.')]);
         }
         
         // Check if plan is enabled
@@ -415,23 +401,27 @@ class PlanController extends Controller
             return back()->withErrors(['error' => __('This plan is not available for subscription.')]);
         }
         
+        // Determine billing cycle
+        $billingCycle = $plan->is_lifetime ? 'lifetime' : ($request->billing_cycle ?? 'lifetime');
+        
         try {
-            // Use helper function to calculate proper pricing
-            $pricing = calculatePlanPricing($plan, null, $request->billing_cycle);
+            // For lifetime plans, price is always the plan price
+            $originalPrice = $plan->price;
+            $finalPrice = $plan->price;
             
             $planOrder = \App\Models\PlanOrder::create([
                 'user_id' => $user->id,
                 'plan_id' => $plan->id,
-                'billing_cycle' => $request->billing_cycle,
-                'original_price' => $pricing['original_price'],
-                'final_price' => $pricing['final_price'],
+                'billing_cycle' => $billingCycle,
+                'original_price' => $originalPrice,
+                'final_price' => $finalPrice,
                 'status' => 'approved'
             ]);
             
             // Assign plan to user with proper resource management
-            assignPlanToUser($user, $plan, $request->billing_cycle);
+            assignPlanToUser($user, $plan, $billingCycle);
             
-            return back()->with('success', __('Plan assigned successfully'));
+            return back()->with('success', __('Lifetime license activated successfully! Your store is now active forever.'));
             
         } catch (\Exception $e) {
             \Log::error('Plan subscription failed: ' . $e->getMessage(), ['user_id' => $user->id, 'plan_id' => $plan->id]);

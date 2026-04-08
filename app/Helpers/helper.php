@@ -1665,7 +1665,9 @@ if (!function_exists('storeUrl')) {
 if (! function_exists('assignPlanToUser')) {
     function assignPlanToUser($user, $plan, $billingCycle)
     {
-        $expiresAt = $billingCycle === 'yearly' ? now()->addYear() : now()->addMonth();
+        // For lifetime plans, no expiration date
+        $isLifetime = $plan->is_lifetime || $billingCycle === 'lifetime';
+        $expiresAt = $isLifetime ? null : ($billingCycle === 'yearly' ? now()->addYear() : now()->addMonth());
         
         $oldPlan = $user->plan;
         
@@ -1674,12 +1676,19 @@ if (! function_exists('assignPlanToUser')) {
             
             $updated = $user->update([
                 'plan_id' => $plan->id,
-                'plan_duration' => $billingCycle,
+                'plan_duration' => $isLifetime ? 'lifetime' : $billingCycle,
                 'plan_expire_date' => $expiresAt,
                 'plan_is_active' => 1,
                 'is_trial' => 'no',
                 'trial_expire_date' => null,
+                'trial_used' => true,
+                'is_lifetime' => $isLifetime,
             ]);
+
+            // Re-enable all stores if they were disabled
+            if ($updated && $isLifetime) {
+                \App\Http\Middleware\CheckPlanAccess::setUserStoresOnline($user);
+            }
             
             if ($updated) {
                 $user = $user->fresh();

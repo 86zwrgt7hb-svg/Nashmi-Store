@@ -181,6 +181,7 @@ class HandleInertiaRequests extends Middleware
                     'stores' => $stores,
                     'trial' => $trialData,
                     'suspension' => $suspensionData,
+                    'is_lifetime' => $user ? (bool) $user->is_lifetime : false,
                     'email_verified' => $user ? $user->hasVerifiedEmail() : false,
                     'email_verification_enabled' => (bool) getSetting('emailVerification', false),
                 ];

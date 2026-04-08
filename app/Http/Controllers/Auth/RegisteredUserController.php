@@ -91,6 +91,9 @@ class RegisteredUserController extends Controller
             }
         }
 
+        // Get the lifetime plan for trial assignment
+        $lifetimePlan = Plan::getLifetimePlan() ?? Plan::getDefaultPlan();
+
         $userData = [
             'name' => $request->name,
             'email' => $request->email,
@@ -100,6 +103,13 @@ class RegisteredUserController extends Controller
             'is_enable_login' => 1,
             'created_by' => 0,
             'plan_is_active' => 1,
+            'plan_id' => $lifetimePlan ? $lifetimePlan->id : null,
+            'is_trial' => 'yes',
+            'trial_day' => 7,
+            'trial_expire_date' => now()->addDays(7),
+            'trial_used' => false,
+            'is_lifetime' => false,
+            'plan_expire_date' => now()->addDays(7),
         ];
         
         // Handle referral code

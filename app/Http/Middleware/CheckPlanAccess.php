@@ -22,52 +22,80 @@ class CheckPlanAccess
             return $next($request);
         }
 
+        // Lifetime users always have full access
+        if ($user->type === 'company' && $user->is_lifetime) {
+            return $next($request);
+        }
+
         // Only company users need plan checks
         if ($user->type !== 'company') {
             $company = User::find($user->created_by);
-            if ($company && $company->type === 'company' && $company->isPlanExpired()) {
-                auth()->logout();
-                return redirect()->route('login')->with('error', __('Access denied. Only company users can access this area.'));
+            if ($company && $company->type === 'company') {
+                // Sub-users of lifetime users have access
+                if ($company->is_lifetime) {
+                    return $next($request);
+                }
+                // Sub-users of expired trial/plan users get logged out
+                if ($company->isTrialExpired() || $company->isPlanExpired()) {
+                    auth()->logout();
+                    return redirect()->route('login')->with('error', __('Access denied. The store owner\'s subscription has expired.'));
+                }
             }
         }
 
-        // Check if user needs plan subscription
+        // Check if user needs plan subscription (trial expired, no lifetime)
         if ($user->needsPlanSubscription()) {
             $message = __('Please subscribe to a plan to continue.');
             
             if ($user->isTrialExpired()) {
-                $message = __('Your trial period has expired. Please subscribe to a plan to continue.');
-                $defaultPlan = Plan::getDefaultPlan();
-                if ($defaultPlan) {
-                    $user->update([
-                        'plan_id' => $defaultPlan->id,
-                        'is_trial' => 'no',
-                        'trial_expire_date' => null,
-                        'plan_is_active' => 1
-                    ]);
-                    enforcePlanLimitations($user->fresh());
-                } else {
-                    \Log::warning('No default plan found for expired trial user', ['user_id' => $user->id]);
-                }
+                $message = __('Your 7-day free trial has ended. Subscribe now to keep your store online!');
+                
+                // Mark trial as used and deactivate plan
+                $user->update([
+                    'is_trial' => 'no',
+                    'trial_used' => true,
+                    'plan_is_active' => 0,
+                ]);
+
+                // Set all user's stores to offline
+                $this->setUserStoresOffline($user);
             } elseif ($user->isPlanExpired()) {
                 $message = __('Your plan has expired. Please renew your subscription.');
-                $defaultPlan = Plan::getDefaultPlan();
-                if ($defaultPlan) {
-                    $user->update([
-                        'plan_id' => $defaultPlan->id,
-                        'plan_expire_date' => null,
-                        'plan_is_active' => 1
-                    ]);
-                    enforcePlanLimitations($user->fresh());
-                } else {
-                    \Log::warning('No default plan found for expired plan user', ['user_id' => $user->id]);
-                }
+                
+                $user->update([
+                    'plan_is_active' => 0,
+                ]);
+
+                // Set all user's stores to offline
+                $this->setUserStoresOffline($user);
             }
             
             return redirect()->route('plans.index')->with('error', $message);
         }
 
         return $next($request);
+    }
+
+    /**
+     * Set all stores owned by a user to offline status
+     */
+    private function setUserStoresOffline($user)
+    {
+        $stores = $user->stores;
+        foreach ($stores as $store) {
+            \App\Models\StoreConfiguration::disableStoreDueToPlan($store->id);
+        }
+    }
+
+    /**
+     * Re-enable all stores for a user (after payment)
+     */
+    public static function setUserStoresOnline($user)
+    {
+        $stores = $user->stores;
+        foreach ($stores as $store) {
+            \App\Models\StoreConfiguration::enableStoreAfterPlanUpgrade($store->id);
+        }
     }
     
     /**

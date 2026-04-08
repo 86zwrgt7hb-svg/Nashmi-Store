@@ -50,53 +50,45 @@ class LandingPageController extends Controller
         
         $landingSettings = LandingPageSetting::getSettings();
         
-        $plans = Plan::where('is_plan_enable', 'on')->get()->map(function ($plan) {
-            // Build ALL features with enabled/disabled status
+        // Get the single lifetime plan
+        $lifetimePlan = Plan::getLifetimePlan() ?? Plan::where('is_plan_enable', 'on')->first();
+        
+        $plans = collect();
+        if ($lifetimePlan) {
             $allFeatures = [
-                ['name' => __('Custom Domain'), 'enabled' => $plan->enable_custdomain === 'on'],
-                ['name' => __('Subdomain'), 'enabled' => $plan->enable_custsubdomain === 'on'],
-                ['name' => __('PWA'), 'enabled' => $plan->pwa_business === 'on'],
-                ['name' => __('AI Integration'), 'enabled' => $plan->enable_chatgpt === 'on'],
-                ['name' => __('Shipping Method'), 'enabled' => $plan->enable_shipping_method === 'on'],
-                ['name' => __('POS System'), 'enabled' => $plan->enable_pos === 'on'],
-                ['name' => __('Remove Branding'), 'enabled' => $plan->enable_branding === 'off'],
+                ['name' => __('Custom Domain'), 'enabled' => $lifetimePlan->enable_custdomain === 'on'],
+                ['name' => __('Subdomain'), 'enabled' => $lifetimePlan->enable_custsubdomain === 'on'],
+                ['name' => __('PWA'), 'enabled' => $lifetimePlan->pwa_business === 'on'],
+                ['name' => __('AI Integration'), 'enabled' => $lifetimePlan->enable_chatgpt === 'on'],
+                ['name' => __('Shipping Method'), 'enabled' => $lifetimePlan->enable_shipping_method === 'on'],
+                ['name' => __('POS System'), 'enabled' => $lifetimePlan->enable_pos === 'on'],
+                ['name' => __('Remove Branding'), 'enabled' => $lifetimePlan->enable_branding === 'off'],
             ];
             
-            // Legacy features array (only enabled ones)
             $features = array_values(array_map(fn($f) => $f['name'], array_filter($allFeatures, fn($f) => $f['enabled'])));
             
-            return [
-                'id' => $plan->id,
-                'name' => $plan->name,
-                'price' => $plan->price,
-                'yearly_price' => $plan->yearly_price,
-                'duration' => 'both', // Support both monthly and yearly
-                'description' => $plan->description,
+            $plans = collect([[
+                'id' => $lifetimePlan->id,
+                'name' => $lifetimePlan->name,
+                'price' => $lifetimePlan->price,
+                'yearly_price' => $lifetimePlan->price,
+                'duration' => 'lifetime',
+                'description' => $lifetimePlan->description,
                 'features' => $features,
                 'allFeatures' => $allFeatures,
                 'stats' => [
-                    'businesses' => $plan->max_stores ?? 0,
-                    'users' => $plan->max_users_per_store ?? 0,
-                    'products_per_store' => $plan->max_products_per_store ?? 0,
-                    'storage' => ($plan->storage_limit >= 1 ? $plan->storage_limit . ' GB' : ($plan->storage_limit * 1024) . ' MB'),
-                    'templates' => is_array($plan->themes) ? count($plan->themes) : 7,
+                    'businesses' => __('Unlimited'),
+                    'users' => __('Unlimited'),
+                    'products_per_store' => __('Unlimited'),
+                    'storage' => __('Unlimited'),
+                    'templates' => is_array($lifetimePlan->themes) ? count($lifetimePlan->themes) : 7,
                     'bio_links' => 'Unlimited',
                     'bio_links_templates' => '14',
                 ],
-                'is_plan_enable' => $plan->is_plan_enable,
-                'is_popular' => false
-            ];
-        });
-        
-        // Pro plan is always marked as "Most Popular"
-        $popularPlanId = 2;
-        
-        $plans = $plans->map(function($plan) use ($popularPlanId) {
-            if ($plan['id'] == $popularPlanId) {
-                $plan['is_popular'] = true;
-            }
-            return $plan;
-        });
+                'is_plan_enable' => $lifetimePlan->is_plan_enable,
+                'is_popular' => true
+            ]]);
+        }
         
         // Get featured stores instead of campaigns
         $featuredStores = Store::whereHas('configurations', function($q) {
