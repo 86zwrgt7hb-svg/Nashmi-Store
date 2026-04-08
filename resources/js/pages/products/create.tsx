@@ -26,8 +26,6 @@ export default function CreateProduct() {
     description_ar: '',
     specifications: '',
     specifications_ar: '',
-    details: '',
-    details_ar: '',
     price: '',
     sale_price: '',
     stock: 0,
@@ -346,23 +344,7 @@ export default function CreateProduct() {
                     placeholder={t('Enter product specifications in English...')}
                   />
                 </div>
-                <div>
-                  <div className="flex items-center justify-between mb-1">
-                    <Label>{t('Product Details (English)')}</Label>
-                    <AiGenerateButton
-                      contextName={formData.name}
-                      fieldType="details"
-                      language="en"
-                      categoryName={getSelectedCategoryName()}
-                      onGenerated={(content) => handleSelectChange('details', content)}
-                    />
-                  </div>
-                  <RichTextEditor
-                    value={formData.details}
-                    onChange={(value) => handleSelectChange('details', value)}
-                    placeholder={t('Enter additional product details in English...')}
-                  />
-                </div>
+
               </CardContent>
             </Card>
             <Card>
@@ -404,23 +386,7 @@ export default function CreateProduct() {
                     placeholder={t('أدخل مواصفات المنتج بالعربية...')}
                   />
                 </div>
-                <div>
-                  <div className="flex items-center justify-between mb-1">
-                    <Label>{t('تفاصيل المنتج (عربي)')}</Label>
-                    <AiGenerateButton
-                      contextName={formData.name_ar || formData.name}
-                      fieldType="details"
-                      language="ar"
-                      categoryName={getSelectedCategoryName()}
-                      onGenerated={(content) => handleSelectChange('details_ar', content)}
-                    />
-                  </div>
-                  <RichTextEditor
-                    value={formData.details_ar}
-                    onChange={(value) => handleSelectChange('details_ar', value)}
-                    placeholder={t('أدخل تفاصيل المنتج بالعربية...')}
-                  />
-                </div>
+
               </CardContent>
             </Card>
           </TabsContent>

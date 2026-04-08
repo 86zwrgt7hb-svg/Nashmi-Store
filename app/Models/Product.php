@@ -19,8 +19,6 @@ class Product extends Model
         'description_ar',
         'specifications',
         'specifications_ar',
-        'details',
-        'details_ar',
         'price',
         'sale_price',
         'stock',

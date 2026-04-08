@@ -26,8 +26,6 @@ export default function EditProduct() {
     description_ar: product.description_ar || '',
     specifications: product.specifications || '',
     specifications_ar: product.specifications_ar || '',
-    details: product.details || '',
-    details_ar: product.details_ar || '',
     price: product.price || '',
     sale_price: product.sale_price || '',
     stock: product.stock || 0,
@@ -51,8 +49,6 @@ export default function EditProduct() {
         description_ar: product.description_ar || '',
         specifications: product.specifications || '',
         specifications_ar: product.specifications_ar || '',
-        details: product.details || '',
-        details_ar: product.details_ar || '',
         price: product.price || '',
         sale_price: product.sale_price || '',
         stock: product.stock || 0,
@@ -372,15 +368,7 @@ export default function EditProduct() {
                     placeholder={t('Enter product specifications in English...')}
                   />
                 </div>
-                <div>
-                  <Label>{t('Product Details (English)')}</Label>
-                  <RichTextEditor
-                    key={`details-${product.id}`}
-                    value={formData.details}
-                    onChange={(value) => handleSelectChange('details', value)}
-                    placeholder={t('Enter additional product details in English...')}
-                  />
-                </div>
+
               </CardContent>
             </Card>
             <Card>
@@ -406,15 +394,7 @@ export default function EditProduct() {
                     placeholder={t('أدخل مواصفات المنتج بالعربية...')}
                   />
                 </div>
-                <div>
-                  <Label>{t('تفاصيل المنتج (عربي)')}</Label>
-                  <RichTextEditor
-                    key={`details_ar-${product.id}`}
-                    value={formData.details_ar}
-                    onChange={(value) => handleSelectChange('details_ar', value)}
-                    placeholder={t('أدخل تفاصيل المنتج بالعربية...')}
-                  />
-                </div>
+
               </CardContent>
             </Card>
           </TabsContent>

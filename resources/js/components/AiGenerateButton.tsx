@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 
 interface AiGenerateButtonProps {
   contextName: string;
-  fieldType: 'description' | 'specifications' | 'details' | 'category_description' | 'seo_description' | 'meta_keywords';
+  fieldType: 'description' | 'specifications' | 'category_description' | 'seo_description' | 'meta_keywords';
   language: 'en' | 'ar';
   categoryName?: string;
   onGenerated: (content: string) => void;

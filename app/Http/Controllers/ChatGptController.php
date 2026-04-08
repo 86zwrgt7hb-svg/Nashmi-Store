@@ -113,7 +113,7 @@ class ChatGptController extends Controller
     {
         $request->validate([
             'context_name' => 'required|string|max:500',
-            'field_type' => 'required|string|in:description,specifications,details,category_description,seo_description,meta_keywords',
+            'field_type' => 'required|string|in:description,specifications,category_description,seo_description,meta_keywords',
             'language' => 'required|string|in:en,ar',
             'category_name' => 'nullable|string|max:200',
         ]);
@@ -142,7 +142,6 @@ class ChatGptController extends Controller
             $maxTokens = match($fieldType) {
                 'description' => 300,
                 'specifications' => 250,
-                'details' => 250,
                 'category_description' => 100,
                 'seo_description' => 60,
                 'meta_keywords' => 50,
@@ -196,9 +195,6 @@ class ChatGptController extends Controller
             'specifications' => $language === 'ar'
                 ? "اكتب مواصفات تقنية مفصلة للمنتج \"{$name}\"{$categoryContext}. استخدم نقاط واضحة ومختصرة تشمل المواد والأبعاد والميزات الرئيسية."
                 : "Write detailed technical specifications for the product \"{$name}\"{$categoryContext}. Use clear, concise bullet points covering materials, dimensions, and key features.",
-            'details' => $language === 'ar'
-                ? "اكتب تفاصيل إضافية للمنتج \"{$name}\"{$categoryContext}. تشمل طريقة الاستخدام، نصائح العناية، ومعلومات الشحن والإرجاع."
-                : "Write additional details for the product \"{$name}\"{$categoryContext}. Include usage instructions, care tips, and shipping/return information.",
             'category_description' => $language === 'ar'
                 ? "اكتب وصفاً قصيراً وجذاباً لفئة المنتجات \"{$name}\". جملتين إلى ثلاث جمل تصف الفئة وتشجع التصفح."
                 : "Write a short, engaging description for the product category \"{$name}\". 2-3 sentences describing the category and encouraging browsing.",

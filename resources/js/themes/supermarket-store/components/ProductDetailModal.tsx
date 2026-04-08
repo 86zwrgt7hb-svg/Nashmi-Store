@@ -43,7 +43,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 }) => {
   const [quantity, setQuantity] = useState(1);
   const [showReviewModal, setShowReviewModal] = useState(false);
-  const [activeTab, setActiveTab] = useState('details');
+  const [activeTab, setActiveTab] = useState('info');
   const [selectedVariants, setSelectedVariants] = useState<{[key: string]: string}>({});
   const { getLocalizedField, isArabic } = useStoreLanguage();
   const productName = getLocalizedField(product, 'name');
@@ -240,14 +240,14 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   <div className="border-b border-gray-200">
                     <div className="flex gap-3 sm:gap-4 md:gap-6">
                       <button
-                        onClick={() => setActiveTab('details')}
+                        onClick={() => setActiveTab('info')}
                         className={`pb-2 sm:pb-3 text-xs sm:text-sm font-medium border-b-2 transition-colors ${
-                          activeTab === 'details' 
+                          activeTab === 'info' 
                             ? 'border-green-500 text-green-600' 
                             : 'border-transparent text-gray-500 hover:text-gray-700'
                         }`}
                       >
-                        Details
+                        {isArabic ? 'المعلومات' : 'Info'}
                       </button>
                       {product.description && (
                         <button
@@ -264,7 +264,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 
                   {/* Tab Content */}
                   <div>
-                    {activeTab === 'details' && (
+                    {activeTab === 'info' && (
                       <div className="space-y-3 sm:space-y-4">
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm">
                           <div className="flex justify-between sm:block">

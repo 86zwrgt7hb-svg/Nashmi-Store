@@ -43,7 +43,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 }) => {
   const [quantity, setQuantity] = useState(1);
   const [showReviewModal, setShowReviewModal] = useState(false);
-  const [activeTab, setActiveTab] = useState('details');
+  const [activeTab, setActiveTab] = useState('info');
   const [selectedVariants, setSelectedVariants] = useState<{[key: string]: string}>({});
   const { getLocalizedField, isArabic } = useStoreLanguage();
   const productName = getLocalizedField(product, 'name');
@@ -238,14 +238,14 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 <div>
                   <div className="flex gap-2 md:gap-4 border-b-2 border-purple-100">
                     <button
-                      onClick={() => setActiveTab('details')}
+                      onClick={() => setActiveTab('info')}
                       className={`pb-1 md:pb-2 text-xs md:text-sm font-bold border-b-2 ${
-                        activeTab === 'details' 
+                        activeTab === 'info' 
                           ? 'border-purple-400 text-purple-700' 
                           : 'border-transparent text-purple-400'
                       }`}
                     >
-                      Details
+                      {isArabic ? 'المعلومات' : 'Info'}
                     </button>
                     {product.description && (
                       <button
@@ -260,7 +260,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   </div>
 
                   <div className="mt-2 md:mt-4">
-                    {activeTab === 'details' && (
+                    {activeTab === 'info' && (
                       <div className="space-y-2 md:space-y-3">
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3 text-xs md:text-sm">
                           <div>

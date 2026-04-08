@@ -47,7 +47,7 @@ export default function ShowProduct() {
 
   return (
     <PageTemplate 
-      title={t('Product Details')}
+      title={t('Product Info')}
       url="/products/show"
       actions={pageActions}
       breadcrumbs={[
@@ -143,7 +143,7 @@ export default function ShowProduct() {
         <div className="grid gap-6 md:grid-cols-2">
           <Card>
             <CardHeader>
-              <CardTitle>{t('Product Details')}</CardTitle>
+              <CardTitle>{t('Product Info')}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               <div className="flex justify-between">
@@ -226,16 +226,6 @@ export default function ShowProduct() {
           </Card>
         )}
 
-        {product.details && (
-          <Card>
-            <CardHeader>
-              <CardTitle>{t('Product Details')}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <SafeHTML html={product.details} className="prose max-w-none" />
-            </CardContent>
-          </Card>
-        )}
 
         {product.variants && product.variants.length > 0 && (
           <Card>

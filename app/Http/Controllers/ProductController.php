@@ -89,7 +89,6 @@ class ProductController extends Controller
             'sku' => 'nullable|string|max:100',
             'description' => 'nullable|string',
             'specifications' => 'nullable|string',
-            'details' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'sale_price' => 'nullable|numeric|min:0',
             'stock' => 'required|integer|min:0',
@@ -112,8 +111,6 @@ class ProductController extends Controller
         $product->description_ar = $request->description_ar;
         $product->specifications = $request->specifications;
         $product->specifications_ar = $request->specifications_ar;
-        $product->details = $request->details;
-        $product->details_ar = $request->details_ar;
         $product->price = $request->price;
         $product->sale_price = $request->sale_price;
         $product->stock = $request->stock;
@@ -209,7 +206,6 @@ class ProductController extends Controller
             'sku' => 'nullable|string|max:100',
             'description' => 'nullable|string',
             'specifications' => 'nullable|string',
-            'details' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'sale_price' => 'nullable|numeric|min:0',
             'stock' => 'required|integer|min:0',
@@ -251,8 +247,6 @@ class ProductController extends Controller
         $product->description_ar = $request->description_ar ?? $product->description;
         $product->specifications = $request->specifications;
         $product->specifications_ar = $request->specifications_ar ?? $product->specifications;
-        $product->details = $request->details;
-        $product->details_ar = $request->details_ar ?? $product->details;
         $product->price = $request->price;
         $product->sale_price = $request->sale_price;
         $product->stock = $request->stock;
