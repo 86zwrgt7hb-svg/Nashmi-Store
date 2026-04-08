@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from '@inertiajs/react';
-import { ArrowRight, Play, Sparkles, TrendingUp, ShoppingBag, Users, BarChart3 } from 'lucide-react';
+import { ArrowRight, Play, Sparkles, Crown, Shield, Infinity, Clock, CreditCard, ShoppingBag, Users, BarChart3, TrendingUp } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 interface HeroSectionProps {
@@ -24,12 +24,22 @@ export default function HeroSection({ settings, sectionData, brandColor = '#6366
   const secondaryColor = 'var(--secondary-color, #8b5cf6)';
 
   const tx = {
-    title: isRTL ? 'أطلق متجرك الإلكتروني في دقائق' : (sectionData.title || 'Launch Your Online Store in Minutes'),
-    subtitle: isRTL ? 'أنشئ وأدر متاجر إلكترونية متعددة مع منصتنا القوية للتجارة الإلكترونية.' : (sectionData.subtitle || 'Create, customize, and manage multiple online stores with our powerful e-commerce platform.'),
-    primaryBtn: isRTL ? 'ابدأ التجربة المجانية' : (sectionData.primary_button_text || 'Start Free Trial'),
-    secondaryBtn: isRTL ? 'تسجيل الدخول' : (sectionData.secondary_button_text || 'Login'),
-    announcement: isRTL ? 'جديد: لوحة تحليلات متقدمة' : (sectionData.announcement_text || 'New: Advanced Analytics Dashboard'),
-    stats: isRTL ? [] : [],
+    announcement: isRTL ? 'عرض حصري - ادفع مرة واحدة فقط' : 'Exclusive Offer - Pay Once, Own Forever',
+    titleLine1: isRTL ? 'امتلك متجرك' : 'Own Your Store',
+    titleLine2: isRTL ? 'للأبد' : 'Forever',
+    subtitle: isRTL
+      ? 'متجر إلكتروني احترافي بـ 499 دينار فقط. استضافة مجانية مدى الحياة، دعم فني، وتحديثات مستمرة. بدون أي رسوم شهرية أو سنوية.'
+      : 'A professional online store for just 499 JOD. Free lifetime hosting, support, and updates. No monthly or yearly fees ever.',
+    primaryBtn: isRTL ? 'ابدأ تجربتك المجانية' : 'Start Your Free Trial',
+    secondaryBtn: isRTL ? 'تسجيل الدخول' : 'Login',
+    trialNote: isRTL ? '7 أيام مجاناً - بدون بطاقة ائتمان' : '7 days free - No credit card required',
+    priceTag: '499',
+    currency: isRTL ? 'دينار' : 'JOD',
+    oneTime: isRTL ? 'دفعة واحدة' : 'One-time',
+    badge1: isRTL ? 'استضافة مجانية' : 'Free Hosting',
+    badge2: isRTL ? 'دعم مدى الحياة' : 'Lifetime Support',
+    badge3: isRTL ? 'بدون رسوم شهرية' : 'No Monthly Fees',
+    badge4: isRTL ? 'كل شي غير محدود' : 'Everything Unlimited',
     dashboard: isRTL ? 'لوحة تحكم نشمي ستور' : 'Nashmi Store Dashboard',
     totalStores: isRTL ? 'إجمالي المتاجر' : 'Total Stores',
     revenue: isRTL ? 'الإيرادات' : 'Revenue',
@@ -37,11 +47,8 @@ export default function HeroSection({ settings, sectionData, brandColor = '#6366
     storeManagement: isRTL ? 'إدارة المتاجر' : 'Store Management',
     active: isRTL ? 'نشط' : 'Active',
     pending: isRTL ? 'قيد الانتظار' : 'Pending',
+    lifetimeBadge: isRTL ? 'مدى الحياة' : 'LIFETIME',
   };
-
-  const titleWords = tx.title.split(' ');
-  const firstHalf = titleWords.slice(0, Math.ceil(titleWords.length / 2)).join(' ');
-  const secondHalf = titleWords.slice(Math.ceil(titleWords.length / 2)).join(' ');
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-20" dir={isRTL ? 'rtl' : 'ltr'}>
@@ -58,28 +65,59 @@ export default function HeroSection({ settings, sectionData, brandColor = '#6366
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Left Content */}
           <div className={`text-center lg:${isRTL ? 'text-right' : 'text-left'} space-y-8`}>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border border-gray-200/60 bg-white/60 backdrop-blur-sm text-gray-700 shadow-sm">
-              <Sparkles className="w-4 h-4" style={{ color: brandColor }} />
+            {/* Announcement Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border border-amber-200/60 bg-amber-50/60 backdrop-blur-sm text-amber-700 shadow-sm">
+              <Crown className="w-4 h-4 text-amber-500" />
               {tx.announcement}
             </div>
 
+            {/* Main Title */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-[1.1] tracking-tight">
-              <span className="text-gray-900">{firstHalf}</span>
+              <span className="text-gray-900">{tx.titleLine1}</span>
               <br />
               <span className="bg-gradient-to-r bg-clip-text text-transparent" style={{ backgroundImage: `linear-gradient(135deg, ${brandColor}, ${secondaryColor})` }}>
-                {secondHalf}
+                {tx.titleLine2}
               </span>
             </h1>
 
+            {/* Price Highlight */}
+            <div className={`flex items-center gap-4 justify-center lg:${isRTL ? 'justify-end' : 'justify-start'}`}>
+              <div className="flex items-baseline gap-2">
+                <span className="text-5xl sm:text-6xl font-black bg-gradient-to-r bg-clip-text text-transparent" style={{ backgroundImage: `linear-gradient(135deg, ${brandColor}, ${secondaryColor})` }}>
+                  {tx.priceTag}
+                </span>
+                <div className="flex flex-col">
+                  <span className="text-xl font-bold text-gray-700">{tx.currency}</span>
+                  <span className="text-sm text-gray-400 font-medium">{tx.oneTime}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Subtitle */}
             <p className={`text-lg sm:text-xl text-gray-500 leading-relaxed max-w-xl mx-auto lg:${isRTL ? 'mr-0' : 'ml-0'}`}>
               {tx.subtitle}
             </p>
 
+            {/* Trust Badges */}
+            <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
+              {[
+                { icon: Shield, text: tx.badge1 },
+                { icon: Infinity, text: tx.badge4 },
+                { icon: CreditCard, text: tx.badge3 },
+              ].map((badge, i) => (
+                <div key={i} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-white border border-gray-100 text-gray-600 shadow-sm">
+                  <badge.icon className="w-3.5 h-3.5" style={{ color: brandColor }} />
+                  {badge.text}
+                </div>
+              ))}
+            </div>
+
+            {/* CTA Buttons */}
             <div className={`flex flex-col sm:flex-row gap-4 justify-center lg:${isRTL ? 'justify-end' : 'justify-start'}`}>
               <Link
                 href={route('register')}
                 className="group inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-white font-semibold text-base transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
-                style={{ 
+                style={{
                   background: `linear-gradient(135deg, ${brandColor}, ${secondaryColor})`,
                   boxShadow: `0 10px 40px -10px ${brandColor}60`
                 }}
@@ -96,20 +134,14 @@ export default function HeroSection({ settings, sectionData, brandColor = '#6366
               </Link>
             </div>
 
-            {/* Stats - hidden when empty */}
-            {tx.stats.length > 0 && <div className="grid grid-cols-3 gap-6 pt-8 border-t border-gray-100">
-              {tx.stats.map((stat: any, index: number) => (
-                <div key={index} className={`text-center lg:${isRTL ? 'text-right' : 'text-left'}`}>
-                  <div className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r bg-clip-text text-transparent" style={{ backgroundImage: `linear-gradient(135deg, ${brandColor}, ${secondaryColor})` }}>
-                    {stat.value}
-                  </div>
-                  <div className="text-sm text-gray-500 font-medium mt-1">{stat.label}</div>
-                </div>
-              ))}
-            </div>}
+            {/* Trial Note */}
+            <p className={`text-sm text-gray-400 flex items-center gap-1.5 justify-center lg:${isRTL ? 'justify-end' : 'justify-start'}`}>
+              <Clock className="w-4 h-4" />
+              {tx.trialNote}
+            </p>
           </div>
 
-          {/* Right Content - Code-built Dashboard Mockup */}
+          {/* Right Content - Dashboard Mockup with Lifetime Badge */}
           <div className="relative lg:flex lg:justify-center">
             <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full border-2 border-dashed opacity-10" style={{ borderColor: brandColor }}></div>
             <div className="absolute -bottom-10 -left-10 w-32 h-32 rounded-full border-2 border-dashed opacity-10" style={{ borderColor: secondaryColor }}></div>
@@ -117,9 +149,17 @@ export default function HeroSection({ settings, sectionData, brandColor = '#6366
             <div className="absolute bottom-20 left-5 w-2 h-2 rounded-full animate-bounce" style={{ backgroundColor: secondaryColor, animationDelay: '1s' }}></div>
 
             <div className="relative transform hover:scale-[1.02] transition-transform duration-500">
+              {/* Lifetime Badge floating */}
+              <div className="absolute -top-4 -right-4 z-20 px-4 py-2 rounded-xl text-white text-xs font-bold shadow-lg animate-pulse" style={{ background: `linear-gradient(135deg, ${brandColor}, ${secondaryColor})` }}>
+                <div className="flex items-center gap-1.5">
+                  <Infinity className="w-4 h-4" />
+                  {tx.lifetimeBadge}
+                </div>
+              </div>
+
               <div className="relative bg-white/70 backdrop-blur-xl rounded-3xl shadow-[0_20px_80px_-20px_rgba(0,0,0,0.15)] p-4 sm:p-6 max-w-lg mx-auto border border-white/40">
                 <div className="absolute inset-0 rounded-3xl opacity-30 blur-xl -z-10" style={{ background: `linear-gradient(135deg, ${brandColor}20, ${secondaryColor}20)` }}></div>
-                
+
                 {/* Dashboard Mockup */}
                 <div className="bg-white rounded-2xl overflow-hidden border border-gray-100" dir={isRTL ? 'rtl' : 'ltr'}>
                   {/* Dashboard Header */}
@@ -129,7 +169,7 @@ export default function HeroSection({ settings, sectionData, brandColor = '#6366
                       <div className="w-3 h-3 rounded-full bg-white"></div>
                     </div>
                   </div>
-                  
+
                   {/* Stats Row */}
                   <div className="grid grid-cols-3 gap-2 p-3">
                     {[

@@ -26,15 +26,15 @@ interface TestimonialsSectionProps {
 }
 
 const defaultTestimonialsEN: Testimonial[] = [
-  { id: 1, name: 'Ahmed Al-Rashid', role: 'Store Owner', content: 'This platform transformed my business. I went from one store to five in just three months. The multi-store management is incredibly intuitive.', rating: 5 },
-  { id: 2, name: 'Sarah Mitchell', role: 'E-commerce Manager', content: 'The themes are beautiful and the customization options are endless. My customers love the shopping experience on our stores.', rating: 5 },
-  { id: 3, name: 'David Chen', role: 'Entrepreneur', content: 'Best investment I have made for my business. The analytics and reporting features help me make data-driven decisions every day.', rating: 5 },
+  { id: 1, name: 'Ahmed Al-Rashid', role: 'Fashion Store Owner', content: 'I was paying $79/month on another platform. Switching to Nashmi and paying once saved me thousands. My store runs perfectly and I never worry about monthly bills anymore.', rating: 5 },
+  { id: 2, name: 'Sarah Mitchell', role: 'E-commerce Entrepreneur', content: 'The 7-day trial convinced me instantly. The themes are stunning, the dashboard is intuitive, and knowing I own my store forever gives me peace of mind. Best investment ever.', rating: 5 },
+  { id: 3, name: 'David Chen', role: 'Multi-Store Owner', content: 'I now run 3 stores from one account. Each with its own lifetime license. The analytics are powerful and the support team is always there when I need them. Truly unlimited.', rating: 5 },
 ];
 
 const defaultTestimonialsAR: Testimonial[] = [
-  { id: 1, name: 'أحمد الراشد', role: 'صاحب متجر', content: 'هذه المنصة غيّرت عملي بالكامل. انتقلت من متجر واحد إلى خمسة متاجر في ثلاثة أشهر فقط. إدارة المتاجر المتعددة سهلة جداً.', rating: 5 },
-  { id: 2, name: 'سارة أحمد', role: 'مديرة تجارة إلكترونية', content: 'التصاميم جميلة وخيارات التخصيص لا نهاية لها. عملائي يحبون تجربة التسوق في متاجرنا.', rating: 5 },
-  { id: 3, name: 'خالد محمد', role: 'رائد أعمال', content: 'أفضل استثمار قمت به لعملي. ميزات التحليلات والتقارير تساعدني في اتخاذ قرارات مبنية على البيانات كل يوم.', rating: 5 },
+  { id: 1, name: 'أحمد الراشد', role: 'صاحب متجر أزياء', content: 'كنت أدفع 79$ شهرياً على منصة أخرى. الانتقال لنشمي والدفع مرة واحدة وفّر لي آلاف الدنانير. متجري يعمل بشكل ممتاز ولم أعد أقلق من الفواتير الشهرية.', rating: 5 },
+  { id: 2, name: 'سارة أحمد', role: 'رائدة أعمال إلكترونية', content: 'التجربة المجانية لـ 7 أيام أقنعتني فوراً. التصاميم مذهلة، لوحة التحكم سهلة، ومعرفة أنني أملك متجري للأبد تمنحني راحة بال. أفضل استثمار على الإطلاق.', rating: 5 },
+  { id: 3, name: 'خالد محمد', role: 'صاحب متاجر متعددة', content: 'الآن أدير 3 متاجر من حساب واحد. كل متجر برخصة مدى الحياة خاصة به. التحليلات قوية وفريق الدعم دائماً موجود عندما أحتاجهم. غير محدود فعلاً.', rating: 5 },
 ];
 
 export default function TestimonialsSection({ testimonials, settings, sectionData, brandColor = '#6366f1' }: TestimonialsSectionProps) {
@@ -45,8 +45,8 @@ export default function TestimonialsSection({ testimonials, settings, sectionDat
 
   const tx = {
     badge: isRTL ? 'آراء العملاء' : 'Testimonials',
-    title: isRTL ? 'ماذا يقول أصحاب المتاجر' : (sectionData.title || 'What Our Store Owners Say'),
-    subtitle: isRTL ? 'قصص نجاح حقيقية من تجار نشمي ستور حول العالم.' : (sectionData.subtitle || 'Real success stories from Nashmi Store merchants worldwide.'),
+    title: isRTL ? 'تجار اختاروا نشمي ستور' : 'Merchants Who Chose Nashmi Store',
+    subtitle: isRTL ? 'اكتشف لماذا يفضّل التجار الدفع مرة واحدة وامتلاك متاجرهم للأبد.' : 'Discover why merchants prefer to pay once and own their stores forever.',
   };
 
   return (

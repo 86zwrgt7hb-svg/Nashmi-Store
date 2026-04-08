@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Target, Heart, Handshake, Eye } from 'lucide-react';
+import { Target, Heart, Handshake, Eye, Crown, Infinity } from 'lucide-react';
 import { useScrollAnimation } from '../../../hooks/useScrollAnimation';
 import { useTranslation } from 'react-i18next';
 
@@ -27,34 +27,42 @@ export default function AboutUs({ settings, sectionData, brandColor = '#6366f1' 
     {
       key: 'mission',
       icon: Target,
-      title: isRTL ? 'مهمتنا' : (sectionData.mission?.title || 'Our Mission'),
-      content: isRTL ? 'تمكين رواد الأعمال حول العالم بالأدوات التي يحتاجونها لبناء وتنمية أعمال تجارية ناجحة عبر الإنترنت.' : (sectionData.mission?.content || 'To empower entrepreneurs worldwide with the tools they need to build and grow successful online businesses.'),
+      title: isRTL ? 'مهمتنا' : 'Our Mission',
+      content: isRTL
+        ? 'نؤمن أن كل تاجر يستحق متجراً إلكترونياً احترافياً بدون أن يُثقل كاهله برسوم شهرية. مهمتنا هي تمكين رواد الأعمال في الأردن والعالم العربي من امتلاك متاجرهم الإلكترونية بدفعة واحدة فقط، مع استضافة ودعم مدى الحياة.'
+        : 'We believe every merchant deserves a professional online store without the burden of monthly fees. Our mission is to empower entrepreneurs in Jordan and the Arab world to own their online stores with a single payment, with lifetime hosting and support.',
     },
     {
       key: 'values',
       icon: Heart,
-      title: isRTL ? 'قيمنا' : (sectionData.values?.title || 'Our Values'),
-      content: isRTL ? 'الابتكار والشفافية ونجاح العملاء هي ما يحرك كل ما نفعله. نؤمن ببناء منتجات تحدث فرقاً حقيقياً.' : (sectionData.values?.content || 'Innovation, transparency, and customer success drive everything we do. We believe in building products that make a real difference.'),
+      title: isRTL ? 'قيمنا' : 'Our Values',
+      content: isRTL
+        ? 'الشفافية في التسعير هي أساس عملنا. لا رسوم مخفية، لا مفاجآت، لا تجديدات تلقائية. ندفعك للنجاح بتوفير كل الأدوات التي تحتاجها بسعر واحد عادل. نؤمن أن نجاحك هو نجاحنا.'
+        : 'Transparent pricing is the foundation of our business. No hidden fees, no surprises, no auto-renewals. We push you to succeed by providing all the tools you need at one fair price. We believe your success is our success.',
     },
     {
       key: 'commitment',
       icon: Handshake,
-      title: isRTL ? 'التزامنا' : (sectionData.commitment?.title || 'Our Commitment'),
-      content: isRTL ? 'نلتزم بتقديم حلول موثوقة وآمنة وقابلة للتوسع تنمو مع احتياجات عملك.' : (sectionData.commitment?.content || 'We are committed to providing reliable, secure, and scalable solutions that grow with your business needs.'),
+      title: isRTL ? 'التزامنا' : 'Our Commitment',
+      content: isRTL
+        ? 'عندما تشتري رخصة "مدى الحياة"، فهذا وعد حقيقي. نلتزم بتقديم تحديثات مستمرة، دعم فني مخصص، واستضافة مجانية طالما متجرك يعمل. متجرك ملكك، وبياناتك ملكك.'
+        : 'When you buy a "Lifetime" license, it\'s a real promise. We commit to providing continuous updates, dedicated technical support, and free hosting as long as your store is running. Your store is yours, and your data is yours.',
     },
     {
       key: 'vision',
       icon: Eye,
-      title: isRTL ? 'رؤيتنا' : (sectionData.vision?.title || 'Our Vision'),
-      content: isRTL ? 'أن نصبح المنصة الرائدة للتجارة الإلكترونية متعددة المتاجر، مما يمكّن ملايين الأعمال من الازدهار في الاقتصاد الرقمي.' : (sectionData.vision?.content || 'To become the leading multi-store e-commerce platform, enabling millions of businesses to thrive in the digital economy.'),
+      title: isRTL ? 'رؤيتنا' : 'Our Vision',
+      content: isRTL
+        ? 'أن نصبح المنصة الأولى في العالم العربي للتجارة الإلكترونية بنموذج "ادفع مرة واحدة". نطمح لتمكين 10,000 تاجر من امتلاك متاجرهم الإلكترونية بحلول 2028، وتغيير مفهوم التجارة الإلكترونية في المنطقة.'
+        : 'To become the #1 e-commerce platform in the Arab world with a "pay once" model. We aspire to empower 10,000 merchants to own their online stores by 2028, and change the concept of e-commerce in the region.',
     },
   ];
 
   const activeTabData = tabs.find(tab => tab.key === activeTab) || tabs[0];
 
   const tx = {
-    title: isRTL ? 'عن نشمي ستور' : (sectionData.title || 'About Nashmi Store'),
-    subtitle: isRTL ? 'تعرف أكثر على مهمتنا وما يدفعنا للأمام' : (sectionData.subtitle || 'Learn more about our mission and what drives us forward'),
+    title: isRTL ? 'عن نشمي ستور' : 'About Nashmi Store',
+    subtitle: isRTL ? 'المنصة الوحيدة التي تمنحك متجراً إلكترونياً مدى الحياة بدفعة واحدة' : 'The only platform that gives you a lifetime online store with a single payment',
   };
 
   return (

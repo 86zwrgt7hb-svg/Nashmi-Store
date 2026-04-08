@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from '@inertiajs/react';
-import { Menu, X, Globe } from 'lucide-react';
+import { Menu, X, Globe, Crown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useBrand } from '@/contexts/BrandContext';
 import { getImageUrl } from '@/utils/image-helper';
@@ -40,7 +40,6 @@ export default function Header({ settings, sectionData, customPages = [], brandC
   useEffect(() => {
     const userChoice = localStorage.getItem('userLanguageChoice');
     if (!userChoice) {
-      // No explicit user choice yet - force Arabic as default
       i18n.changeLanguage('ar');
       document.documentElement.dir = 'rtl';
       document.documentElement.setAttribute('dir', 'rtl');
@@ -59,11 +58,10 @@ export default function Header({ settings, sectionData, customPages = [], brandC
     document.documentElement.lang = newLang;
     localStorage.setItem('layoutDirection', newDir);
     localStorage.setItem('i18nextLng', newLang);
-    // Mark that user explicitly chose a language
     localStorage.setItem('userLanguageChoice', newLang);
   };
 
-  // Filter out legal pages from header navigation (they belong in footer only)
+  // Filter out legal pages from header navigation
   const legalSlugs = ['privacy-policy', 'terms-and-conditions', 'refund-policy'];
   const menuItems = customPages
     .filter(page => !legalSlugs.includes(page.slug))
@@ -82,6 +80,8 @@ export default function Header({ settings, sectionData, customPages = [], brandC
     { name: t('Contact'), href: '#contact' },
     ...menuItems,
   ];
+
+  const ctaText = isRTL ? 'ابدأ مجاناً' : 'Start Free Trial';
 
   return (
     <header
@@ -109,7 +109,12 @@ export default function Header({ settings, sectionData, customPages = [], brandC
             )}
           </Link>
 
-          <span className="ml-1 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-amber-500 text-white rounded-full shadow-sm animate-pulse">Beta</span>
+          {/* Lifetime Deal Badge instead of Beta */}
+          <span className="hidden sm:inline-flex items-center gap-1 ml-1 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white rounded-full shadow-sm" style={{ background: `linear-gradient(135deg, ${brandColor}, var(--secondary-color, #8b5cf6))` }}>
+            <Crown className="w-3 h-3" />
+            {isRTL ? '499 دينار مدى الحياة' : '499 JOD Lifetime'}
+          </span>
+
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-1">
             {navLinks.map((item) => (
@@ -159,7 +164,7 @@ export default function Header({ settings, sectionData, customPages = [], brandC
                     boxShadow: `0 4px 15px -3px ${brandColor}50`
                   }}
                 >
-                  {t('Get Started')}
+                  {ctaText}
                 </Link>
               </>
             )}
@@ -220,7 +225,7 @@ export default function Header({ settings, sectionData, customPages = [], brandC
                     className="block w-full text-center py-3 rounded-xl text-sm font-semibold text-white"
                     style={{ backgroundColor: brandColor }}
                   >
-                    {t('Get Started')}
+                    {ctaText}
                   </Link>
                 </>
               )}

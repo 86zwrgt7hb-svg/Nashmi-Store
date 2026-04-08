@@ -54,7 +54,7 @@ export default function Footer({ settings, sectionData = {}, brandColor = '#6366
   };
 
   const tx = {
-    description: isRTL ? 'المنصة الشاملة للتجارة الإلكترونية متعددة المتاجر للأعمال الحديثة.' : (sectionData.description || 'The complete multi-store e-commerce platform for modern businesses.'),
+    description: isRTL ? 'امتلك متجرك الإلكتروني مدى الحياة بدفعة واحدة. استضافة مجانية، دعم فني، وتحديثات مستمرة.' : (sectionData.description || 'Own your online store forever with a single payment. Free hosting, support, and continuous updates.'),
     product: isRTL ? 'المنتج' : (sectionData.section_titles?.product || 'Product'),
     company: isRTL ? 'الشركة' : (sectionData.section_titles?.company || 'Company'),
     contact: isRTL ? 'التواصل' : (sectionData.section_titles?.support || 'Contact'),
