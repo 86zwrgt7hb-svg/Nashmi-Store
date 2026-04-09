@@ -549,6 +549,18 @@ if (! function_exists('getPaymentMethodConfig')) {
                     'private_key' => $settings['paymentwall_private_key'] ?? null,
                 ];
                 
+            case 'cliq':
+                return [
+                    'enabled' => isPaymentMethodEnabled('cliq', $userId, $storeId),
+                    'details' => $settings['cliq_detail'] ?? null,
+                ];
+                
+            case 'zaincash':
+                return [
+                    'enabled' => isPaymentMethodEnabled('zaincash', $userId, $storeId),
+                    'number' => $settings['zaincash_number'] ?? null,
+                ];
+                
             case 'whatsapp':
                 return [
                     'enabled' => isPaymentMethodEnabled('whatsapp', $userId, $storeId),
@@ -581,13 +593,14 @@ if (! function_exists('getEnabledPaymentMethods')) {
      */
     function getEnabledPaymentMethods($userId = null, $storeId = null)
     {
-        $methods = ['stripe', 'paypal', 'razorpay', 'mercadopago', 'paystack', 'flutterwave', 'bank', 'paytabs', 'skrill', 'coingate', 'payfast', 'tap', 'xendit', 'paytr', 'mollie', 'toyyibpay', 'cashfree', 'iyzipay', 'benefit', 'ozow', 'easebuzz', 'khalti', 'authorizenet', 'fedapay', 'payhere', 'cinetpay', 'paymentwall'];
+        $methods = ['stripe', 'paypal', 'razorpay', 'mercadopago', 'paystack', 'flutterwave', 'bank', 'cliq', 'paytabs', 'skrill', 'coingate', 'payfast', 'tap', 'xendit', 'paytr', 'mollie', 'toyyibpay', 'cashfree', 'iyzipay', 'benefit', 'ozow', 'easebuzz', 'khalti', 'authorizenet', 'fedapay', 'payhere', 'cinetpay', 'paymentwall'];
         
-        // Add COD, WhatsApp and Telegram only for company users (not superadmin)
+        // Add COD, WhatsApp, Telegram and Zain Cash only for company users (not superadmin)
         if ($userId) {
             $user = \App\Models\User::find($userId);
             if ($user && $user->type === 'company') {
                 array_unshift($methods, 'cod'); // Add COD at beginning
+                $methods[] = 'zaincash'; // Add Zain Cash
                 $methods[] = 'whatsapp'; // Add WhatsApp
                 $methods[] = 'telegram'; // Add Telegram at end
             }

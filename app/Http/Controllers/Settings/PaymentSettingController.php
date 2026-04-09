@@ -162,6 +162,8 @@ class PaymentSettingController extends Controller
                 'whatsapp_number' => 'nullable|string',
                 'messaging_message_template' => 'nullable|string',
                 'messaging_item_template' => 'nullable|string',
+                'cliq_detail' => 'nullable|string',
+                'zaincash_number' => 'nullable|string',
             ]);
 
             $settings = $this->preparePaymentSettings($request, $validatedData);
@@ -308,6 +310,10 @@ class PaymentSettingController extends Controller
             'whatsapp_number' => $validatedData['whatsapp_number'],
             'messaging_message_template' => $validatedData['messaging_message_template'],
             'messaging_item_template' => $validatedData['messaging_item_template'],
+            'is_cliq_enabled' => $request->boolean('is_cliq_enabled'),
+            'cliq_detail' => $validatedData['cliq_detail'] ?? null,
+            'is_zaincash_enabled' => $request->boolean('is_zaincash_enabled'),
+            'zaincash_number' => $validatedData['zaincash_number'] ?? null,
         ];
     }
 

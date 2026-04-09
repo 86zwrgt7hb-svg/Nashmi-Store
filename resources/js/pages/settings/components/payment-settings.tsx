@@ -146,6 +146,10 @@ interface PaymentSettings {
   payfast_merchant_key: string;
   payfast_passphrase: string;
   payfast_mode: 'sandbox' | 'live';
+  is_cliq_enabled: boolean;
+  cliq_detail: string;
+  is_zaincash_enabled: boolean;
+  zaincash_number: string;
 }
 
 interface PaymentSettingsProps {
@@ -296,53 +300,30 @@ export default function PaymentSettings({ settings = {}, messagingVariables = {}
     payfast_merchant_key: settings.payfast_merchant_key || '',
     payfast_passphrase: settings.payfast_passphrase || '',
     payfast_mode: settings.payfast_mode || 'sandbox',
+    is_cliq_enabled: settings.is_cliq_enabled === true || settings.is_cliq_enabled === '1',
+    cliq_detail: settings.cliq_detail || '',
+    is_zaincash_enabled: settings.is_zaincash_enabled === true || settings.is_zaincash_enabled === '1',
+    zaincash_number: settings.zaincash_number || '',
   });
 
 
 
   // Payment methods data for search
   const paymentMethods = useMemo(() => {
-    const methods = [
-      { key: 'bank', name: t(PAYMENT_METHOD_LABELS[PAYMENT_METHODS.BANK]) },
-    { key: 'stripe', name: t(PAYMENT_METHOD_LABELS[PAYMENT_METHODS.STRIPE]) },
-    { key: 'paypal', name: t(PAYMENT_METHOD_LABELS[PAYMENT_METHODS.PAYPAL]) },
-      // { key: 'razorpay', name: t(PAYMENT_METHOD_LABELS[PAYMENT_METHODS.RAZORPAY]) },
-      // { key: 'mercadopago', name: t(PAYMENT_METHOD_LABELS[PAYMENT_METHODS.MERCADOPAGO]) },
-      // { key: 'paystack', name: t(PAYMENT_METHOD_LABELS[PAYMENT_METHODS.PAYSTACK]) },
-      // { key: 'flutterwave', name: t(PAYMENT_METHOD_LABELS[PAYMENT_METHODS.FLUTTERWAVE]) },
-    { key: 'paytabs', name: t(PAYMENT_METHOD_LABELS[PAYMENT_METHODS.PAYTABS]) },
-      // { key: 'skrill', name: t(PAYMENT_METHOD_LABELS[PAYMENT_METHODS.SKRILL]) },
-      // { key: 'coingate', name: t(PAYMENT_METHOD_LABELS[PAYMENT_METHODS.COINGATE]) },
-      // { key: 'payfast', name: t(PAYMENT_METHOD_LABELS[PAYMENT_METHODS.PAYFAST]) },
-    { key: 'tap', name: t(PAYMENT_METHOD_LABELS[PAYMENT_METHODS.TAP]) },
-      // { key: 'xendit', name: t(PAYMENT_METHOD_LABELS[PAYMENT_METHODS.XENDIT]) },
-      // { key: 'paytr', name: t(PAYMENT_METHOD_LABELS[PAYMENT_METHODS.PAYTR]) },
-      // { key: 'mollie', name: t(PAYMENT_METHOD_LABELS[PAYMENT_METHODS.MOLLIE]) },
-      // { key: 'toyyibpay', name: t(PAYMENT_METHOD_LABELS[PAYMENT_METHODS.TOYYIBPAY]) },
-      // { key: 'paymentwall', name: t('PaymentWall') },
-      // { key: 'sspay', name: t('SSPay') },
-      // { key: 'benefit', name: t('Benefit') },
-      // { key: 'iyzipay', name: t('Iyzipay') },
-      // { key: 'aamarpay', name: t('Aamarpay') },
-      // { key: 'midtrans', name: t('Midtrans') },
-      // { key: 'yookassa', name: t('YooKassa') },
-      // { key: 'nepalste', name: t('Nepalste') },
-      // { key: 'paiement', name: t('Paiement Pro') },
-      // { key: 'cinetpay', name: t('CinetPay') },
-      // { key: 'payhere', name: t('PayHere') },
-      // { key: 'fedapay', name: t('FedaPay') },
-      // { key: 'authorizenet', name: t('AuthorizeNet') },
-      // { key: 'khalti', name: t('Khalti') },
-      // { key: 'easebuzz', name: t('Easebuzz') },
-      // { key: 'ozow', name: t('Ozow') },
-      // { key: 'cashfree', name: t('Cashfree') },
-    ];
+    const methods: { key: string; name: string }[] = [];
     
-    // Add COD, WhatsApp and Telegram for company users and sub-users
-    if (auth?.user?.type === 'company' || (auth?.user?.type !== 'superadmin' && auth?.user?.created_by)) {
-      methods.unshift({ key: 'cod', name: t('Cash on Delivery (COD)') });
-      methods.push({ key: 'whatsapp', name: t('WhatsApp') });
-      methods.push({ key: 'telegram', name: t('Telegram') });
+    if (auth?.user?.type === 'superadmin') {
+      // Super Admin: CliQ, WhatsApp Payment, Bank Deposit
+      methods.push({ key: 'cliq', name: t('CliQ Transfer') });
+      methods.push({ key: 'whatsapp', name: t('WhatsApp Payment') });
+      methods.push({ key: 'bank', name: t('Bank Deposit') });
+    } else if (auth?.user?.type === 'company' || (auth?.user?.type !== 'superadmin' && auth?.user?.created_by)) {
+      // Merchant: COD, CliQ, WhatsApp, Bank Deposit, Zain Cash
+      methods.push({ key: 'cod', name: t('Cash on Delivery (COD)') });
+      methods.push({ key: 'cliq', name: t('CliQ Transfer') });
+      methods.push({ key: 'whatsapp', name: t('WhatsApp Payment') });
+      methods.push({ key: 'bank', name: t('Bank Deposit') });
+      methods.push({ key: 'zaincash', name: t('Zain Cash') });
     }
     
     return methods;
@@ -537,28 +518,81 @@ export default function PaymentSettings({ settings = {}, messagingVariables = {}
               </PaymentMethodCard>
               )}
 
-              {/* Bank Transfer */}
+              {/* CliQ Transfer */}
+              {shouldShowMethod('cliq') && (
+              <PaymentMethodCard
+                title={t('CliQ Transfer')}
+                icon={<Banknote className="h-5 w-5" />}
+                enabled={data.is_cliq_enabled}
+                onToggle={(checked) => setData('is_cliq_enabled', checked)}
+              >
+                <div className="space-y-2">
+                  <Label htmlFor="cliq_detail">{t("CliQ Account Details")}</Label>
+                  <Textarea
+                    id="cliq_detail"
+                    value={data.cliq_detail}
+                    onChange={(e) => setData('cliq_detail', e.target.value)}
+                    placeholder={t("CliQ Alias: YourAlias\nAccount Holder: Your Name\nBank: Your Bank Name")}
+                    rows={4}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    {t("Enter your CliQ account details for receiving transfers")}
+                  </p>
+                  {errors.cliq_detail && (
+                    <p className="text-sm text-destructive">{errors.cliq_detail}</p>
+                  )}
+                </div>
+              </PaymentMethodCard>
+              )}
+
+              {/* Bank Deposit */}
               {shouldShowMethod('bank') && (
               <PaymentMethodCard
-                title={t(PAYMENT_METHOD_LABELS[PAYMENT_METHODS.BANK])}
+                title={t('Bank Deposit')}
                 icon={<Banknote className="h-5 w-5" />}
                 enabled={data.is_bank_enabled}
                 onToggle={(checked) => setData('is_bank_enabled', checked)}
               >
                 <div className="space-y-2">
-                  <Label htmlFor="bank_detail">{t("Bank Details")}</Label>
+                  <Label htmlFor="bank_detail">{t("Bank Account Details")}</Label>
                   <Textarea
                     id="bank_detail"
                     value={data.bank_detail}
                     onChange={(e) => setData('bank_detail', e.target.value)}
-                    placeholder={t("Bank: Your Bank Name\nAccount Number: 0000 0000\nRouting Number: 000000000")}
+                    placeholder={t("Bank: Your Bank Name\nAccount Number: 0000 0000\nIBAN: JO00 0000 0000 0000 0000 0000")}
                     rows={6}
                   />
                   <p className="text-xs text-muted-foreground">
-                    {t("Enter your bank details that customers will use for manual transfers")}
+                    {t("Enter your bank account details for receiving deposits")}
                   </p>
                   {errors.bank_detail && (
                     <p className="text-sm text-destructive">{errors.bank_detail}</p>
+                  )}
+                </div>
+              </PaymentMethodCard>
+              )}
+
+              {/* Zain Cash - For merchants only */}
+              {shouldShowMethod('zaincash') && (
+              <PaymentMethodCard
+                title={t('Zain Cash')}
+                icon={<Wallet className="h-5 w-5" />}
+                enabled={data.is_zaincash_enabled}
+                onToggle={(checked) => setData('is_zaincash_enabled', checked)}
+              >
+                <div className="space-y-2">
+                  <Label htmlFor="zaincash_number">{t("Zain Cash Number")}</Label>
+                  <Input
+                    id="zaincash_number"
+                    value={data.zaincash_number}
+                    onChange={(e) => setData('zaincash_number', e.target.value)}
+                    placeholder={t("+962 7X XXX XXXX")}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    {t("Enter your Zain Cash wallet number. This number will be displayed to customers for payment.")}
+                  </p>
+                  {errors.zaincash_number && (
+                    <p className="text-sm text-destructive">{errors.zaincash_number}</p>
                   )}
                 </div>
               </PaymentMethodCard>
@@ -1699,37 +1733,55 @@ export default function PaymentSettings({ settings = {}, messagingVariables = {}
                 </PaymentMethodCard>
               )}
 
-              {/* WhatsApp - For company users and sub-users */}
-              {shouldShowMethod('whatsapp') && (auth?.user?.type === 'company' || (auth?.user?.type !== 'superadmin' && auth?.user?.created_by)) && (
+              {/* WhatsApp Payment - For all users */}
+              {shouldShowMethod('whatsapp') && (
                 <PaymentMethodCard
-                  title={t('WhatsApp')}
+                  title={t('WhatsApp Payment')}
                   icon={<CreditCard className="h-5 w-5" />}
                   enabled={data.is_whatsapp_enabled}
                   onToggle={(checked) => setData('is_whatsapp_enabled', checked)}
-                  helpText={t("Configure WhatsApp settings for order notifications")}
+                  helpText={auth?.user?.type === 'superadmin' 
+                    ? t("Configure WhatsApp for store licensing payments") 
+                    : t("Configure WhatsApp settings for order notifications")}
                 >
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="whatsapp_number">{t("Phone Number")}</Label>
+                      <Label htmlFor="whatsapp_number">{t("WhatsApp Number")}</Label>
                       <Input
                         id="whatsapp_number"
                         value={data.whatsapp_number}
                         onChange={(e) => setData('whatsapp_number', e.target.value)}
-                        placeholder={t("+1234567890")}
+                        placeholder="+962 7X XXX XXXX"
                       />
                       <p className="text-xs text-muted-foreground">
-                        {t("Enter your WhatsApp number with country code (e.g., +1234567890)")}
+                        {t("Enter your WhatsApp number with country code (e.g., +962791234567)")}
                       </p>
                       {errors.whatsapp_number && (
                         <p className="text-sm text-destructive">{errors.whatsapp_number}</p>
                       )}
                     </div>
-                    <Alert>
-                      <AlertCircle className="h-4 w-4" />
-                      <AlertDescription>
-                        {t("WhatsApp notifications work by generating a pre-filled message link. Message templates are configured in the Messaging Templates section below.")}
-                      </AlertDescription>
-                    </Alert>
+                    {auth?.user?.type === 'superadmin' && (
+                      <Alert>
+                        <AlertCircle className="h-4 w-4" />
+                        <AlertDescription>
+                          <p className="font-medium mb-2">{t("Licensing Message Template:")}</p>
+                          <p className="text-xs mb-1">
+                            <strong>{t("Arabic:")}</strong> {t("مرحباً، أود ترخيص متجري على منصة نشمي ستور")}
+                          </p>
+                          <p className="text-xs">
+                            <strong>{t("English:")}</strong> {t("Hello, I would like to license my store on Nashmi Store")}
+                          </p>
+                        </AlertDescription>
+                      </Alert>
+                    )}
+                    {(auth?.user?.type === 'company' || (auth?.user?.type !== 'superadmin' && auth?.user?.created_by)) && (
+                      <Alert>
+                        <AlertCircle className="h-4 w-4" />
+                        <AlertDescription>
+                          {t("WhatsApp notifications work by generating a pre-filled message link. Message templates are configured in the Messaging Templates section below.")}
+                        </AlertDescription>
+                      </Alert>
+                    )}
                   </div>
                 </PaymentMethodCard>
               )}
