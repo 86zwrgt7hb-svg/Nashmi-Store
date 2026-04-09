@@ -2,6 +2,7 @@ import { SidebarProvider } from '@/components/ui/sidebar';
 import { useLayout } from '@/contexts/LayoutContext';
 import { BrandProvider } from '@/contexts/BrandContext';
 import CookieConsentBanner from '@/components/CookieConsentBanner';
+import { TrialBanner } from '@/components/TrialBanner';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import { usePage } from '@inertiajs/react';
@@ -42,12 +43,15 @@ export function AppShell({ children, variant = 'header' }: AppShellProps) {
 
     return (
         <BrandProvider globalSettings={globalSettings} user={user}>
-            <SidebarProvider defaultOpen={isOpen} open={isOpen} onOpenChange={handleSidebarChange}>
-                <div className={cn('flex w-full', position === 'right' ? 'flex-row-reverse' : 'flex-row')}>
-                    {children}
-                    {shouldShowCookie && <CookieConsentBanner />}
-                </div>
-            </SidebarProvider>
+            <div className="flex flex-col min-h-screen">
+                <TrialBanner />
+                <SidebarProvider defaultOpen={isOpen} open={isOpen} onOpenChange={handleSidebarChange}>
+                    <div className={cn('flex w-full flex-1', position === 'right' ? 'flex-row-reverse' : 'flex-row')}>
+                        {children}
+                        {shouldShowCookie && <CookieConsentBanner />}
+                    </div>
+                </SidebarProvider>
+            </div>
         </BrandProvider>
     );
 }
