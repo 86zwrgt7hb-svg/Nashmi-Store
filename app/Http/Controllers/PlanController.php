@@ -317,6 +317,10 @@ class PlanController extends Controller
             ]]);
         }
         
+        // Get superadmin payment settings so merchants can see enabled payment methods
+        $superAdminId = \App\Models\User::where('type', 'superadmin')->first()?->id;
+        $paymentSettings = $superAdminId ? getPaymentSettings($superAdminId) : [];
+        
         return Inertia::render('plans/index', [
             'plans' => $plans,
             'billingCycle' => 'lifetime',
@@ -330,6 +334,7 @@ class PlanController extends Controller
             'trialPeriodActive' => $user->isOnActiveTrial(),
             'isLifetime' => (bool)$user->is_lifetime,
             'isTrialExpired' => $user->isTrialExpired() && !$user->is_lifetime,
+            'paymentSettings' => $paymentSettings,
         ]);
     }
     

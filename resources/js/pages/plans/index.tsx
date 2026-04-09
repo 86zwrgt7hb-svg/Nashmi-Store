@@ -148,7 +148,15 @@ export default function Plans({
     if (paymentSettings?.is_benefit_enabled === true || paymentSettings?.is_benefit_enabled === '1') {
       methods.push({ id: 'benefit', name: t('Benefit'), icon: <CreditCard className="h-5 w-5" />, enabled: true });
     }
-    // Add other payment methods as needed...
+    if (paymentSettings?.is_cliq_enabled === true || paymentSettings?.is_cliq_enabled === '1') {
+      methods.push({ id: 'cliq', name: t('CliQ Transfer'), icon: <Coins className="h-5 w-5" />, enabled: true });
+    }
+    if (paymentSettings?.is_bank_enabled === true || paymentSettings?.is_bank_enabled === '1') {
+      methods.push({ id: 'bank', name: t('Bank Deposit'), icon: <Wallet className="h-5 w-5" />, enabled: true });
+    }
+    if (paymentSettings?.is_whatsapp_enabled === true || paymentSettings?.is_whatsapp_enabled === '1') {
+      methods.push({ id: 'whatsapp', name: t('WhatsApp Payment'), icon: <Smartphone className="h-5 w-5" />, enabled: true });
+    }
     
     return methods;
   };

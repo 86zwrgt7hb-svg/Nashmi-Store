@@ -40,6 +40,8 @@ import { PaymentWallPaymentForm } from './paymentwall-payment-form';
 import { SSPayPaymentForm } from './sspay-payment-form';
 import { TapPaymentForm } from './tap-payment-form';
 import { XenditPaymentForm } from './xendit-payment-form';
+import { CliQTransferForm } from './cliq-transfer-form';
+import { WhatsAppPaymentForm } from './whatsapp-payment-form';
 
 interface PaymentMethod {
   id: string;
@@ -455,6 +457,22 @@ export function PaymentProcessor({
             planPrice={finalPrice}
             xenditApiKey={plan.paymentMethods?.xendit_api_key || ''}
             currency={plan.paymentMethods?.currency || 'PHP'}
+          />
+        );
+      case 'cliq':
+        return (
+          <CliQTransferForm
+            {...commonProps}
+            planPrice={finalPrice}
+            cliqDetails={plan.paymentMethods?.cliq_detail || ''}
+          />
+        );
+      case 'whatsapp':
+        return (
+          <WhatsAppPaymentForm
+            {...commonProps}
+            planPrice={finalPrice}
+            whatsappNumber={plan.paymentMethods?.whatsapp_number || ''}
           />
         );
       default:
