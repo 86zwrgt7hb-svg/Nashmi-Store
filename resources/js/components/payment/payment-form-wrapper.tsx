@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useTranslation } from 'react-i18next';
-import { Loader2 } from 'lucide-react';
+import { Loader2, CreditCard, Building2, MessageCircle, Banknote } from 'lucide-react';
 import { StripePaymentForm } from './stripe-payment-form';
 import { RazorpayPaymentForm } from './razorpay-payment-form';
 import { PaypalPaymentForm } from './paypal-payment-form';
 import { BankTransferForm } from './bank-transfer-form';
+import { CliQTransferForm } from './cliq-transfer-form';
+import { WhatsAppPaymentForm } from './whatsapp-payment-form';
 import { MercadopagoPaymentForm } from './mercadopago-payment-form';
 
 interface PaymentMethod {
@@ -14,6 +16,7 @@ interface PaymentMethod {
   name: string;
   enabled: boolean;
   config: any;
+  icon?: string;
 }
 
 interface PaymentFormWrapperProps {
@@ -49,11 +52,52 @@ export function PaymentFormWrapper({
       
       const methods: PaymentMethod[] = [];
       
+      // CliQ Transfer
+      if (data.is_cliq_enabled) {
+        methods.push({
+          id: 'cliq',
+          name: t('CliQ Transfer'),
+          enabled: true,
+          icon: 'cliq',
+          config: {
+            details: data.cliq_detail
+          }
+        });
+      }
+      
+      // Bank Deposit
+      if (data.is_bank_enabled) {
+        methods.push({
+          id: 'bank',
+          name: t('Bank Deposit'),
+          enabled: true,
+          icon: 'bank',
+          config: {
+            details: data.bank_detail
+          }
+        });
+      }
+      
+      // WhatsApp Payment
+      if (data.is_whatsapp_enabled) {
+        methods.push({
+          id: 'whatsapp',
+          name: t('WhatsApp Payment'),
+          enabled: true,
+          icon: 'whatsapp',
+          config: {
+            number: data.whatsapp_number
+          }
+        });
+      }
+      
+      // Stripe
       if (data.is_stripe_enabled) {
         methods.push({
           id: 'stripe',
-          name: 'Credit Card (Stripe)',
+          name: t('Credit Card (Stripe)'),
           enabled: true,
+          icon: 'stripe',
           config: {
             key: data.stripe_key,
             secret: data.stripe_secret
@@ -61,11 +105,13 @@ export function PaymentFormWrapper({
         });
       }
       
+      // PayPal
       if (data.is_paypal_enabled) {
         methods.push({
           id: 'paypal',
           name: 'PayPal',
           enabled: true,
+          icon: 'paypal',
           config: {
             mode: data.paypal_mode,
             client_id: data.paypal_client_id,
@@ -74,11 +120,13 @@ export function PaymentFormWrapper({
         });
       }
       
+      // Razorpay
       if (data.is_razorpay_enabled) {
         methods.push({
           id: 'razorpay',
           name: 'Razorpay',
           enabled: true,
+          icon: 'razorpay',
           config: {
             key: data.razorpay_key,
             secret: data.razorpay_secret,
@@ -87,25 +135,16 @@ export function PaymentFormWrapper({
         });
       }
       
+      // MercadoPago
       if (data.is_mercadopago_enabled) {
         methods.push({
           id: 'mercadopago',
           name: 'Mercado Pago',
           enabled: true,
+          icon: 'mercadopago',
           config: {
             mode: data.mercadopago_mode,
             access_token: data.mercadopago_access_token
-          }
-        });
-      }
-      
-      if (data.is_bank_enabled) {
-        methods.push({
-          id: 'bank',
-          name: 'Bank Transfer',
-          enabled: true,
-          config: {
-            details: data.bank_detail
           }
         });
       }
@@ -117,6 +156,19 @@ export function PaymentFormWrapper({
     } catch (error) {
     } finally {
       setLoading(false);
+    }
+  };
+
+  const getMethodIcon = (iconType: string) => {
+    switch (iconType) {
+      case 'cliq':
+        return <Banknote className="h-4 w-4 text-blue-600" />;
+      case 'bank':
+        return <Building2 className="h-4 w-4 text-gray-600" />;
+      case 'whatsapp':
+        return <MessageCircle className="h-4 w-4 text-green-600" />;
+      default:
+        return <CreditCard className="h-4 w-4 text-gray-600" />;
     }
   };
 
@@ -134,6 +186,30 @@ export function PaymentFormWrapper({
     };
 
     switch (selectedMethod) {
+      case 'cliq':
+        return (
+          <CliQTransferForm
+            {...commonProps}
+            cliqDetails={method.config.details}
+          />
+        );
+      
+      case 'bank':
+        return (
+          <BankTransferForm
+            {...commonProps}
+            bankDetails={method.config.details}
+          />
+        );
+      
+      case 'whatsapp':
+        return (
+          <WhatsAppPaymentForm
+            {...commonProps}
+            whatsappNumber={method.config.number}
+          />
+        );
+      
       case 'stripe':
         return (
           <StripePaymentForm
@@ -164,14 +240,6 @@ export function PaymentFormWrapper({
           <MercadopagoPaymentForm
             {...commonProps}
             mercadopagoConfig={method.config}
-          />
-        );
-      
-      case 'bank':
-        return (
-          <BankTransferForm
-            {...commonProps}
-            bankDetails={method.config.details}
           />
         );
       
@@ -232,6 +300,9 @@ export function PaymentFormWrapper({
                   onChange={(e) => setSelectedMethod(e.target.value)}
                   className="mr-3"
                 />
+                {method.icon && (
+                  <span className="mr-2">{getMethodIcon(method.icon)}</span>
+                )}
                 <span className="font-medium">{method.name}</span>
               </label>
             ))}

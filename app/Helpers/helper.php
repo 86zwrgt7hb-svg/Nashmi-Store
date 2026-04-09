@@ -595,14 +595,19 @@ if (! function_exists('getEnabledPaymentMethods')) {
     {
         $methods = ['stripe', 'paypal', 'razorpay', 'mercadopago', 'paystack', 'flutterwave', 'bank', 'cliq', 'paytabs', 'skrill', 'coingate', 'payfast', 'tap', 'xendit', 'paytr', 'mollie', 'toyyibpay', 'cashfree', 'iyzipay', 'benefit', 'ozow', 'easebuzz', 'khalti', 'authorizenet', 'fedapay', 'payhere', 'cinetpay', 'paymentwall'];
         
-        // Add COD, WhatsApp, Telegram and Zain Cash only for company users (not superadmin)
+        // Add local payment methods based on user type
         if ($userId) {
             $user = \App\Models\User::find($userId);
-            if ($user && $user->type === 'company') {
-                array_unshift($methods, 'cod'); // Add COD at beginning
-                $methods[] = 'zaincash'; // Add Zain Cash
-                $methods[] = 'whatsapp'; // Add WhatsApp
-                $methods[] = 'telegram'; // Add Telegram at end
+            if ($user) {
+                if ($user->type === 'superadmin') {
+                    // SuperAdmin: CliQ, Bank Deposit (bank), WhatsApp
+                    $methods[] = 'whatsapp';
+                } elseif ($user->type === 'company') {
+                    array_unshift($methods, 'cod'); // Add COD at beginning
+                    $methods[] = 'zaincash'; // Add Zain Cash
+                    $methods[] = 'whatsapp'; // Add WhatsApp
+                    $methods[] = 'telegram'; // Add Telegram at end
+                }
             }
         }
         

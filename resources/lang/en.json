@@ -3603,5 +3603,15 @@
   "Arabic:": "Arabic:",
   "English:": "English:",
   "مرحباً، أود ترخيص متجري على منصة نشمي ستور": "Hello, I would like to license my store on Nashmi Store",
-  "Hello, I would like to license my store on Nashmi Store": "Hello, I would like to license my store on Nashmi Store"
+  "Hello, I would like to license my store on Nashmi Store": "Hello, I would like to license my store on Nashmi Store",
+  "CliQ Transfer Details": "CliQ Transfer Details",
+  "Transfer the exact amount using CliQ": "Transfer the exact amount using CliQ",
+  "Credit Card (Stripe)": "Credit Card (Stripe)",
+  "Click the button below to send a licensing request via WhatsApp. Our team will process your payment and activate your plan.": "Click the button below to send a licensing request via WhatsApp. Our team will process your payment and activate your plan.",
+  "Message Preview:": "Message Preview:",
+  "A WhatsApp message will be sent with your licensing request": "A WhatsApp message will be sent with your licensing request",
+  "Our team will guide you through the payment process": "Our team will guide you through the payment process",
+  "Your plan will be activated after payment confirmation": "Your plan will be activated after payment confirmation",
+  "Send via WhatsApp": "Send via WhatsApp",
+  "Payment request submitted. Redirecting to WhatsApp...": "Payment request submitted. Redirecting to WhatsApp..."
 }
