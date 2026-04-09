@@ -63,7 +63,7 @@ class PlanController extends Controller
                 'savings' => $savings,
                 'features' => $features,
                 'stats' => [
-                    'stores' => ($plan->max_stores ?? $plan->business ?? 0) == 0 ? __('Unlimited') : ($plan->max_stores ?? $plan->business ?? 0),
+                    'stores' => ($plan->max_stores ?? $plan->business ?? 1) ?: '1',
                     'users_per_store' => ($plan->max_users_per_store ?? $plan->max_users ?? 0) == 0 ? __('Unlimited') : ($plan->max_users_per_store ?? $plan->max_users ?? 0),
                     'products_per_store' => ($plan->max_products_per_store ?? 0) == 0 ? __('Unlimited') : ($plan->max_products_per_store ?? 0),
                     'storage' => ($plan->storage_limit ?? 0) == 0 ? __('Unlimited') : $plan->storage_limit . ' GB',
@@ -302,7 +302,7 @@ class PlanController extends Controller
                 'trial_days' => $lifetimePlan->trial_day,
                 'features' => $features,
                 'stats' => [
-                    'stores' => __('Unlimited'),
+                    'stores' => '1',
                     'users_per_store' => __('Unlimited'),
                     'products_per_store' => __('Unlimited'),
                     'storage' => __('Unlimited'),

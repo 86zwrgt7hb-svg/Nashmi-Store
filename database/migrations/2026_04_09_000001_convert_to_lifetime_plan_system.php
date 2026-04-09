@@ -34,7 +34,7 @@ return new class extends Migration
             'yearly_price' => 499,
             'duration' => 'lifetime',
             'description' => 'Own your online store forever. One-time payment, lifetime hosting, support & updates.',
-            'max_stores' => 0, // 0 = unlimited
+            'max_stores' => 1, // 1 store per license
             'max_users_per_store' => 0, // 0 = unlimited
             'max_products_per_store' => 0, // 0 = unlimited
             'themes' => json_encode(['home-decor', 'gadgets', 'fashion', 'car-accessories', 'supermarket', 'toy-store', 'bakery']),

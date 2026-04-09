@@ -359,7 +359,7 @@ export default function Plans({
               {/* Stats - All Unlimited */}
               <div className="grid grid-cols-5 gap-2 mb-8">
                 {[
-                  { icon: <Store className="h-4 w-4" />, value: '∞', label: t('Stores'), color: 'blue' },
+                  { icon: <Store className="h-4 w-4" />, value: '1', label: t('Store'), color: 'blue' },
                   { icon: <Users className="h-4 w-4" />, value: '∞', label: t('Users'), color: 'emerald' },
                   { icon: <Box className="h-4 w-4" />, value: '∞', label: t('Products'), color: 'orange' },
                   { icon: <HardDrive className="h-4 w-4" />, value: '∞', label: t('Storage'), color: 'amber' },

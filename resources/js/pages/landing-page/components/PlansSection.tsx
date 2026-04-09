@@ -170,7 +170,7 @@ function PlansSection({ plans, settings, sectionData, brandColor = '#6366f1' }: 
               {/* Stats */}
               <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 mb-8">
                 {[
-                  { value: '∞', label: isRTL ? 'متاجر' : 'Stores' },
+                  { value: '1', label: isRTL ? 'متجر' : 'Store' },
                   { value: '∞', label: isRTL ? 'مستخدمين' : 'Users' },
                   { value: '∞', label: isRTL ? 'منتجات' : 'Products' },
                   { value: '∞', label: isRTL ? 'تخزين' : 'Storage' },
