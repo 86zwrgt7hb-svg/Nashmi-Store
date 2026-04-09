@@ -45,30 +45,43 @@ class CheckPlanAccess
 
         // Check if user needs plan subscription (trial expired, no lifetime)
         if ($user->needsPlanSubscription()) {
-            $message = __('Please subscribe to a plan to continue.');
             
             if ($user->isTrialExpired()) {
-                $message = __('Your 7-day free trial has ended. Subscribe now to keep your store online!');
-                
-                // Mark trial as used and deactivate plan
-                $user->update([
-                    'is_trial' => 'no',
-                    'trial_used' => true,
-                    'plan_is_active' => 0,
-                ]);
+                // Mark trial as used and deactivate plan (only once)
+                if ($user->is_trial === 'yes') {
+                    $user->update([
+                        'is_trial' => 'no',
+                        'trial_used' => true,
+                        'plan_is_active' => 0,
+                    ]);
 
-                // Set all user's stores to offline
-                $this->setUserStoresOffline($user);
+                    // Set all user's stores to offline
+                    $this->setUserStoresOffline($user);
+                }
             } elseif ($user->isPlanExpired()) {
-                $message = __('Your plan has expired. Please renew your subscription.');
-                
-                $user->update([
-                    'plan_is_active' => 0,
-                ]);
+                if ($user->plan_is_active) {
+                    $user->update([
+                        'plan_is_active' => 0,
+                    ]);
 
-                // Set all user's stores to offline
-                $this->setUserStoresOffline($user);
+                    // Set all user's stores to offline
+                    $this->setUserStoresOffline($user);
+                }
             }
+            
+            // Allow access to dashboard and plans page (account is NOT locked)
+            // The user can browse their frozen dashboard and pay to reactivate
+            $allowedRoutes = ['plans.index', 'plans.subscribe', 'dashboard', 'logout', 'profile.edit', 'profile.update'];
+            $currentRoute = $request->route()?->getName();
+            
+            if ($currentRoute && in_array($currentRoute, $allowedRoutes)) {
+                return $next($request);
+            }
+            
+            // For all other pages, redirect to plans page
+            $message = $user->isTrialExpired() || $user->trial_used
+                ? __('Your 7-day free trial has ended. Subscribe now to keep your store online!')
+                : __('Your plan has expired. Please renew your subscription.');
             
             return redirect()->route('plans.index')->with('error', $message);
         }

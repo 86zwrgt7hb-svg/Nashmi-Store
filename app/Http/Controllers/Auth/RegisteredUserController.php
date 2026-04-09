@@ -94,23 +94,50 @@ class RegisteredUserController extends Controller
         // Get the lifetime plan for trial assignment
         $lifetimePlan = Plan::getLifetimePlan() ?? Plan::getDefaultPlan();
 
-        $userData = [
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'type' => 'company',
-            'is_active' => 1,
-            'is_enable_login' => 1,
-            'created_by' => 0,
-            'plan_is_active' => 1,
-            'plan_id' => $lifetimePlan ? $lifetimePlan->id : null,
-            'is_trial' => 'yes',
-            'trial_day' => 7,
-            'trial_expire_date' => now()->addDays(7),
-            'trial_used' => false,
-            'is_lifetime' => false,
-            'plan_expire_date' => now()->addDays(7),
-        ];
+        // Check if this email already used a trial (one trial per email, ever)
+        $alreadyTrialed = \Illuminate\Support\Facades\DB::table('trial_emails')
+            ->where('email', strtolower($request->email))
+            ->exists();
+
+        if ($alreadyTrialed) {
+            // No trial — account created but store is frozen until payment
+            $userData = [
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'type' => 'company',
+                'is_active' => 1,
+                'is_enable_login' => 1,
+                'created_by' => 0,
+                'plan_is_active' => 0,
+                'plan_id' => $lifetimePlan ? $lifetimePlan->id : null,
+                'is_trial' => 'no',
+                'trial_day' => 0,
+                'trial_expire_date' => null,
+                'trial_used' => true,
+                'is_lifetime' => false,
+                'plan_expire_date' => null,
+            ];
+        } else {
+            // Fresh trial — 7 days free
+            $userData = [
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'type' => 'company',
+                'is_active' => 1,
+                'is_enable_login' => 1,
+                'created_by' => 0,
+                'plan_is_active' => 1,
+                'plan_id' => $lifetimePlan ? $lifetimePlan->id : null,
+                'is_trial' => 'yes',
+                'trial_day' => 7,
+                'trial_expire_date' => now()->addDays(7),
+                'trial_used' => false,
+                'is_lifetime' => false,
+                'plan_expire_date' => now()->addDays(7),
+            ];
+        }
         
         // Handle referral code
         if ($request->referral_code) {
@@ -124,6 +151,17 @@ class RegisteredUserController extends Controller
         }
         
         $user = User::create($userData);
+
+        // Record this email in trial_emails (so it can never get a trial again)
+        if (!$alreadyTrialed) {
+            \Illuminate\Support\Facades\DB::table('trial_emails')->insertOrIgnore([
+                'email' => strtolower($request->email),
+                'trial_started_at' => now(),
+                'trial_expired_at' => now()->addDays(7),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
 
         // Assign role and settings to the user
         defaultRoleAndSetting($user);
