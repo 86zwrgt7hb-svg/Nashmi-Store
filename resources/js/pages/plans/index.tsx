@@ -475,9 +475,9 @@ export default function Plans({
             setIsSubscriptionModalOpen(false);
             setSelectedPlan(null);
           }}
-          plan={selectedPlan}
+          plan={{...selectedPlan, paymentMethods: { ...selectedPlan.paymentMethods, whatsapp_number: paymentSettings?.whatsapp_number, cliq_detail: paymentSettings?.cliq_detail, bank_detail: paymentSettings?.bank_detail }}}
           billingCycle="lifetime"
-          paymentMethods={formatPaymentMethods(selectedPlan.paymentMethods)}
+          paymentMethods={formatPaymentMethods(paymentSettings)}
         />
       )}
     </PageTemplate>
