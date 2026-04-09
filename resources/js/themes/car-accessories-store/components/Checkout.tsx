@@ -202,7 +202,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
 
                       <div>
 
-                        <label className="block text-sm font-bold text-white mb-2 mb-2">{isArabic ? "الاسم الأول *" : "First Name *"}</label>
+                        <label className="block text-sm font-bold text-white mb-2">{isArabic ? "الاسم الأول *" : "First Name *"}</label>
 
                         <input
 
@@ -222,7 +222,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
 
                       <div>
 
-                        <label className="block text-sm font-bold text-white mb-2 mb-2">{isArabic ? "اسم العائلة *" : "Last Name *"}</label>
+                        <label className="block text-sm font-bold text-white mb-2">{isArabic ? "اسم العائلة *" : "Last Name *"}</label>
 
                         <input
 
@@ -246,7 +246,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
 
                     <div>
 
-                      <label className="block text-sm font-bold text-white mb-2 mb-2">{isArabic ? "البريد الإلكتروني (اختياري)" : "Email (Optional)"}</label>
+                      <label className="block text-sm font-bold text-white mb-2">{isArabic ? "البريد الإلكتروني (اختياري)" : "Email (Optional)"}</label>
 
                       <input
 
@@ -274,7 +274,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
 
                     <div>
 
-                      <label className="block text-sm font-bold text-white mb-2 mb-2">{isArabic ? "رقم الهاتف *" : "Phone *"}</label>
+                      <label className="block text-sm font-bold text-white mb-2">{isArabic ? "رقم الهاتف *" : "Phone *"}</label>
 
                       <input
 
@@ -302,7 +302,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
 
                     <div>
 
-                      <label className="block text-sm font-bold text-white mb-2 mb-2">{isArabic ? "العنوان *" : "Address *"}</label>
+                      <label className="block text-sm font-bold text-white mb-2">{isArabic ? "العنوان *" : "Address *"}</label>
 
                       <textarea
 

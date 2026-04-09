@@ -186,7 +186,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
 
                       <div>
 
-                        <label className="block text-sm font-medium text-gray-700 mb-2 mb-2">{isArabic ? "الاسم الأول *" : "First Name *"}</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">{isArabic ? "الاسم الأول *" : "First Name *"}</label>
 
                         <input
 
@@ -206,7 +206,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
 
                       <div>
 
-                        <label className="block text-sm font-medium text-gray-700 mb-2 mb-2">{isArabic ? "اسم العائلة *" : "Last Name *"}</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">{isArabic ? "اسم العائلة *" : "Last Name *"}</label>
 
                         <input
 
@@ -230,7 +230,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
 
                     <div>
 
-                      <label className="block text-sm font-medium text-gray-700 mb-2 mb-2">{isArabic ? "البريد الإلكتروني (اختياري)" : "Email (Optional)"}</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">{isArabic ? "البريد الإلكتروني (اختياري)" : "Email (Optional)"}</label>
 
                       <input
 
@@ -258,7 +258,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
 
                     <div>
 
-                      <label className="block text-sm font-medium text-gray-700 mb-2 mb-2">{isArabic ? "رقم الهاتف *" : "Phone *"}</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">{isArabic ? "رقم الهاتف *" : "Phone *"}</label>
 
                       <input
 
@@ -286,7 +286,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
 
                     <div>
 
-                      <label className="block text-sm font-medium text-gray-700 mb-2 mb-2">{isArabic ? "العنوان *" : "Address *"}</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">{isArabic ? "العنوان *" : "Address *"}</label>
 
                       <textarea
 
@@ -659,7 +659,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
                       }
                       className="px-8 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white font-semibold rounded-lg transition-colors cursor-pointer disabled:cursor-not-allowed"
                     >
-                      Continue
+                      {isArabic ? "متابعة" : "Continue"}
                     </button>
                   ) : (
                     <button
@@ -678,7 +678,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
               </div>
             </div>
 
-            {/* Desktop Layout */}
+            {/* Desktop Layout */
             <div className="hidden md:flex md:items-center md:justify-between gap-4">
               <div>
                 {step > 1 && (
@@ -702,7 +702,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
                     }
                     className="px-8 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white font-semibold rounded-lg transition-colors cursor-pointer disabled:cursor-not-allowed"
                   >
-                    Continue
+                    {isArabic ? "متابعة" : "Continue"}
                   </button>
                 ) : (
                   <button

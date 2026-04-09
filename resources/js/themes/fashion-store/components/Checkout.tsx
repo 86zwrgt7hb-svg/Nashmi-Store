@@ -162,7 +162,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
                       ) : stepNum}
                     </div>
                     <span className={`ml-3 font-semibold ${step >= stepNum ? 'text-rose-600' : 'text-gray-400'}`}>
-                      {stepNum === 1 ? 'Personal Details' : stepNum === 2 ? 'Order Review' : 'Payment Method'}
+                      {stepNum === 1 ? (isArabic ? 'التفاصيل' : 'Personal Details') : stepNum === 2 ? (isArabic ? 'المراجعة' : 'Order Review') : (isArabic ? 'الدفع' : 'Payment Method')}
                     </span>
                   </div>
                   
@@ -590,7 +590,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
                       }
                       className="px-8 py-3 bg-rose-600 hover:bg-rose-700 disabled:bg-gray-300 text-white font-semibold rounded-lg transition-colors cursor-pointer disabled:cursor-not-allowed"
                     >
-                      Continue
+                      {isArabic ? "متابعة" : "Continue"}
                     </button>
                   ) : (
                     <button
@@ -632,7 +632,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
                     }
                     className="px-8 py-3 bg-rose-600 hover:bg-rose-700 disabled:bg-gray-300 text-white font-semibold rounded-lg transition-colors cursor-pointer disabled:cursor-not-allowed"
                   >
-                    Continue
+                    {isArabic ? "متابعة" : "Continue"}
                   </button>
                 ) : (
                   <button

@@ -80,7 +80,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
         >
           {/* Simple Header */}
           <div className="flex items-center justify-between p-6 bg-purple-400 rounded-t-[2rem] md:rounded-t-2xl">
-            <h2 className="text-lg font-bold text-white truncate flex-1 mr-4">
+            <h2 className="text-lg font-bold text-white truncate max-w-[60%] sm:max-w-[70%] mr-4">
               {productName}
             </h2>
             <div className="flex items-center gap-2">

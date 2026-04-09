@@ -197,7 +197,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
 
                       <div>
 
-                        <label className="block text-sm font-semibold text-stone-700 mb-2 mb-2">{isArabic ? "الاسم الأول *" : "First Name *"}</label>
+                        <label className="block text-sm font-semibold text-stone-700 mb-2">{isArabic ? "الاسم الأول *" : "First Name *"}</label>
 
                         <input
 
@@ -217,7 +217,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
 
                       <div>
 
-                        <label className="block text-sm font-semibold text-stone-700 mb-2 mb-2">{isArabic ? "اسم العائلة *" : "Last Name *"}</label>
+                        <label className="block text-sm font-semibold text-stone-700 mb-2">{isArabic ? "اسم العائلة *" : "Last Name *"}</label>
 
                         <input
 
@@ -241,7 +241,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
 
                     <div>
 
-                      <label className="block text-sm font-semibold text-stone-700 mb-2 mb-2">{isArabic ? "البريد الإلكتروني (اختياري)" : "Email (Optional)"}</label>
+                      <label className="block text-sm font-semibold text-stone-700 mb-2">{isArabic ? "البريد الإلكتروني (اختياري)" : "Email (Optional)"}</label>
 
                       <input
 
@@ -269,7 +269,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
 
                     <div>
 
-                      <label className="block text-sm font-semibold text-stone-700 mb-2 mb-2">{isArabic ? "رقم الهاتف *" : "Phone *"}</label>
+                      <label className="block text-sm font-semibold text-stone-700 mb-2">{isArabic ? "رقم الهاتف *" : "Phone *"}</label>
 
                       <input
 
@@ -297,7 +297,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
 
                     <div>
 
-                      <label className="block text-sm font-semibold text-stone-700 mb-2 mb-2">{isArabic ? "العنوان *" : "Address *"}</label>
+                      <label className="block text-sm font-semibold text-stone-700 mb-2">{isArabic ? "العنوان *" : "Address *"}</label>
 
                       <textarea
 
@@ -614,7 +614,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
                     onClick={handlePrevStep}
                     className="flex-1 px-4 py-3 border-2 border-stone-300 text-stone-700 rounded-lg hover:bg-stone-100 transition-colors font-semibold text-sm"
                   >
-                    ← Back
+                    {isArabic ? "رجوع ←" : "← Back"}
                   </button>
                 )}
                 {step < 3 ? (
@@ -626,7 +626,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
                     }
                     className="flex-1 px-4 py-3 bg-stone-700 hover:bg-stone-800 disabled:bg-stone-300 text-white font-bold rounded-lg transition-colors disabled:cursor-not-allowed shadow-lg text-sm"
                   >
-                    Continue →
+                    {isArabic ? "→ متابعة" : "Continue →"}
                   </button>
                 ) : (
                   <button
@@ -649,7 +649,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
                     onClick={handlePrevStep}
                     className="px-6 py-3 border-2 border-stone-300 text-stone-700 rounded-lg hover:bg-stone-100 transition-colors font-semibold"
                   >
-                    ← Back
+                    {isArabic ? "رجوع ←" : "← Back"}
                   </button>
                 )}
               </div>
@@ -667,7 +667,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
                     }
                     className="px-8 py-3 bg-stone-700 hover:bg-stone-800 disabled:bg-stone-300 text-white font-bold rounded-lg transition-colors disabled:cursor-not-allowed shadow-lg"
                   >
-                    Continue →
+                    {isArabic ? "→ متابعة" : "Continue →"}
                   </button>
                 ) : (
                   <button

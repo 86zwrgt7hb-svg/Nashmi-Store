@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { getImageUrl } from '../../../utils/image-helper';
 import { formatCurrency } from '../../../utils/currency-formatter';
 import { CheckoutProvider, useCheckoutContext } from '../../../contexts/CheckoutContext';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+// Select components available if needed
+// import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { X, ShoppingCart, User, Package, CreditCard, Check, Minus, Plus, Trash2, Gift, Sparkles } from 'lucide-react';
 import { useStoreLanguage } from '../../shared/StoreLanguageContext';
 import SafeHTML from '../../../components/SafeHTML';
@@ -116,7 +117,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
   }, []);
 
   const stepIcons = [User, Package, CreditCard];
-  const stepLabels = ['Information', 'Review', 'Payment'];
+  const stepLabels = isArabic ? ['المعلومات', 'المراجعة', 'الدفع'] : ['Information', 'Review', 'Payment'];
 
   return (
     <div className="fixed inset-0 z-50 bg-purple-900/50">
@@ -187,48 +188,34 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
                   <div className="mx-auto">
                     <h3 className="text-lg font-bold text-purple-800 mb-6 flex items-center gap-2">
                       <User className="w-5 h-5 text-purple-600" />
-                      Customer Information
+                      {isArabic ? 'معلومات العميل' : 'Customer Information'}
                     </h3>
                     <div className="space-y-4">
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-sm font-bold text-purple-700 mb-2">First Name *</label>
+                          <label className="block text-sm font-bold text-purple-700 mb-2">{isArabic ? 'الاسم الأول *' : 'First Name *'}</label>
                           <input
                             type="text"
                             value={customerInfo.firstName}
                             onChange={(e) => handleInputChange('firstName', e.target.value)}
                             className="w-full px-4 py-3 border-2 border-purple-200 rounded-2xl bg-purple-50 text-purple-800 focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300"
-                            placeholder="Enter first name"
+                            placeholder={isArabic ? 'أدخل الاسم الأول' : 'Enter first name'}
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-bold text-purple-700 mb-2">Last Name *</label>
+                          <label className="block text-sm font-bold text-purple-700 mb-2">{isArabic ? 'الاسم الأخير *' : 'Last Name *'}</label>
                           <input
                             type="text"
                             value={customerInfo.lastName}
                             onChange={(e) => handleInputChange('lastName', e.target.value)}
                             className="w-full px-4 py-3 border-2 border-purple-200 rounded-2xl bg-purple-50 text-purple-800 focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300"
-                            placeholder="Enter last name"
+                            placeholder={isArabic ? 'أدخل الاسم الأخير' : 'Enter last name'}
                           />
                         </div>
                       </div>
                       
                       <div>
-                        <label className="block text-sm font-bold text-purple-700 mb-2">Email *</label>
-                        <input
-                          type="email"
-                          value={customerInfo.email}
-                          onChange={(e) => handleInputChange('email', e.target.value)}
-                          className={`w-full px-4 py-3 border-2 rounded-2xl bg-purple-50 text-purple-800 focus:outline-none focus:ring-2 ${
-                            emailError ? 'border-red-400 focus:ring-red-300' : 'border-purple-200 focus:ring-purple-300 focus:border-purple-300'
-                          }`}
-                          placeholder="your@email.com"
-                        />
-                        {emailError && <p className="text-red-500 text-sm mt-1 font-medium">{emailError}</p>}
-                      </div>
-                      
-                      <div>
-                        <label className="block text-sm font-bold text-purple-700 mb-2">Phone *</label>
+                        <label className="block text-sm font-bold text-purple-700 mb-2">{isArabic ? 'رقم الهاتف *' : 'Phone *'}</label>
                         <input
                           type="tel" pattern="07[0-9]{8}"
                           value={customerInfo.phone}
@@ -236,99 +223,20 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
                           className={`w-full px-4 py-3 border-2 rounded-2xl bg-purple-50 text-purple-800 focus:outline-none focus:ring-2 ${
                             phoneError ? 'border-red-400 focus:ring-red-300' : 'border-purple-200 focus:ring-purple-300 focus:border-purple-300'
                           }`}
-                          placeholder="+1 (555) 123-4567"
+                          placeholder={isArabic ? 'أدخل رقم الهاتف' : 'Enter phone number'}
                         />
                         {phoneError && <p className="text-red-500 text-sm mt-1 font-medium">{phoneError}</p>}
                       </div>
                       
                       <div>
-                        <label className="block text-sm font-bold text-purple-700 mb-2">Address *</label>
+                        <label className="block text-sm font-bold text-purple-700 mb-2">{isArabic ? 'العنوان *' : 'Address *'}</label>
                         <textarea
                           value={customerInfo.address}
                           onChange={(e) => handleInputChange('address', e.target.value)}
                           className="w-full px-4 py-3 border-2 border-purple-200 rounded-2xl bg-purple-50 text-purple-800 focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300"
                           rows={3}
-                          placeholder="أدخل عنوانك أو رابط Google Maps (Enter your address or Google Maps link)"
+                          placeholder={isArabic ? 'أدخل عنوانك أو رابط Google Maps' : 'Enter your address or Google Maps link'}
                         />
-                      </div>
-                      
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                          <label className="block text-sm font-bold text-purple-700 mb-2">Country *</label>
-                          <Select
-                            value={(() => {
-                              const countries = (window as any).page?.props?.countries || [];
-                              const selectedCountry = countries.find(c => c.name === customerInfo.country);
-                              return selectedCountry?.id?.toString() || '';
-                            })()} 
-                            onValueChange={(countryId) => {
-                              const countries = (window as any).page?.props?.countries || [];
-                              const selectedCountry = countries.find(c => c.id.toString() === countryId);
-                              if (selectedCountry) {
-                                handleInputChange('country', selectedCountry.name);
-                                handleInputChange('state', '');
-                                handleInputChange('city', '');
-                                setCountryId(selectedCountry.id);
-                                setStateId(undefined);
-                                setCityId(undefined);
-                              }
-                            }}
-                          >
-                            <SelectTrigger className="focus:ring-purple-300 focus:border-purple-300 border-purple-200 rounded-2xl bg-purple-50">
-                              <SelectValue placeholder="Select Country" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {((window as any).page?.props?.countries || []).map(country => (
-                                <SelectItem key={country.id} value={country.id.toString()}>
-                                  {country.name}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm font-bold text-purple-700 mb-2">State *</label>
-                          <StateDropdown
-                            countryId={countryId}
-                            value={customerInfo.state}
-                            onChange={(value, id) => {
-                              handleInputChange('state', value);
-                              handleInputChange('city', '');
-                              setStateId(id);
-                              setCityId(undefined);
-                            }}
-                            className="w-full px-4 py-3 border-2 border-purple-200 rounded-2xl bg-purple-50 text-purple-800 focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300"
-                            disabled={!countryId}
-                          />
-                        </div>
-                      </div>
-                      
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                          <label className="block text-sm font-bold text-purple-700 mb-2">City *</label>
-                          <CityDropdown
-                            stateId={stateId}
-                            value={customerInfo.city}
-                            onChange={(value, id) => {
-                              handleInputChange('city', value);
-                              setCityId(id);
-                            }}
-                            className="w-full px-4 py-3 border-2 border-purple-200 rounded-2xl bg-purple-50 text-purple-800 focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300"
-                            disabled={!stateId}
-                          />
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm font-bold text-purple-700 mb-2">Postal Code *</label>
-                          <input
-                            type="text"
-                            value={customerInfo.postalCode}
-                            onChange={(e) => handleInputChange('postalCode', e.target.value)}
-                            className="w-full px-4 py-3 border-2 border-purple-200 rounded-2xl bg-purple-50 text-purple-800 focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300"
-                            placeholder="12345"
-                          />
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -339,7 +247,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
                 <div className="p-4 md:p-6">
                   <h3 className="text-lg font-bold text-purple-800 mb-6 flex items-center gap-2">
                     <Package className="w-5 h-5 text-purple-600" />
-                    Order Review
+                    {isArabic ? 'مراجعة الطلب' : 'Order Review'}
                   </h3>
                   
                   {/* Cart Items */}
@@ -417,13 +325,13 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
 
                   {/* Coupon Section */}
                   <div className="bg-white border-4 border-purple-200 rounded-3xl p-3 sm:p-4 mb-6">
-                    <h4 className="font-bold text-purple-800 mb-3 text-sm sm:text-base">Apply Coupon</h4>
+                    <h4 className="font-bold text-purple-800 mb-3 text-sm sm:text-base">{isArabic ? 'كوبون خصم' : 'Apply Coupon'}</h4>
                     <div className="flex flex-col sm:flex-row gap-2">
                       <input
                         type="text"
                         value={couponCode}
                         onChange={(e) => setCouponCode(e.target.value)}
-                        placeholder="Enter coupon code"
+                        placeholder={isArabic ? 'أدخل كود الكوبون' : 'Enter coupon code'}
                         className={`flex-1 px-3 sm:px-4 py-2.5 sm:py-3 border-2 rounded-2xl bg-purple-50 text-purple-800 focus:outline-none focus:ring-2 text-sm sm:text-base ${
                           couponError ? 'border-red-400 focus:ring-red-300' : 'border-purple-200 focus:ring-purple-300'
                         }`}
@@ -432,16 +340,16 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
                         onClick={() => handleApplyCoupon(subtotal)}
                         className="px-4 sm:px-6 py-2.5 sm:py-3 bg-purple-500 hover:bg-purple-600 text-white rounded-2xl font-bold transition-all text-sm sm:text-base whitespace-nowrap transform hover:scale-105"
                       >
-                        Apply
+                        {isArabic ? 'تطبيق' : 'Apply'}
                       </button>
                     </div>
                     {couponError && <p className="text-red-500 text-xs sm:text-sm mt-2 font-medium">{couponError}</p>}
-                    {appliedCoupon && <p className="text-green-600 text-xs sm:text-sm mt-2 font-bold">✓ Coupon applied</p>}
+                    {appliedCoupon && <p className="text-green-600 text-xs sm:text-sm mt-2 font-bold">{isArabic ? '✓ تم تطبيق الكوبون' : '✓ Coupon applied'}</p>}
                   </div>
 
                   {/* Shipping Methods */}
                   <div className="bg-white border-4 border-purple-200 rounded-3xl p-4 mb-6">
-                    <h4 className="font-bold text-purple-800 mb-3">Shipping Method</h4>
+                    <h4 className="font-bold text-purple-800 mb-3">{isArabic ? 'طريقة الشحن' : 'Shipping Method'}</h4>
                     {loadingShipping ? (
                       <div className="text-center py-4">
                         <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-purple-500 mx-auto"></div>
@@ -463,7 +371,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
                               <div className="text-sm text-purple-600 font-medium">{method.delivery_time}</div>
                             </div>
                             <div className="font-bold text-purple-600">
-                              {method.type === 'free' ? 'Free' : formatCurrency(parseFloat(method.cost || 0), storeSettings, currencies)}
+                              {method.type === 'free' ? (isArabic ? 'مجاني' : 'Free') : formatCurrency(parseFloat(method.cost || 0), storeSettings, currencies)}
                             </div>
                           </label>
                         ))}
@@ -550,12 +458,12 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
                           {selectedPayment === method.name && method.name === 'bank' && method.details && (
                             <div className="px-4 pb-4 border-t border-purple-200 mt-2 pt-4">
                               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
-                                <h5 className="font-semibold text-blue-900 mb-2">Bank Transfer Details</h5>
+                                <h5 className="font-semibold text-blue-900 mb-2">{isArabic ? 'تفاصيل التحويل البنكي' : 'Bank Transfer Details'}</h5>
                                 <div className="text-sm text-blue-800 whitespace-pre-line">{method.details}</div>
                               </div>
                               <div>
                                 <label className="block text-sm font-semibold text-purple-800 mb-2">
-                                  Upload Payment Receipt *
+                                  {isArabic ? 'رفع إيصال الدفع *' : 'Upload Payment Receipt *'}
                                 </label>
                                 <input
                                   type="file"
@@ -573,12 +481,12 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
                           {selectedPayment === method.name && method.name === 'whatsapp' && (
                             <div className="px-4 pb-4 border-t border-purple-200 mt-2 pt-4">
                               <div className="bg-green-50 border border-green-200 rounded-2xl p-4 mb-4">
-                                <h5 className="font-bold text-green-900 mb-2">WhatsApp Payment</h5>
-                                <div className="text-sm text-green-800">You will be redirected to WhatsApp to complete your payment.</div>
+                                <h5 className="font-bold text-green-900 mb-2">{isArabic ? 'الدفع عبر واتساب' : 'WhatsApp Payment'}</h5>
+                                <div className="text-sm text-green-800">{isArabic ? 'سيتم تحويلك إلى واتساب لإتمام الدفع' : 'You will be redirected to WhatsApp to complete your payment.'}</div>
                               </div>
                               <div>
                                 <label className="block text-sm font-bold text-purple-800 mb-2">
-                                  WhatsApp Number *
+                                  {isArabic ? 'رقم الواتساب *' : 'WhatsApp Number *'}
                                 </label>
                                 <input
                                   type="tel" pattern="07[0-9]{8}"
@@ -596,7 +504,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
                                   <p className="mt-1 text-sm text-red-500 font-medium">{whatsappError}</p>
                                 )}
                                 <p className="mt-1 text-sm text-purple-600 font-medium">
-                                  Enter your WhatsApp number with country code (e.g., +91 9876543210)
+                                  {isArabic ? 'أدخل رقم الواتساب مع رمز الدولة' : 'Enter your WhatsApp number with country code (e.g., +91 9876543210)'}
                                 </p>
                               </div>
                             </div>
@@ -631,12 +539,12 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
                       <button
                         onClick={handleNextStep}
                         disabled={
-                          (step === 1 && (!customerInfo.firstName || !customerInfo.lastName || !customerInfo.email || !customerInfo.phone || !customerInfo.address || !customerInfo.city || !customerInfo.state || !customerInfo.country || !customerInfo.postalCode)) ||
+                          (step === 1 && (!customerInfo.firstName || !customerInfo.lastName || !customerInfo.phone || !customerInfo.address)) ||
                           (step === 2 && !selectedShipping)
                         }
                         className="w-full px-6 py-3 bg-purple-500 hover:bg-purple-600 disabled:bg-gray-300 text-white font-bold rounded-2xl transition-all disabled:cursor-not-allowed text-sm transform hover:scale-105"
                       >
-                        Continue
+                        {isArabic ? "متابعة" : "Continue"}
                       </button>
                     ) : (
                       <button
@@ -672,12 +580,12 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
                     <button
                       onClick={handleNextStep}
                       disabled={
-                        (step === 1 && (!customerInfo.firstName || !customerInfo.lastName || !customerInfo.email || !customerInfo.phone || !customerInfo.address || !customerInfo.city || !customerInfo.state || !customerInfo.country || !customerInfo.postalCode)) ||
+                        (step === 1 && (!customerInfo.firstName || !customerInfo.lastName || !customerInfo.phone || !customerInfo.address)) ||
                         (step === 2 && !selectedShipping)
                       }
                       className="px-8 py-3 bg-purple-500 hover:bg-purple-600 disabled:bg-gray-300 text-white font-bold rounded-2xl transition-all disabled:cursor-not-allowed transform hover:scale-105"
                     >
-                      Continue
+                      {isArabic ? "متابعة" : "Continue"}
                     </button>
                   ) : (
                     <button

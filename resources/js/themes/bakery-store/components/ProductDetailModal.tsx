@@ -84,7 +84,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 
             <div className="flex items-center justify-center text-white pr-10">
               <ShoppingBag className="w-5 h-5 mr-2 flex-shrink-0" />
-              <h2 className="text-lg sm:text-xl font-serif font-bold truncate">{productName}</h2>
+              <h2 className="text-lg sm:text-xl font-serif font-bold truncate max-w-[70%]">{productName}</h2>
             </div>
           </div>
 

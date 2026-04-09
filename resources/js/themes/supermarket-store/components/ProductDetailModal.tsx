@@ -81,10 +81,10 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
         >
           {/* Modal Header */}
           <div className="flex items-center justify-between p-3 sm:p-4 border-b bg-white sm:bg-green-50">
-            <h2 className="text-base sm:text-lg font-semibold text-gray-900 truncate pr-2 sm:pr-4">
+            <h2 className="text-base sm:text-lg font-semibold text-gray-900 truncate max-w-[60%] sm:max-w-[70%]">
               {productName}
             </h2>
-            <div className="flex items-center gap-1 flex-shrink-0">
+            <div className="flex items-center gap-2 flex-shrink-0">
               <button 
                 onClick={(e) => { e.stopPropagation(); setShowReviewModal(true); }}
                 className="p-1.5 sm:p-2 hover:bg-yellow-100 rounded-full transition-colors"

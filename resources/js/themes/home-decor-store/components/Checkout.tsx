@@ -128,14 +128,14 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
                     <span className="text-xl md:text-2xl">🏠</span>
                   </div>
                   <div>
-                    <h2 className="text-lg md:text-2xl font-serif font-bold text-amber-900">Secure Checkout</h2>
+                    <h2 className="text-lg md:text-2xl font-serif font-bold text-amber-900">{isArabic ? 'إتمام الطلب' : 'Secure Checkout'}</h2>
                     <div className="flex items-center gap-2 mt-1">
                       <div className="flex space-x-1">
                         {[1, 2, 3].map((num) => (
                           <div key={num} className={`w-2 h-2 rounded-full ${step >= num ? 'bg-amber-600' : 'bg-amber-200'}`}></div>
                         ))}
                       </div>
-                      <span className="text-xs md:text-sm text-amber-600">Step {step} of 3</span>
+                      <span className="text-xs md:text-sm text-amber-600">{isArabic ? `الخطوة ${step} من 3` : `Step ${step} of 3`}</span>
                     </div>
                   </div>
                 </div>
@@ -168,7 +168,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
 
                         <div>
 
-                          <label className="block text-sm font-semibold text-amber-800 mb-2 mb-2">{isArabic ? "الاسم الأول *" : "First Name *"}</label>
+                          <label className="block text-sm font-semibold text-amber-800 mb-2">{isArabic ? "الاسم الأول *" : "First Name *"}</label>
 
                           <input
 
@@ -188,7 +188,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
 
                         <div>
 
-                          <label className="block text-sm font-semibold text-amber-800 mb-2 mb-2">{isArabic ? "اسم العائلة *" : "Last Name *"}</label>
+                          <label className="block text-sm font-semibold text-amber-800 mb-2">{isArabic ? "اسم العائلة *" : "Last Name *"}</label>
 
                           <input
 
@@ -212,7 +212,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
 
                       <div>
 
-                        <label className="block text-sm font-semibold text-amber-800 mb-2 mb-2">{isArabic ? "البريد الإلكتروني (اختياري)" : "Email (Optional)"}</label>
+                        <label className="block text-sm font-semibold text-amber-800 mb-2">{isArabic ? "البريد الإلكتروني (اختياري)" : "Email (Optional)"}</label>
 
                         <input
 
@@ -240,7 +240,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
 
                       <div>
 
-                        <label className="block text-sm font-semibold text-amber-800 mb-2 mb-2">{isArabic ? "رقم الهاتف *" : "Phone *"}</label>
+                        <label className="block text-sm font-semibold text-amber-800 mb-2">{isArabic ? "رقم الهاتف *" : "Phone *"}</label>
 
                         <input
 
@@ -268,7 +268,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
 
                       <div>
 
-                        <label className="block text-sm font-semibold text-amber-800 mb-2 mb-2">{isArabic ? "العنوان *" : "Address *"}</label>
+                        <label className="block text-sm font-semibold text-amber-800 mb-2">{isArabic ? "العنوان *" : "Address *"}</label>
 
                         <textarea
 
@@ -506,7 +506,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
                     onClick={handlePrevStep}
                     className="w-full sm:w-auto px-6 py-3 border-2 border-amber-300 text-amber-700 rounded-xl hover:bg-amber-100 transition-colors font-semibold order-2 sm:order-1"
                   >
-                    ← Back
+                    {isArabic ? 'رجوع ←' : '← Back'}
                   </button>
                 ) : <div className="hidden sm:block"></div>}
 
@@ -519,7 +519,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
                     }
                     className="w-full sm:w-auto px-8 py-3 bg-amber-600 hover:bg-amber-700 disabled:bg-amber-300 text-white font-bold rounded-xl transition-colors disabled:cursor-not-allowed order-1 sm:order-2"
                   >
-                    Continue →
+                    {isArabic ? '→ متابعة' : 'Continue →'}
                   </button>
                 ) : (
                   <button
@@ -527,7 +527,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
                     disabled={isPlacingOrder || !selectedPayment || (selectedPayment === 'whatsapp' && !whatsappNumber.trim())}
                     className="w-full sm:w-auto px-8 py-3 bg-amber-600 hover:bg-amber-700 disabled:bg-amber-300 text-white font-bold rounded-xl transition-colors disabled:cursor-not-allowed order-1 sm:order-2"
                   >
-                    {isPlacingOrder ? 'Processing...' : '🛒 Place Order'}
+                    {isPlacingOrder ? (isArabic ? 'جاري المعالجة...' : 'Processing...') : (isArabic ? '🛒 تأكيد الطلب' : '🛒 Place Order')}
                   </button>
                 )}
               </div>
@@ -538,7 +538,7 @@ const CheckoutContent: React.FC<Omit<CheckoutProps, 'userProfile' | 'isLoggedIn'
           <div className="w-full md:w-96 bg-amber-50 border-t md:border-t-0 md:border-l border-amber-200 flex flex-col h-full md:h-auto">
             {/* Header */}
             <div className="p-4 md:p-6 border-b border-amber-200 flex-shrink-0">
-              <h3 className="text-lg md:text-xl font-bold text-amber-900">Order Summary ({cartItems.length} items)</h3>
+              <h3 className="text-lg md:text-xl font-bold text-amber-900">{isArabic ? `ملخص الطلب (${cartItems.length} عناصر)` : `Order Summary (${cartItems.length} items)`}</h3>
             </div>
 
             {/* Cart Items - Scrollable */}
