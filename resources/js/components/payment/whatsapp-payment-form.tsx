@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { router } from '@inertiajs/react';
 import { toast } from '@/components/custom-toast';
 import { MessageCircle, CheckCircle } from 'lucide-react';
 
@@ -33,32 +32,26 @@ export function WhatsAppPaymentForm({
     ? `مرحباً، أود ترخيص متجري على منصة نشمي ستور\nالباقة: ${planPrice}\nنوع الاشتراك: ${billingCycle}`
     : `Hello, I would like to license my store on Nashmi Store\nPlan: ${planPrice}\nBilling: ${billingCycle}`;
 
-  const whatsappLink = `https://wa.me/${whatsappNumber?.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(messageTemplate)}`;
+  const cleanNumber = whatsappNumber?.replace(/[^0-9]/g, '') || '';
+  const whatsappLink = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(messageTemplate)}`;
 
   const handleWhatsAppPayment = () => {
+    if (!cleanNumber) {
+      toast.error(t('WhatsApp number is not configured. Please contact support.'));
+      return;
+    }
+    
     setProcessing(true);
     
-    // First record the payment intent
-    router.post(route('bank.payment'), {
-      plan_id: planId,
-      billing_cycle: billingCycle,
-      coupon_code: couponCode,
-      amount: planPrice,
-      payment_method: 'whatsapp',
-    }, {
-      onSuccess: () => {
-        toast.success(t('Payment request submitted. Redirecting to WhatsApp...'));
-        // Open WhatsApp link
-        window.open(whatsappLink, '_blank');
-        onSuccess();
-      },
-      onError: () => {
-        toast.error(t('Failed to submit payment request'));
-      },
-      onFinish: () => {
-        setProcessing(false);
-      }
-    });
+    // Open WhatsApp directly - no backend call needed
+    // The superadmin will manually activate the plan after receiving payment
+    window.open(whatsappLink, '_blank');
+    toast.success(t('Redirecting to WhatsApp...'));
+    
+    setTimeout(() => {
+      setProcessing(false);
+      onSuccess();
+    }, 1500);
   };
 
   return (
@@ -103,7 +96,7 @@ export function WhatsAppPaymentForm({
         </Button>
         <Button 
           onClick={handleWhatsAppPayment} 
-          disabled={processing}
+          disabled={processing || !cleanNumber}
           className="flex-1 bg-green-600 hover:bg-green-700"
         >
           <MessageCircle className="h-4 w-4 mr-2" />
