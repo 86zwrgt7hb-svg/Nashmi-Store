@@ -9,7 +9,7 @@ interface SSPayPaymentFormProps {
   planId: number;
   planPrice: number;
   couponCode?: string;
-  billingCycle: 'monthly' | 'yearly';
+  billingCycle: 'monthly' | 'yearly' | 'lifetime';
   sspaySecretKey: string;
   currency?: string;
   onSuccess: () => void;
@@ -108,7 +108,7 @@ export function SSPayPaymentForm({
             <span className="text-lg font-bold">{formatPrice(planPrice)}</span>
           </div>
           <div className="text-sm text-muted-foreground mt-1">
-            {t('Billing Cycle')}: {t(billingCycle)}
+            {t('Payment Type')}: {t('Lifetime')}
           </div>
           {couponCode && (
             <div className="text-sm text-green-600 mt-1">

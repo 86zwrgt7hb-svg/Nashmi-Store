@@ -12,7 +12,7 @@ import { router } from '@inertiajs/react';
 interface CoinGatePaymentFormProps {
   planId: number;
   couponCode: string;
-  billingCycle: 'monthly' | 'yearly';
+  billingCycle: 'monthly' | 'yearly' | 'lifetime';
   planPrice: number;
   currency: string;
   onSuccess: () => void;
@@ -91,7 +91,7 @@ export function CoinGatePaymentForm({
           <div className="bg-muted p-4 rounded-lg">
             <div className="flex justify-between items-center mb-2">
               <span className="text-sm font-medium">{t('Plan')}</span>
-              <span className="text-sm">{t(billingCycle)} {t('billing')}</span>
+              <span className="text-sm">{t('Lifetime')}</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-sm font-medium">{t('Amount')}</span>

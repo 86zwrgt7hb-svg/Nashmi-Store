@@ -13,7 +13,7 @@ interface AuthorizeNetPaymentFormProps {
   planId: number;
   planPrice: number;
   couponCode?: string;
-  billingCycle: 'monthly' | 'yearly';
+  billingCycle: 'monthly' | 'yearly' | 'lifetime';
   authorizenetMerchantId: string;
   currency?: string;
   isSandbox?: boolean;
@@ -187,7 +187,7 @@ export function AuthorizeNetPaymentForm({
             <span className="text-lg font-bold">{formatPrice(planPrice)}</span>
           </div>
           <div className="text-sm text-muted-foreground mt-1">
-            {t('Billing Cycle')}: {t(billingCycle)}
+            {t('Payment Type')}: {t('Lifetime')}
           </div>
           {couponCode && (
             <div className="text-sm text-green-600 mt-1">

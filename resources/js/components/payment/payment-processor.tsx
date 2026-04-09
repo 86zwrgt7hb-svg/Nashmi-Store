@@ -57,7 +57,7 @@ interface PaymentProcessorProps {
     duration: string;
     paymentMethods?: any;
   };
-  billingCycle: 'monthly' | 'yearly';
+  billingCycle: 'monthly' | 'yearly' | 'lifetime' | 'lifetime';
   paymentMethods: PaymentMethod[];
   onSuccess: () => void;
   onCancel: () => void;
@@ -77,9 +77,8 @@ export function PaymentProcessor({
   const [couponLoading, setCouponLoading] = useState(false);
   const [showPaymentForm, setShowPaymentForm] = useState(false);
 
-  const originalPrice = billingCycle === 'yearly' && (plan as any).yearly_price
-    ? Number((plan as any).yearly_price)
-    : (billingCycle === 'monthly' && (plan as any).monthly_price ? Number((plan as any).monthly_price) : Number(plan.price));
+  // Lifetime: always use plan.price directly
+  const originalPrice = Number(plan.price) || 0;
   const discountAmount = appliedCoupon ? (appliedCoupon.type === 'percentage' ? (originalPrice * Number(appliedCoupon.value) / 100) : Number(appliedCoupon.value)) : 0;
   const finalPrice = Math.max(0, originalPrice - discountAmount);
 
@@ -486,13 +485,13 @@ export function PaymentProcessor({
             <div>
               <h3 className="font-medium">{plan.name}</h3>
               <p className="text-sm text-muted-foreground">
-                {t(billingCycle)} {t('subscription')}
+                {t('Lifetime License')}
               </p>
             </div>
             <div className="text-right">
               <div className="text-lg font-bold">{plan.formatted_price || plan.price}</div>
               <div className="text-sm text-muted-foreground">
-                /{t(plan.duration.toLowerCase())}
+                {t('One-time payment')}
               </div>
             </div>
           </div>

@@ -20,7 +20,7 @@ interface PaymentFormWrapperProps {
   planId: number;
   planPrice: number;
   couponCode?: string;
-  billingCycle: 'monthly' | 'yearly';
+  billingCycle: 'monthly' | 'yearly' | 'lifetime';
   onSuccess: () => void;
   onCancel: () => void;
 }

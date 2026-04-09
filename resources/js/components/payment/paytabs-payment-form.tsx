@@ -9,7 +9,7 @@ import axios from 'axios';
 interface PayTabsPaymentFormProps {
   planId: number;
   couponCode: string;
-  billingCycle: 'monthly' | 'yearly';
+  billingCycle: 'monthly' | 'yearly' | 'lifetime';
   planPrice: number;
   paytabsClientKey: string;
   currency: string;
@@ -109,8 +109,8 @@ export function PayTabsPaymentForm({
               <span className="text-sm text-gray-900">{t('Subscription Plan')}</span>
             </div>
             <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-medium text-gray-600">{t('Billing Cycle')}:</span>
-              <span className="text-sm text-gray-900 capitalize">{billingCycle}</span>
+              <span className="text-sm font-medium text-gray-600">{t('Payment Type')}:</span>
+              <span className="text-sm text-gray-900">{t('Lifetime')}</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-sm font-medium text-gray-600">{t('Amount')}:</span>

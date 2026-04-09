@@ -12,7 +12,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 interface ToyyibPayPaymentFormProps {
   planId: number;
   couponCode: string;
-  billingCycle: 'monthly' | 'yearly';
+  billingCycle: 'monthly' | 'yearly' | 'lifetime';
   planPrice: number;
   toyyibpayCategoryCode: string;
   currency: string;
@@ -79,7 +79,7 @@ export function ToyyibPayPaymentForm({
         billing_cycle: billingCycle,
         coupon_code: couponCode || '',
         billName: `Plan Subscription - ${planId}`,
-        billDescription: `${billingCycle} subscription for ${customerDetails.name}`,
+        billDescription: `Lifetime license for ${customerDetails.name}`,
         billAmount: planPrice,
         billTo: customerDetails.name.trim(),
         billEmail: customerDetails.email.trim(),

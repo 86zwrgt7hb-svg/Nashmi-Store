@@ -9,7 +9,7 @@ import { Loader2, CreditCard } from 'lucide-react';
 interface MolliePaymentFormProps {
   planId: number;
   couponCode: string;
-  billingCycle: 'monthly' | 'yearly';
+  billingCycle: 'monthly' | 'yearly' | 'lifetime';
   planPrice: number;
   mollieApiKey: string;
   currency: string;

@@ -4,8 +4,7 @@ import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { Switch } from '@/components/ui/switch';
-import { CheckCircle2, CreditCard, Circle, Crown } from 'lucide-react';
+import { CheckCircle2, Crown, Circle, Infinity, Shield } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 interface Plan {
@@ -42,81 +41,52 @@ export function UpgradePlanModal({
 }: UpgradePlanModalProps) {
   const { t } = useTranslation();
   const [selectedPlanId, setSelectedPlanId] = useState<number | null>(null);
-  const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
   
-  // Initialize with current plan ID and billing cycle when modal opens
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen || !plans || plans.length === 0) return;
     
-    // Reset state when modal closes
-    if (!plans || plans.length === 0) {
-      return;
-    }
-    
-    // Find the current plan
     const currentPlan = plans.find(plan => plan.is_current === true);
-    
-    // If there's a current plan, select it and set the correct billing cycle
     if (currentPlan) {
       setSelectedPlanId(currentPlan.id);
-      // Use the plan's duration from the API response
-      const detectedCycle = currentPlan.duration === 'yearly' ? 'yearly' : 'monthly';
-      setBillingCycle(detectedCycle);
-    } else if (companyCurrentPlanDuration) {
-      // Fallback: use the company's current plan duration from props
-      setSelectedPlanId(currentPlanId || plans[0].id);
-      const detectedCycle = companyCurrentPlanDuration === 'yearly' ? 'yearly' : 'monthly';
-      setBillingCycle(detectedCycle);
     } else if (currentPlanId) {
       setSelectedPlanId(currentPlanId);
-      setBillingCycle('monthly');
     } else {
       setSelectedPlanId(plans[0].id);
-      setBillingCycle('monthly');
     }
-  }, [isOpen, plans, currentPlanId, companyCurrentPlanDuration]);
+  }, [isOpen, plans, currentPlanId]);
   
   const handleConfirm = () => {
     if (selectedPlanId) {
-      onConfirm(selectedPlanId, billingCycle);
+      // Always pass 'yearly' as a placeholder — backend handles lifetime logic
+      onConfirm(selectedPlanId, 'yearly');
     }
   };
   
-  // Helper function to format currency
   const formatCurrency = (amount: number | string): string => {
     const num = Number(amount) || 0;
     return num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  };
-  
-  const getPriceForSelectedCycle = (plan: Plan) => {
-    const priceValue = billingCycle === 'yearly' ? plan.yearly_price : plan.monthly_price;
-    // Extract numeric value from formatted price (e.g., "$99.99" -> 99.99)
-    const numericPrice = parseFloat(priceValue?.replace(/[^0-9.-]+/g, '') || '0');
-    return isNaN(numericPrice) ? priceValue : formatCurrency(numericPrice);
-  };
-  
-  const getDurationLabel = () => {
-    return billingCycle === 'yearly' ? t('Yearly') : t('Monthly');
   };
   
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-lg max-h-[90vh] flex flex-col">
         <DialogHeader>
-          <DialogTitle>{t("Upgrade Plan for")} {companyName}</DialogTitle>
+          <DialogTitle className="flex items-center gap-2">
+            <Crown className="h-5 w-5 text-amber-500" />
+            {t("Assign Lifetime License")} — {companyName}
+          </DialogTitle>
           <DialogDescription>
-            {t("Select a new plan for this company")}
+            {t("Assign a lifetime store license to this company")}
           </DialogDescription>
         </DialogHeader>
         
-        {/* Billing Cycle Toggle */}
+        {/* Lifetime Badge — replaces the old monthly/yearly toggle */}
         <div className="flex items-center justify-center gap-3 py-4 border-b">
-          <Label className="text-sm font-medium">{t('Monthly')}</Label>
-          <Switch
-            checked={billingCycle === 'yearly'}
-            onCheckedChange={(checked) => setBillingCycle(checked ? 'yearly' : 'monthly')}
-          />
-          <Label className="text-sm font-medium">{t('Yearly')}</Label>
+          <div className="flex items-center gap-2 bg-gradient-to-r from-amber-50 to-purple-50 border border-amber-200 rounded-full px-5 py-2">
+            <Infinity className="h-4 w-4 text-amber-600" />
+            <span className="text-sm font-bold text-amber-800">{t('Lifetime License')}</span>
+            <Shield className="h-4 w-4 text-purple-600" />
+          </div>
         </div>
         
         <div className="py-4 flex-1 overflow-y-auto -mx-6 px-6">
@@ -129,9 +99,11 @@ export function UpgradePlanModal({
               {plans.map((plan) => (
                 <div
                   key={plan.id}
-                  className={`relative flex items-center space-x-3 rounded-lg border p-4 ${
-                    selectedPlanId === plan.id ? 'border-primary bg-primary/5' : 'border-gray-200'
-                  } ${plan.is_current ? 'bg-blue-50' : ''}`}
+                  className={`relative flex items-center space-x-3 rounded-xl border-2 p-5 transition-all ${
+                    selectedPlanId === plan.id 
+                      ? 'border-primary bg-primary/5 shadow-md' 
+                      : 'border-gray-200 hover:border-gray-300'
+                  } ${plan.is_current ? 'bg-green-50 border-green-300' : ''}`}
                 >
                   <div className="relative">
                     <RadioGroupItem 
@@ -149,25 +121,22 @@ export function UpgradePlanModal({
                     htmlFor={`plan-${plan.id}`}
                     className="flex flex-1 cursor-pointer items-center justify-between"
                   >
-                    <div className="space-y-1">
-                      <div className="flex items-center">
-                        <p className="text-base font-medium">{plan.name}</p>
+                    <div className="space-y-1.5">
+                      <div className="flex items-center gap-2">
+                        <p className="text-base font-bold">{plan.name}</p>
                         {plan.is_current && (
-                          <Badge variant="outline" className="ml-2 bg-blue-100 text-blue-800 border-blue-200">
+                          <Badge variant="outline" className="bg-green-100 text-green-800 border-green-200">
                             {t("Current")}
                           </Badge>
                         )}
                       </div>
-                      <div className="flex items-center">
-                        <CreditCard className="mr-1.5 h-4 w-4 text-muted-foreground" />
-                        <p className="text-sm font-medium">
-                          {getPriceForSelectedCycle(plan)} / {getDurationLabel().toLowerCase()}
-                        </p>
-                        {billingCycle === 'yearly' && (
-                          <Badge variant="secondary" className="ml-2 text-xs bg-orange-100 text-orange-800">
-                            {t('Best Value')}
-                          </Badge>
-                        )}
+                      <div className="flex items-center gap-2">
+                        <span className="text-lg font-extrabold text-primary">
+                          {formatCurrency(plan.price)}
+                        </span>
+                        <span className="text-sm text-muted-foreground font-medium">
+                          / {t('Lifetime')}
+                        </span>
                       </div>
                       {plan.description && (
                         <p className="text-sm text-muted-foreground">{plan.description}</p>
@@ -196,9 +165,11 @@ export function UpgradePlanModal({
           </Button>
           <Button 
             onClick={handleConfirm} 
-            disabled={!selectedPlanId || selectedPlanId === currentPlanId}
+            disabled={!selectedPlanId}
+            className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-700"
           >
-            {t("Upgrade Plan")}
+            <Crown className="h-4 w-4 mr-2" />
+            {t("Assign Lifetime License")}
           </Button>
         </DialogFooter>
       </DialogContent>

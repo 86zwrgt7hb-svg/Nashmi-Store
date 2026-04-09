@@ -23,7 +23,7 @@ interface PlanSubscriptionModalProps {
     isSubscribed?: boolean;
     isExpired?: boolean;
   };
-  billingCycle: 'monthly' | 'yearly';
+  billingCycle: 'monthly' | 'yearly' | 'lifetime';
   paymentMethods: PaymentMethod[];
 }
 
@@ -44,7 +44,6 @@ export function PlanSubscriptionModal({
 
   const handlePaymentSuccess = () => {
     onClose();
-    // Use Inertia visit instead of hard reload
     router.visit(route('plans.index'));
   };
 

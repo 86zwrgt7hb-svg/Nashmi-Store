@@ -3362,4 +3362,9 @@
   "days": "days",
   "Lifetime plan activated successfully!": "Lifetime plan activated successfully!",
   "Lifetime plan assigned successfully": "Lifetime plan assigned successfully"
+,
+    "Payment Type": "Payment Type",
+    "Lifetime License": "Lifetime License",
+    "Assign Lifetime License": "Assign Lifetime License",
+    "Assign a lifetime store license to this company": "Assign a lifetime store license to this company"
 }

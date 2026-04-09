@@ -12,7 +12,7 @@ import { router } from '@inertiajs/react';
 interface PayfastPaymentFormProps {
   planId: number;
   couponCode: string;
-  billingCycle: 'monthly' | 'yearly';
+  billingCycle: 'monthly' | 'yearly' | 'lifetime';
   planPrice: number;
   payfastMerchantId: string;
   currency: string;

@@ -11,7 +11,7 @@ import axios from 'axios';
 interface PayTRPaymentFormProps {
   planId: number;
   couponCode: string;
-  billingCycle: 'monthly' | 'yearly';
+  billingCycle: 'monthly' | 'yearly' | 'lifetime';
   planPrice: number;
   paytrMerchantId: string;
   currency: string;
