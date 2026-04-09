@@ -391,11 +391,6 @@ class PlanController extends Controller
         $user = auth()->user();
         $plan = Plan::findOrFail($request->plan_id);
         
-        // For lifetime plans, check if user already has lifetime
-        if ($plan->is_lifetime && $user->is_lifetime) {
-            return back()->withErrors(['error' => __('You already have a lifetime license.')]);
-        }
-        
         // Check if plan is enabled
         if ($plan->is_plan_enable !== 'on') {
             return back()->withErrors(['error' => __('This plan is not available for subscription.')]);
@@ -404,8 +399,10 @@ class PlanController extends Controller
         // Determine billing cycle
         $billingCycle = $plan->is_lifetime ? 'lifetime' : ($request->billing_cycle ?? 'lifetime');
         
+        // If user already has lifetime → this is a NEW STORE license purchase
+        $isAdditionalStore = $plan->is_lifetime && $user->is_lifetime;
+        
         try {
-            // For lifetime plans, price is always the plan price
             $originalPrice = $plan->price;
             $finalPrice = $plan->price;
             
@@ -418,14 +415,61 @@ class PlanController extends Controller
                 'status' => 'approved'
             ]);
             
-            // Assign plan to user with proper resource management
-            assignPlanToUser($user, $plan, $billingCycle);
-            
-            return back()->with('success', __('Lifetime license activated successfully! Your store is now active forever.'));
+            if ($isAdditionalStore) {
+                // Create a new store automatically for the user
+                $newStore = $this->createNewStoreForUser($user, $plan);
+                
+                // Switch user to the new store
+                $user->update(['current_store' => $newStore->id]);
+                
+                return redirect()->route('dashboard')->with('success', __('New store created and activated successfully! You can now set it up.'));
+            } else {
+                // First-time activation: assign plan to user
+                assignPlanToUser($user, $plan, $billingCycle);
+                
+                return back()->with('success', __('Lifetime license activated successfully! Your store is now active forever.'));
+            }
             
         } catch (\Exception $e) {
             \Log::error('Plan subscription failed: ' . $e->getMessage(), ['user_id' => $user->id, 'plan_id' => $plan->id]);
             return back()->withErrors(['error' => __('Plan subscription failed. Please try again.')]);
+        }
+    }
+    
+    /**
+     * Create a new store automatically for an existing lifetime user
+     */
+    private function createNewStoreForUser($user, $plan)
+    {
+        \DB::beginTransaction();
+        
+        try {
+            // Get available themes from the plan
+            $themes = is_array($plan->themes) ? $plan->themes : ['gadgets'];
+            $defaultTheme = $themes[0] ?? 'gadgets';
+            
+            // Generate a unique store name
+            $storeCount = \App\Models\Store::where('user_id', $user->id)->count();
+            $storeName = $user->name . "'s Store " . ($storeCount + 1);
+            
+            $store = new \App\Models\Store();
+            $store->name = $storeName;
+            $store->slug = \App\Models\Store::generateUniqueSlug($storeName);
+            $store->theme = $defaultTheme;
+            $store->user_id = $user->id;
+            $store->save();
+            
+            // Dispatch StoreCreated event to set up default configurations
+            event(new \App\Events\StoreCreated($store));
+            
+            \DB::commit();
+            
+            return $store;
+            
+        } catch (\Exception $e) {
+            \DB::rollback();
+            \Log::error('Auto store creation failed: ' . $e->getMessage(), ['user_id' => $user->id]);
+            throw $e;
         }
     }
     

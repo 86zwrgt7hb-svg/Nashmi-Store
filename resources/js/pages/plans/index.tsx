@@ -402,10 +402,26 @@ export default function Plans({
               {/* CTA */}
               <div className="pt-4 border-t border-gray-200">
                 {isLifetime ? (
-                  <Button disabled className="w-full bg-green-100 text-green-800 border-green-200 h-12 text-base">
-                    <Crown className="h-5 w-5 mr-2" />
-                    {t('Lifetime License Active')}
-                  </Button>
+                  <div className="space-y-3">
+                    <Button disabled className="w-full bg-green-100 text-green-800 border-green-200 h-12 text-base">
+                      <Crown className="h-5 w-5 mr-2" />
+                      {t('Lifetime License Active')}
+                    </Button>
+                    {hasPermission('subscribe-plans', auth) && (
+                      <Button
+                        onClick={() => handleSubscribe(plan.id)}
+                        variant="outline"
+                        className="w-full h-12 text-base font-semibold border-primary/30 text-primary hover:bg-primary/5"
+                        disabled={processing}
+                      >
+                        <Plus className="h-5 w-5 mr-2" />
+                        {t('Add New Store')} — {plan.formatted_price || formatSuperadminCurrency(plan.price)}
+                      </Button>
+                    )}
+                    <p className="text-center text-xs text-muted-foreground">
+                      {t('Each new store requires a separate lifetime license.')}
+                    </p>
+                  </div>
                 ) : (
                   <div className="space-y-3">
                     {hasPermission('subscribe-plans', auth) && (
