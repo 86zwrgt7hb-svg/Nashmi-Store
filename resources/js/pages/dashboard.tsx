@@ -13,6 +13,7 @@ import { THEME_COLORS } from '@/hooks/use-appearance';
 import { DashboardOverview } from '@/components/dashboard/dashboard-overview';
 import { hasPermission, checkPermission } from '@/utils/permissions';
 import { ResourceUsageCard } from '@/components/dashboard/ResourceUsageCard';
+import { TrialBanner } from '@/components/TrialBanner';
 
 interface Props {
   dashboardData: {
@@ -325,6 +326,9 @@ export default function Dashboard({ dashboardData, currentStore, storeUrl, isSup
       breadcrumbs={breadcrumbs}
     >
       <div className="space-y-4">
+        {/* Trial Banner - Shows remaining trial days */}
+        <TrialBanner />
+
         {/* Resource Usage Section - Shows warnings and progress bars */}
         {resourceUsage && (
           <ResourceUsageCard resourceUsage={resourceUsage} />

@@ -45,6 +45,9 @@ return new class extends Migration
             'enable_chatgpt' => 'on',
             'enable_shipping_method' => 'on',
             'enable_pos' => 'on',
+            'enable_staff_management' => 'on',
+            'enable_express_checkout' => 'on',
+            'enable_analytics' => 'on',
             'storage_limit' => 0, // 0 = unlimited
             'is_trial' => 'on',
             'trial_day' => 7,
